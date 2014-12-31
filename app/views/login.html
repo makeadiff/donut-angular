@@ -1,0 +1,17 @@
+
+<div layout="column" layout-align="center center" ng-controller="LoginCtrl as loginCtrl" >
+    <form name="loginForm" layout="column" ng-submit="loginForm.$valid && loginCtrl.loginCheck()" novalidate>
+        <div layout="row" layout-align="center center">
+            <p ng-show="loginCtrl.login_invalid" style="color:red">Invalid Login</p>
+            <p ng-show="loginCtrl.poc_not_assigned" style="color:red">POC not assigned</p>
+        </div>
+        <md-text-float name="phone" label="Phone Number" ng-model="loginCtrl.login.phone" required ng-minlenght="10" ng-maxlength="10"> </md-text-float>
+
+        <md-text-float name="password" label="Password" ng-model="loginCtrl.login.password" required type="password"> </md-text-float>
+
+        <br>
+        <md-button ng-disabled="loginForm.$invalid" class="md-raised" type="submit">Login</md-button>
+
+    </form>
+    <span ng-show="loginCtrl.is_processing"><br><md-progress-circular  md-mode="indeterminate"></md-progress-circular></span>
+</div>
