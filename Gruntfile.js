@@ -346,26 +346,8 @@ module.exports = function (grunt) {
         configFile: 'test/karma.conf.js',
         singleRun: true
       }
-    },
-    
-    //Build control settings
-    buildcontrol: {
-    options: {
-      dir: 'dist',
-      commit: true,
-      push: true,
-      message: 'Built %sourceName% from commit %sourceCommit% on branch %sourceBranch%'
-    },
-    
-    github: {
-      options: {
-        remote: 'git@github.com:makeadiff/donut-angular-dist.git',
-        branch: 'master'
-      }
     }
-  }
-  }
-  );
+  });
 
 
   grunt.registerTask('serve', 'Compile then start a connect web server', function (target) {
@@ -417,9 +399,5 @@ module.exports = function (grunt) {
     'newer:jshint',
     'test',
     'build'
-  ]);
-  
-  grunt.registerTask('deploy', [
-    'buildcontrol:github'    
   ]);
 };

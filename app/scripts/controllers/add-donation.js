@@ -8,7 +8,7 @@
  * Controller of the donutApp
  */
 angular.module('donutApp')
-  .controller('AddDonationCtrl', ['$http','$mdDialog',function ($http,$mdDialog) {
+  .controller('AddDonationCtrl', ['$http','$mdDialog','UserService',function ($http,$mdDialog,User) {
 
         var vm = this; //vm stands for view-model
 
@@ -26,6 +26,9 @@ angular.module('donutApp')
         vm.phone_invalid = false;
         vm.amount_invalid = false;
         vm.is_processing = false;
+
+
+        var fundraiser_id = User.getUserId();
 
         vm.validCheck = function() {
             if(vm.donationForm.$valid == false){
@@ -77,7 +80,7 @@ angular.module('donutApp')
                     return json;
                 },
                 data: {amount: vm.donation.amount, first_name: vm.donation.name, email_id : vm.donation.email,
-                    phone_no : vm.donation.phone, eighty_g_required : vm.donation.eighty_g, address : vm.donation.address, fundraiser_id : '8', product_id : 'GEN',
+                    phone_no : vm.donation.phone, eighty_g_required : vm.donation.eighty_g, address : vm.donation.address, fundraiser_id : fundraiser_id, product_id : 'GEN',
                     donation_type : 'GEN', format : 'xml'}
 
             }).success(function (data) {
