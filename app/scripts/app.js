@@ -50,6 +50,10 @@ angular
         templateUrl: 'views/select-event.html',
         controller: 'SelectEventCtrl'
       })
+      .when('/change-password', {
+        templateUrl: 'views/change-password.html',
+        controller: 'ChangePasswordCtrl'
+      })
       .otherwise({
         redirectTo: '/'
       });

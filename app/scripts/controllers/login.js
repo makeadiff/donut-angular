@@ -25,7 +25,7 @@ angular.module('donutApp')
 
             $http({
                 method: 'POST',
-                url: 'http://cfrapp.makeadiff.in:3000/mobileauth/',
+                url: 'http://localhost:3000/mobileauth/',
                 withCredentials : true,
                 headers: {'Content-Type': 'application/x-www-form-urlencoded','Access-Control-Allow-Origin': 'Origin, X-Requested-With, Content-Type, Accept',
                     'Authorization' : 'Basic ' + window.btoa('mad:mad')},
