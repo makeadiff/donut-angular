@@ -17,8 +17,6 @@ angular.module('donutApp')
 
                     if (next.restricted && !User.checkLoggedIn()) {
 
-
-
                         $location.path('/login');
 
                     }

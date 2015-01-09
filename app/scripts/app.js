@@ -24,22 +24,26 @@ angular
       .when('/', {
         templateUrl: 'views/home.html',
         controller: 'HomeCtrl',
-        restricted : true
+        restricted : true,
+        title : 'Home'
       })
       .when('/add-donation', {
         templateUrl: 'views/add-donation.html',
         controller: 'AddDonationCtrl',
-        restricted : true
+        restricted : true,
+        title : 'Add Donation'
       })
       .when('/view-donation', {
         templateUrl: 'views/view-donation.html',
         controller: 'ViewDonationCtrl',
-        restricted : true
+        restricted : true,
+        title : 'View Donation'
       })
       .when('/login', {
         templateUrl: 'views/login.html',
         controller: 'LoginCtrl',
-        restricted : false
+        restricted : false,
+        title : 'Login'
       })
       .when('/logout', {
         templateUrl: 'views/logout.html',
@@ -48,13 +52,23 @@ angular
       })
       .when('/select-event', {
         templateUrl: 'views/select-event.html',
-        controller: 'SelectEventCtrl'
-      })
+        controller: 'SelectEventCtrl',
+        restricted : true
+
+        })
       .when('/change-password', {
         templateUrl: 'views/change-password.html',
-        controller: 'ChangePasswordCtrl'
+        controller: 'ChangePasswordCtrl',
+        restricted : true,
+        title : 'Change Password'
+
       })
       .otherwise({
         redirectTo: '/'
       });
-  });
+  })
+    .run(['$location', '$rootScope', function($location, $rootScope) {
+        $rootScope.$on('$routeChangeSuccess', function (event, current, previous) {
+            $rootScope.title = ' |  ' + current.$$route.title;
+        });
+    }]);

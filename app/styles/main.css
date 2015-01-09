@@ -5,3 +5,7 @@
 .error {
     color:red;
 }
+
+.reduced {
+    font-size: 70%;
+}

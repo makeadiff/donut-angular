@@ -8,7 +8,7 @@
  * Controller of the donutApp
  */
 angular.module('donutApp')
-  .controller('AddDonationCtrl', ['$http','$mdDialog','UserService',function ($http,$mdDialog,User) {
+  .controller('AddDonationCtrl', ['$http','$mdDialog','UserService','$location',function ($http,$mdDialog,User,$location) {
 
         var vm = this; //vm stands for view-model
 
@@ -64,7 +64,7 @@ angular.module('donutApp')
 
                 $http({
                     method: 'POST',
-                    url: 'http://localhost:3000/donations/',
+                    url: 'http://cfrapp.makeadiff.in:3000/donations/',
                     withCredentials : true,
                     headers: {'Content-Type': 'application/x-www-form-urlencoded','Access-Control-Allow-Origin': 'Origin, X-Requested-With, Content-Type, Accept',
                         'Authorization' : 'Basic ' + window.btoa('mad:mad')},
@@ -109,6 +109,7 @@ angular.module('donutApp')
 
                 var alert = $mdDialog.alert().title('Error!').content('Connection error. Please try again later.').ok('Ok');
                 $mdDialog.show(alert);
+                $location.path('/login');
 
             };
 
