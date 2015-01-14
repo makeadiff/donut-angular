@@ -1,1 +1,12 @@
-<p>This is the view-donation view.</p>
+<div layout="column" ng-controller="ViewDonationCtrl as cm" layout-margin layout-fill layout-padding>
+    <span layout="row" ng-show="cm.is_processing" layout-align="center center"><br><br><br><md-progress-circular  md-mode="indeterminate"></md-progress-circular></span>
+    <div layout="row" layout-align="center center" ng-repeat="donation in cm.donations">
+        <md-card flex-gt-lg="30" flex="100">
+                ID &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: {{donation.id}} <br>
+                Name &nbsp;&nbsp;&nbsp;: {{donation.donour.first_name}} {{donation.donour.last_name}} <br>
+                Amount : {{donation.donation_amount}} <br>
+                Date &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: {{donation.created_at | date : 'MMM d, y'}} <br>
+                Status &nbsp;&nbsp;&nbsp;&nbsp;: {{donation.donation_status}} <br>
+        </md-card>
+    </div>
+</div>
