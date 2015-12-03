@@ -14,3 +14,24 @@
     color : #01579b;
 }
 
+.md-body-2 {
+	font-weight:bold;
+}
+
+div[layout="row"] {
+	height: 50px;
+}
+div .md-button span {
+	color:#000;
+}
+div .md-button.md-primary span {
+	color:#fff;
+}
+
+.md-dialog-container .md-button.md-primary span {
+	color: #000;
+}
+
+.md-datepicker-calendar {
+	background-color: #fff;
+}

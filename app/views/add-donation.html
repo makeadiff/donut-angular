@@ -1,28 +1,46 @@
 
 <div layout="column" layout-align="center center" ng-controller="AddDonationCtrl as addDon" >
-    <span ng-show="addDon.is_processing"><br><md-progress-circular  md-mode="indeterminate"></md-progress-circular></span>
-    <form name="addDon.donationForm" layout="column" ng-submit="addDon.addDonation()" novalidate>
-        <md-text-float name="name" label="Name" ng-model="addDon.donation.name" required> </md-text-float>
-        <md-text-float name="amount" label="Amount" ng-model="addDon.donation.amount" required> </md-text-float>
-        <md-text-float name="phone" label="Phone" ng-model="addDon.donation.phone" > </md-text-float>
-        <md-text-float name="email" label="Email" ng-model="addDon.donation.email" type="email" type="email"> </md-text-float>
+	<span ng-show="addDon.is_processing"><br><md-progress-circular  md-mode="indeterminate"></md-progress-circular></span>
+	<form name="addDon.donationForm" layout="column" ng-submit="addDon.addDonation()" novalidate>
+		<md-input-container>
+		<label>Name</label>
+		<input name="name" label="Name" ng-model="addDon.donation.name" required>
+		</md-input-container>
 
-        <md-text-float name="address" label="Address" ng-model="addDon.donation.address" type="text"> </md-text-float>
+		<md-input-container>
+		<label>Amount</label>
+		<input name="amount" label="Amount" ng-model="addDon.donation.amount" required>
+		</md-input-container>
 
-        <md-radio-group layout="row" layout-align="start center" ng-model="addDon.donation.eighty_g">
-            <p>80G :</p>
-            <md-radio-button value ="true">Yes</md-radio-button>
-            <md-radio-button value="false">No</md-radio-button>
-        </md-radio-group>
+		<md-input-container>
+		<label>Phone</label>
+		<input name="phone" label="Phone" ng-model="addDon.donation.phone" required >
+		</md-input-container>
 
-        <br>
+		<md-input-container>
+		<label>Email</label>
+		<input name="email" label="Email" ng-model="addDon.donation.email" type="email" type="email" required>
+		</md-input-container>
 
-        <md-button ng-disabled="!addDon.validCheck() || addDon.is_processing" class="md-raised" type="submit">Submit</md-button>
-    </form>
+		<md-input-container flex>
+		<label>Address</label>
+		<textarea name="address" label="Address" ng-model="addDon.donation.address" columns="5" md-maxlength="200"> </textarea>
+		</md-input-container>
+ 
+		<md-radio-group layout="row" layout-align="start center" ng-model="addDon.donation.eighty_g">
+			<p>80G :</p>
+			<md-radio-button value ="true">Yes</md-radio-button>
+			<md-radio-button value="false">No</md-radio-button>
+		</md-radio-group>
 
-    <span ng-show="addDon.phone_email_absent"><p class="error">If amount is greater than Rs. 200, then either phone or email is compulsory</p></span>
-    <span ng-show="addDon.phone_invalid"><p class="error">Phone number should be 10 digits in length</p></span>
-    <span ng-show="addDon.amount_invalid"><p class="error">Amount is not a valid number</p></span>
+		<br>
+
+		<md-button ng-disabled="!addDon.validCheck() || addDon.is_processing" class="md-raised" type="submit">Submit</md-button>
+	</form>
+
+	<span ng-show="addDon.phone_email_absent"><p class="error">If amount is greater than Rs. 200, then either phone or email is compulsory</p></span>
+	<span ng-show="addDon.phone_invalid"><p class="error">Phone number should be 10 digits in length</p></span>
+	<span ng-show="addDon.amount_invalid"><p class="error">Amount is not a valid number</p></span>
 </div>
 
 
