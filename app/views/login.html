@@ -5,9 +5,16 @@
             <p ng-show="loginCtrl.login_invalid" style="color:red">Invalid Login</p>
             <p ng-show="loginCtrl.poc_not_assigned" style="color:red">POC not assigned</p>
         </div>
-        <md-text-float name="phone" label="Phone Number" ng-model="loginCtrl.login.phone" required ng-minlenght="10" ng-maxlength="10"> </md-text-float>
 
-        <md-text-float name="password" label="Password" ng-model="loginCtrl.login.password" required type="password"> </md-text-float>
+        <md-input-container>
+        <label>Phone Number</label>
+        <input name="name" label="Name" ng-model="loginCtrl.login.phone" required ng-minlenght="10" ng-maxlength="10">
+        </md-input-container>
+
+        <md-input-container>
+        <label>Password</label>
+        <input name="password" label="Password" ng-model="loginCtrl.login.password" required type="password">
+        </md-input-container>
 
         <br>
         <md-button ng-disabled="loginForm.$invalid" class="md-raised" type="submit">Login</md-button>

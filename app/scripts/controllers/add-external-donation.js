@@ -74,8 +74,8 @@ angular.module('donutApp')
 
 				$http({
 					method: 'POST',
-					// url: 'http://localhost/Sites/community/makeadiff/makeadiff.in/apps/exdon/api/add_donation.php',
-					url: 'http://makeadiff.in/apps/exdon/api/add_donation.php',
+					url: 'http://localhost/Sites/community/makeadiff/makeadiff.in/apps/exdon/api/add_donation.php',
+					// url: 'http://makeadiff.in/apps/exdon/api/add_donation.php',
 					withCredentials : true,
 					headers: {'Content-Type': 'application/x-www-form-urlencoded','Access-Control-Allow-Origin': 'Origin, X-Requested-With, Content-Type, Accept',
 						'Authorization' : 'Basic ' + window.btoa('mad:mad')},
