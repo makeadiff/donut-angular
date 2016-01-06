@@ -3,27 +3,27 @@
 	<span ng-show="addDon.is_processing"><br><md-progress-circular  md-mode="indeterminate"></md-progress-circular></span>
 	<form name="addDon.donationForm" layout="column" ng-submit="addDon.addDonation()" novalidate>
 		<md-input-container>
-		<label>Name</label>
+		<label>Donor Name</label>
 		<input name="name" label="Name" ng-model="addDon.donation.name" required>
 		</md-input-container>
 
 		<md-input-container>
-		<label>Amount</label>
+		<label>Donated Amount</label>
 		<input name="amount" label="Amount" ng-model="addDon.donation.amount" required>
 		</md-input-container>
 
 		<md-input-container>
-		<label>Phone</label>
+		<label>Donor Phone</label>
 		<input name="phone" label="Phone" ng-model="addDon.donation.phone" required >
 		</md-input-container>
 
 		<md-input-container>
-		<label>Email</label>
+		<label>Donor Email</label>
 		<input name="email" label="Email" ng-model="addDon.donation.email" type="email" type="email" required>
 		</md-input-container>
 
 		<md-input-container flex>
-		<label>Address</label>
+		<label>Donor Address</label>
 		<textarea name="address" label="Address" ng-model="addDon.donation.address" columns="5" md-maxlength="200"> </textarea>
 		</md-input-container>
  
