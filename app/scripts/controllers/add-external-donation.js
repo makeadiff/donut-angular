@@ -20,7 +20,11 @@ angular.module('donutApp')
 		vm.donation.donation_type = $routeParams.donation_type;
 		vm.donation.created_at = new Date();
 
+		// vm.base_url = 'http://localhost/Sites/community/makeadiff/makeadiff.in/';
+		vm.base_url = 'http://makeadiff.in/';
+
 		//Initializing errors
+		vm.is_error = false;
 		vm.phone_absent = false;
 		vm.email_absent = false;
 		vm.phone_invalid = false;
@@ -28,7 +32,7 @@ angular.module('donutApp')
 		vm.amount_invalid = false;
 		vm.is_processing = false;
 
-		var fundraiser_id = User.getUserId();
+		vm.fundraiser_id = User.getUserId();
 
 		vm.validCheck = function() {
 			if(vm.donationForm.$valid == false){
@@ -71,11 +75,11 @@ angular.module('donutApp')
 
 			if(User.checkLoggedIn()) {
 				var fundraiser_id = User.getUserId();
+				var add_donation_url = vm.base_url + 'apps/exdon/api/add_donation.php';
 
 				$http({
 					method: 'POST',
-					url: 'http://localhost/Sites/community/makeadiff/makeadiff.in/apps/exdon/api/add_donation.php',
-					// url: 'http://makeadiff.in/apps/exdon/api/add_donation.php',
+					url: add_donation_url,
 					withCredentials : true,
 					headers: {'Content-Type': 'application/x-www-form-urlencoded','Access-Control-Allow-Origin': 'Origin, X-Requested-With, Content-Type, Accept',
 						'Authorization' : 'Basic ' + window.btoa('mad:mad')},
@@ -100,14 +104,16 @@ angular.module('donutApp')
 
 				}).error(function (data) {
 					vm.is_processing = false;
+					vm.is_error = true;
 
-					var alert = $mdDialog.alert().title('Error!').content('Connection error. Please try again later.').ok('Ok');
+					var alert = $mdDialog.alert().title('Error!').content('Connection issue with \''+add_donation_url+'\'. Please try again later.').ok('Ok');
 					$mdDialog.show(alert);
 				});
 
 
 			} else {
 				vm.is_processing = false;
+				vm.is_error = true;
 
 				var alert = $mdDialog.alert().title('Error!').content('Connection error. Please try again later.').ok('Ok');
 				$mdDialog.show(alert);
