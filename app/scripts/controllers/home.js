@@ -8,6 +8,12 @@
  * Controller of the donutApp
  */
 angular.module('donutApp')
-    .controller('HomeCtrl', function ($scope) {
+    .controller('HomeCtrl', ['UserService','$location', function (User, $location) {
+		var vm = this;
 
-    });
+		if(!User.checkLoggedIn()) {
+			$location.path('/login');
+		}
+
+		vm.is_poc = User.isPOC();
+    }]);

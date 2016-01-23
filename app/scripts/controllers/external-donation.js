@@ -12,5 +12,4 @@ angular.module('donutApp')
         var vm = this; //vm stands for view-model
         
 
-
   }]);

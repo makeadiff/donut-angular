@@ -23,7 +23,6 @@ angular
 	$routeProvider
 	  .when('/', {
 		templateUrl: 'views/home.html',
-		controller: 'HomeCtrl',
 		restricted : true,
 		title : 'Home'
 	  })
@@ -67,6 +66,11 @@ angular
 		restricted : true,
 		title: "Add External Donations"
 		})
+	  .when('/approvals', {
+		templateUrl: 'views/approvals.html',
+		restricted : true,
+		title: "Approve Donations"
+		})
 	  .when('/change-password', {
 		templateUrl: 'views/change-password.html',
 		controller: 'ChangePasswordCtrl',
@@ -78,6 +82,9 @@ angular
 	  });
   })
 	.run(['$location', '$rootScope', function($location, $rootScope) {
+		// $rootScope.base_url = 'http://localhost/Sites/community/makeadiff/makeadiff.in/apps/exdon/api/';
+		$rootScope.base_url = 'http://makeadiff.in/apps/exdon/api/';
+
 		$rootScope.$on('$routeChangeSuccess', function (event, current, previous) {
 			if(current.$$route && current.$$route.title)
 				$rootScope.title = current.$$route.title;

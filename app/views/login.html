@@ -2,8 +2,7 @@
 <div layout="column" layout-align="center center" ng-controller="LoginCtrl as loginCtrl" >
     <form name="loginForm" layout="column" ng-submit="loginForm.$valid && loginCtrl.loginCheck()" novalidate>
         <div layout="row" layout-align="center center">
-            <p ng-show="loginCtrl.login_invalid" style="color:red">Invalid Login</p>
-            <p ng-show="loginCtrl.poc_not_assigned" style="color:red">POC not assigned</p>
+            <p ng-show="loginCtrl.error_message" style="color:red">{{loginCtrl.error_message}}</p>
         </div>
 
         <md-input-container>

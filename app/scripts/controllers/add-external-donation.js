@@ -8,7 +8,7 @@
  * Controller of the donutApp
  */
 angular.module('donutApp')
-  .controller('AddExternalDonationCtrl', ['$http','$mdDialog','UserService','$location', '$routeParams', '$filter',function ($http,$mdDialog,User,$location, $routeParams, $filter) {
+  .controller('AddExternalDonationCtrl', ['$http','$mdDialog','UserService','$location', '$routeParams', '$filter', '$rootScope',function($http,$mdDialog,User,$location,$routeParams, $filter, $rootScope) {
 		var vm = this; //vm stands for view-model
 
 		//Initializing fields to be empty otherwise fields contain undefined.
@@ -19,9 +19,6 @@ angular.module('donutApp')
 		vm.donation.phone = "";
 		vm.donation.donation_type = $routeParams.donation_type;
 		vm.donation.created_at = new Date();
-
-		// vm.base_url = 'http://localhost/Sites/community/makeadiff/makeadiff.in/';
-		vm.base_url = 'http://makeadiff.in/';
 
 		//Initializing errors
 		vm.is_error = false;
@@ -75,24 +72,18 @@ angular.module('donutApp')
 
 			if(User.checkLoggedIn()) {
 				var fundraiser_id = User.getUserId();
-				var add_donation_url = vm.base_url + 'apps/exdon/api/add_donation.php';
 
 				$http({
 					method: 'POST',
-					url: add_donation_url,
-					withCredentials : true,
-					headers: {'Content-Type': 'application/x-www-form-urlencoded','Access-Control-Allow-Origin': 'Origin, X-Requested-With, Content-Type, Accept',
-						'Authorization' : 'Basic ' + window.btoa('mad:mad')},
+					url: $rootScope.base_url + 'donation/add',
+					headers: {'Content-Type': 'application/x-www-form-urlencoded'},
 					transformRequest: function(obj) {
 						var str = [];
-						for(var p in obj) {
-							str.push(encodeURIComponent(p) + '=' + encodeURIComponent(obj[p]));
-						}
-
+						for(var p in obj) { str.push(encodeURIComponent(p) + '=' + encodeURIComponent(obj[p])); }
 						return str.join('&');
 					},
-					data: {amount : vm.donation.amount, name : vm.donation.name, email : vm.donation.email,
-						phone : vm.donation.phone, fundraiser_id : fundraiser_id, 
+					data: {amount : vm.donation.amount, donor_name : vm.donation.name, donor_email : vm.donation.email,
+						donor_phone : vm.donation.phone, fundraiser_id : fundraiser_id, 
 						created_at : $filter("date")(vm.donation.created_at, "yyyy-MM-dd"),
 						donation_type : vm.donation.donation_type, format : 'json'}
 

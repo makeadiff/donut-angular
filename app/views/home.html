@@ -1,6 +1,10 @@
+<div layout="column" ng-controller="HomeCtrl as ctrl" layout-margin layout-fill layout-padding>
 <br>
 <div layout="column" layout-align="center center" layout-margin layout-padding >
     <div layout="row" layout-align="center center"> <md-button ng-href="#add-donation" class="md-raised md-primary" >Add Cash Donation</md-button></div>
     <div layout="row" layout-align="center center"> <md-button ng-href="#view-donation" class="md-raised md-primary" >View Donation</md-button></div>
 	<div layout="row" layout-align="center center"> <md-button ng-href="#external-donation" class="md-raised" >External Donation</md-button></div>
+
+	<div layout="row" layout-align="center center" ng-show="ctrl.is_poc"><br /><br /><md-button ng-href="#approvals" class="md-raised" >Approve Donations</md-button></div>
+</div>
 </div>

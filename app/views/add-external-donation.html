@@ -29,9 +29,9 @@
 		<input type="hidden" name="donation_type" value="{{addExDon.donation.donation_type}}" />
 	</form>
 
-	<div class="failsafe" ng-show="addExDon.is_error">
+	<!-- <div class="failsafe" ng-show="addExDon.is_error">
 		<a href="{{addExDon.base_url}}apps/donut/failsafe/external-donations.php?fundraiser_id={{addExDon.fundraiser_id}}">Failsafe</a>
-	</div>
+	</div> -->
 
 	<span ng-show="addExDon.phone_absent"><p class="error">Phone is a mandatory field</p></span>
 	<span ng-show="addExDon.email_absent"><p class="error">Email is a mandatory field</p></span>
