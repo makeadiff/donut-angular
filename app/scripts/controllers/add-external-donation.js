@@ -52,7 +52,7 @@ angular.module('donutApp')
 				return false;
 
 			} else if(vm.donation.amount.length !=0 && (isNaN(vm.donation.amount))) {
-				vm.phone_invalid = true;
+				vm.amount_invalid = true;
 				return false;
 
 			} else { // No errors.
