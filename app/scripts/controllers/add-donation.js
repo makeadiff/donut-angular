@@ -19,6 +19,7 @@ angular.module('donutApp')
 		vm.donation.email = "";
 		vm.donation.phone = "";
 		vm.donation.address = "";
+		vm.donation.comment = "";
 		vm.donation.eighty_g = "false";
 
 		//Initializing errors
@@ -69,7 +70,8 @@ angular.module('donutApp')
 						return str.join('&');
 					},
 					data: {amount : vm.donation.amount, donor_name : vm.donation.name, donor_email : vm.donation.email,
-						donor_phone : vm.donation.phone, eighty_g_required : vm.donation.eighty_g, address : vm.donation.address, fundraiser_id : fundraiser_id, 
+						donor_phone : vm.donation.phone, eighty_g_required : vm.donation.eighty_g, address : vm.donation.address, 
+						comment: vm.donation.comment, fundraiser_id : fundraiser_id, 
 						created_at : $filter("date")(vm.donation.created_at, "yyyy-MM-dd"), format : 'json'}
 
 				}).success(function (data) {
@@ -102,7 +104,12 @@ angular.module('donutApp')
 			vm.donation.email = "";
 			vm.donation.phone = "";
 			vm.donation.address = "";
+			vm.donation.comment = "";
 			vm.donation.eighty_g = "false";
+
+			//So that form is reset after submit
+			vm.donationForm.$setUntouched();
+			vm.donationForm.$setPristine();
 		};
 
   }]);

@@ -22,9 +22,14 @@
 		<input name="email" label="Email" ng-model="addDon.donation.email" type="email" type="email" required>
 		</md-input-container>
 
-		<md-input-container flex>
+<!--		<md-input-container flex>
 		<label>Donor Address</label>
 		<textarea name="address" label="Address" ng-model="addDon.donation.address" columns="5" md-maxlength="200"> </textarea>
+		</md-input-container>-->
+
+		<md-input-container>
+		<label>Comment</label>
+		<input name="comment" label="Comment" ng-model="addDon.donation.comment">
 		</md-input-container>
  
 		<md-radio-group layout="row" layout-align="start center" ng-model="addDon.donation.eighty_g">
