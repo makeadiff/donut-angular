@@ -9,36 +9,36 @@
  */
 angular.module('donutApp')
   .factory('UserService', ['$localStorage',function ($localStorage) {
-        var user = {};
+		var user = {};
 
-        user.setLoggedIn = function(user_data){
-            $localStorage.user_id = user_data.id;
-            $localStorage.user = user_data;
-            $localStorage.loggedIn = true;
-        };
+		user.setLoggedIn = function(user_data){
+			$localStorage.user_id = user_data.id;
+			$localStorage.user = user_data;
+			$localStorage.loggedIn = true;
+		};
 
-        user.checkLoggedIn = function(){
-            return $localStorage.loggedIn;
-        };
+		user.checkLoggedIn = function(){
+			return $localStorage.loggedIn;
+		};
 
-        user.getUserId = function(){
-            return $localStorage.user_id;
-        };
+		user.getUserId = function(){
+			return $localStorage.user_id;
+		};
 
-        user.isPOC = function() {
-            for(var role in $localStorage.user.roles) {
-                if(role == 9) {return true;}
-            }
+		user.isPOC = function() {
+			for(var role in $localStorage.user.roles) {
+				if(role == 9) {return true;}
+			}
 
-            return false;
-        };
+			return false;
+		};
 
-        user.unsetLoggedIn = function(){
-            $localStorage.user_id = 0;
-            $localStorage.user = {};
-            $localStorage.loggedIn = false;
-            return true;
-        };
+		user.unsetLoggedIn = function(){
+			$localStorage.user_id = 0;
+			$localStorage.user = {};
+			$localStorage.loggedIn = false;
+			return true;
+		};
 
-        return user;
+		return user;
   }]);

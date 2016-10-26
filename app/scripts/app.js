@@ -82,9 +82,9 @@ angular
 	  });
   })
 	.run(['$location', '$rootScope', function($location, $rootScope) {
-		// $rootScope.base_url = 'http://localhost/Sites/community/makeadiff/makeadiff.in/apps/exdon/api/';
-		//$rootScope.base_url = 'http://localhost/makeadiff.in/home/makeadiff/public_html/apps/exdon/api/';
-		$rootScope.base_url = 'http://makeadiff.in/apps/exdon/api/';
+		$rootScope.base_url = 'http://localhost/Sites/community/makeadiff/makeadiff.in/apps/exdon/api/';
+		// $rootScope.base_url = 'http://localhost/makeadiff.in/home/makeadiff/public_html/apps/exdon/api/';
+		// $rootScope.base_url = 'http://makeadiff.in/apps/exdon/api/';
 
 		$rootScope.$on('$routeChangeSuccess', function (event, current, previous) {
 			if(current.$$route && current.$$route.title)

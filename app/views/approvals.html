@@ -12,8 +12,8 @@
 			<tr><td class="md-body-2">Fundraiser Name</td><td>{{donation.user_name}}</td></tr>
 			<tr><td class="md-body-2">Amount</td><td>{{donation.amount}}</td></tr>
 			<tr><td class="md-body-2">Date</td><td>{{donation.created_at | dateToISO | date : 'MMM d, y'}}</td></tr>
-			<tr><td class="md-body-2">Status</td><td><strong>{{donation.donation_status}}</strong></td></tr>
-			<tr><td colspan="2"><md-button ng-disabled="donation.donation_status == 'APPROVED'" ng-click="ctrl.approveDonation(donation.id)" class="md-raised md-primary">Approve</md-button></td></tr>
+			<tr><td class="md-body-2">Status</td><td><strong>{{donation.donation_status | statusFormat}}</strong></td></tr>
+			<tr><td colspan="2"><md-button ng-disabled="donation.donation_status == 'APPROVED'" ng-click="ctrl.approveDonation(donation.id)" class="md-raised md-primary">Collected</md-button></td></tr>
 			</table>
 		</md-card>
 	</div>
