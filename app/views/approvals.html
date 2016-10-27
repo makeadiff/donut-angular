@@ -3,9 +3,10 @@
 	<span layout="row" ng-show="ctrl.is_processing" layout-align="center center"><br><br><br><md-progress-circular  md-mode="indeterminate"></md-progress-circular></span>
 
 	<span ng-show="ctrl.error" style="color:red;">{{ctrl.error}}</span>
-
+	
 	<div layout="row" layout-align="center center" ng-repeat="donation in ctrl.donations">
 		<md-card flex-gt-lg="30" flex="100">
+		<md-card-content> 
 			<table>
 			<tr><td class="md-body-2">ID</td><td>{{donation.id}}</td></tr>
 			<tr><td class="md-body-2">Donor Name</td><td>{{donation.donor_name}}</td></tr>
@@ -13,8 +14,10 @@
 			<tr><td class="md-body-2">Amount</td><td>{{donation.amount}}</td></tr>
 			<tr><td class="md-body-2">Date</td><td>{{donation.created_at | dateToISO | date : 'MMM d, y'}}</td></tr>
 			<tr><td class="md-body-2">Status</td><td><strong>{{donation.donation_status | statusFormat}}</strong></td></tr>
-			<tr><td colspan="2"><md-button ng-disabled="donation.donation_status == 'APPROVED'" ng-click="ctrl.approveDonation(donation.id)" class="md-raised md-primary">Collected</md-button></td></tr>
+			<tr><td colspan="2"><md-button	ng-disabled="donation.donation_status == 'APPROVED'" 
+											ng-click="ctrl.approveDonation(donation.id)" class="md-raised md-primary">Collected</md-button></td></tr>
 			</table>
 		</md-card>
+		</md-card-content>
 	</div>
 </div>

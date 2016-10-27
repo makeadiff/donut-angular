@@ -8,7 +8,8 @@
  * Controller of the donutApp
  */
 angular.module('donutApp')
-  .controller('ApprovalsCtrl', ['$http','$scope','$rootScope','$mdDialog','UserService','$location',function($http,$scope,$rootScope,$mdDialog,User, $location){
+  .controller('ApprovalsCtrl', ['$http','$scope','$rootScope','$mdDialog','UserService','$location', '$cookies',
+  			function($http,$scope,$rootScope,$mdDialog,User, $location, $cookies){
 		var vm = this;
 		vm.is_processing = true;
 		vm.error = "";
@@ -68,12 +69,24 @@ angular.module('donutApp')
 
 			var poc_id = User.getUserId();
 
+			// Show this only once per day
+			if($cookies.get('daily_confirmation')) {
+				vm.approveDonationCall(); 
+				return;
+			}
+			
 			var confirm = $mdDialog.confirm().title('Collected?')
 				.content('Please ensure that you have collected Rs. ' + vm.donations[donation_id].amount + ' from ' + vm.donations[donation_id].user_name + '. Press \'Yes\' if already collected. Press \'No\' if not collected yet.')
 				.ok('Yes').cancel('No');
-			$mdDialog.show(confirm).then(vm.approveDonationCall, function() {
+			$mdDialog.show(confirm).then(function() { // Yes
+				// No cookie - create cookie with one day expiry.
+				var expire_date = new Date();
+	  			expire_date.setDate(expire_date.getDate() + 1);
+				$cookies.put('daily_confirmation', '1', {'expires': expire_date});
+
+				vm.approveDonationCall();
+			}, function() { // No
 				vm.is_processing = false;
-				console.log("No");
 			});
 
 		}
@@ -130,4 +143,3 @@ angular.module('donutApp')
 		};
 	});
 
-	
