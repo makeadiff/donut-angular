@@ -14,11 +14,39 @@ angular.module('donutApp')
 
 		//Initializing fields to be empty otherwise fields contain undefined.
 		vm.donation = {};
-		vm.donation.name = "";
-		vm.donation.amount = "";
-		vm.donation.email = "";
-		vm.donation.phone = "";
-		vm.donation.address = "";
+
+		var params = $location.search();
+
+		if(params.donor_name != null) {
+			vm.donation.name = params.donor_name;
+		}else{
+			vm.donation.name = "";
+		}
+
+		if(params.donor_phone != null) {
+			vm.donation.phone = params.donor_phone;
+		}else{
+			vm.donation.phone = "";
+		}
+
+		if(params.donor_email != null) {
+			vm.donation.email = params.donor_email;
+		}else{
+			vm.donation.email = "";
+		}
+
+		if(params.donor_city != null) {
+			vm.donation.address = params.donor_city;
+		}else{
+			vm.donation.address = "";
+		}
+
+		if(params.amount != null) {
+			vm.donation.amount = params.amount;
+		}else{
+			vm.donation.amount = "";
+		}
+
 		vm.donation.comment = "";
 		vm.donation.eighty_g = "false";
 
@@ -84,6 +112,7 @@ angular.module('donutApp')
 						//insertDonation();
 
 					}else{
+
 						var confirm_dialog = $mdDialog.confirm().title('Confirm').content(data.error).ok('Yes').cancel('No');
 						$mdDialog.show(confirm_dialog).then(function() {
 							//insertDonation();
