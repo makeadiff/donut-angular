@@ -23,16 +23,13 @@ angular.module('donutApp')
 				method: 'GET',
 				url: $rootScope.base_url + "donation/get_donations_for_approval/" + poc_id,
 				headers: {'Content-Type': 'application/x-www-form-urlencoded'},
-				transformRequest: vm.transformRequest,
+				transformRequest: vm.transformRequest
 			}).success(function (data) {
 				vm.is_processing = false;
 
-				if(data.success) {
-					vm.donations = data.donations;
-				} else {
-					vm.error = data.error;
-				}
-
+				if(data.success) vm.donations = data.donations;
+				else vm.error = data.error;
+				
 			}).error(function (data) {
 				vm.is_processing = false;
 

@@ -21,7 +21,7 @@ angular.module('donutApp')
 
 			$http({
 				method: 'GET',
-				url: $rootScope.base_url + "donation/get_donations_for_approval/" + poc_id,
+				url: $rootScope.base_url + "donation/get_approved_donations/" + poc_id,
 				headers: {'Content-Type': 'application/x-www-form-urlencoded'},
 				transformRequest: function(obj) {
 					var str = [];
