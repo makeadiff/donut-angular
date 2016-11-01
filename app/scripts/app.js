@@ -71,6 +71,11 @@ angular
 		restricted : true,
 		title: "Approve Donations"
 		})
+	  .when('/approved-donations', {
+		templateUrl: 'views/approved-donations.html',
+		restricted : true,
+		title: "Approved Donations"
+		})
 	  .when('/change-password', {
 		templateUrl: 'views/change-password.html',
 		controller: 'ChangePasswordCtrl',
@@ -92,4 +97,30 @@ angular
 			else 
 				$rootScope.title = "Donut";
 		});
-	}]);
+	}])
+	.filter('dateToISO', function() {
+		return function(input) {
+			var t = input.split(/[- :]/); // Split timestamp into [ Y, M, D, h, m, s ]
+			var d = new Date(t[0], t[1]-1, t[2], t[3], t[4], t[5]); // Apply each element to the Date function
+			return d.toISOString();
+		};
+	})
+	.filter('statusFormat', function() {
+		// :TODO:
+		// Make a mapping of all the possible status and a text for it - rather than just a formatting.
+		// 
+		return function(input) {
+			input = input.replace(/[_\-]/g, ' ')		//Changes 'hello_cruel-world' to 'hello cruel world'
+				.replace(/([a-zA-Z])(\d)/g, '$1 $2')	//Changes 'no1' to 'no 1'
+				.replace(/([a-z])([A-Z])/g, '$1 $2');	//Changes 'helloWorld' to 'hello World'
+
+			var text = input.toLowerCase().split(' ').map(function(word) {
+					return word.replace(word[0], word[0].toUpperCase());
+				}).join(' ');
+
+			text = text.replace('Poc', 'POC').replace('Fc', 'Finance Fellow');
+
+			return text;
+		};
+	});;
+

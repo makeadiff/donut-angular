@@ -1,5 +1,5 @@
-<div layout="column" ng-controller="ApprovalsCtrl as ctrl" layout-margin layout-fill layout-padding>
-	<h3 align="center">Donations for Approval</h3>
+<div layout="column" ng-controller="ApprovedDonationsCtrl as ctrl" layout-margin layout-fill layout-padding>
+	<h3 align="center">Approved Donations</h3>
 	<span layout="row" ng-show="ctrl.is_processing" layout-align="center center"><br><br><br><md-progress-circular  md-mode="indeterminate"></md-progress-circular></span>
 
 	<span ng-show="ctrl.error" style="color:red;">{{ctrl.error}}</span>
@@ -14,8 +14,8 @@
 			<tr><td class="md-body-2">Amount</td><td>{{donation.amount}}</td></tr>
 			<tr><td class="md-body-2">Date</td><td>{{donation.created_at | dateToISO | date : 'MMM d, y'}}</td></tr>
 			<tr><td class="md-body-2">Status</td><td><strong>{{donation.donation_status | statusFormat}}</strong></td></tr>
-			<tr><td><md-button	ng-disabled="donation.donation_status == 'APPROVED'"
-											ng-click="ctrl.approveDonation(donation.id)" class="md-raised md-primary">Collected</md-button></td>
+			<tr><td><md-button 	ng-disabled="donation.donation_status == 'TO_BE_APPROVED_BY_POC'"
+								ng-click="ctrl.rejectDonation(donation.id)" class="md-raised md-primary">Didn't Receive the Money</md-button></td>
 					<td><md-button ng-click="ctrl.deleteDonation(donation.id)" class="md-raised md-warn">Mistaken Entry</md-button></td></tr>
 			</table>
 		</md-card>
