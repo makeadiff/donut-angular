@@ -25,6 +25,10 @@ angular.module('donutApp')
             return $localStorage.user_id;
         };
 
+        user.getUserName = function(){
+            return $localStorage.user.name;
+        };
+
         user.isPOC = function() {
             for(var role in $localStorage.user.roles) {
                 if(role == 9) {return true;}
