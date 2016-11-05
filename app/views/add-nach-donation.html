@@ -1,0 +1,44 @@
+<div layout="column" layout-align="center center" ng-controller="AddNACHDonationCtrl as addExDon" >
+    <span ng-show="addExDon.is_processing"><br><md-progress-circular  md-mode="indeterminate"></md-progress-circular></span>
+
+    <form name="addExDon.donationForm" layout="column" ng-submit="addExDon.addExDonation()" novalidate>
+        <md-input-container>
+            <label>Donor Name</label>
+            <input name="name" label="Name" ng-model="addExDon.donation.name" required>
+        </md-input-container>
+
+        <md-input-container>
+            <label>Monthly Donation Amount</label>
+            <input name="amount" label="Amount" ng-model="addExDon.donation.amount" required>
+        </md-input-container>
+
+        <md-input-container>
+            <label>Donor Phone</label>
+            <input name="phone" label="Phone" ng-model="addExDon.donation.phone" required >
+        </md-input-container>
+
+        <md-input-container>
+            <label>Donor Email</label>
+            <input name="email" label="Email" ng-model="addExDon.donation.email" type="email" type="email" required>
+        </md-input-container>
+
+        <p>Donated on Date :</p>
+        <md-datepicker ng-model="addExDon.donation.created_at" md-placeholder="Donated On"></md-datepicker>
+        <br>
+
+        <md-button ng-disabled="!addExDon.validCheck() || addExDon.is_processing" class="md-raised" type="submit">Submit</md-button>
+
+    </form>
+
+    <!-- <div class="failsafe" ng-show="addExDon.is_error">
+        <a href="{{addExDon.base_url}}apps/donut/failsafe/external-donations.php?fundraiser_id={{addExDon.fundraiser_id}}">Failsafe</a>
+    </div> -->
+
+    <span ng-show="addExDon.phone_absent"><p class="error">Phone is a mandatory field</p></span>
+    <span ng-show="addExDon.email_absent"><p class="error">Email is a mandatory field</p></span>
+    <span ng-show="addExDon.email_invalid"><p class="error">Invalid Email</p></span>
+    <span ng-show="addExDon.phone_invalid"><p class="error">Phone number should be 10 digits in length</p></span>
+    <span ng-show="addExDon.amount_invalid"><p class="error">Amount is not a valid number</p></span>
+</div>
+
+

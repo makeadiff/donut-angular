@@ -8,7 +8,7 @@
 		</md-input-container>
 
 		<md-input-container>
-		<label>Donated Amount(If ECS, enter yearly amount)</label>
+		<label>Donated Amount(For NACH, enter yearly amount)</label>
 		<input name="amount" label="Amount" ng-model="addExDon.donation.amount" required>
 		</md-input-container>
 
@@ -26,7 +26,8 @@
 		<br>
 
 		<md-button ng-disabled="!addExDon.validCheck() || addExDon.is_processing" class="md-raised" type="submit">Submit</md-button>
-		<input type="hidden" name="donation_type" value="{{addExDon.donation.donation_type}}" />
+
+		<input type="hidden" name="donation_type" value="nach" />
 	</form>
 
 	<!-- <div class="failsafe" ng-show="addExDon.is_error">

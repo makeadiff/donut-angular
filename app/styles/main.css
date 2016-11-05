@@ -35,3 +35,7 @@ div .md-button.md-primary span {
 .md-datepicker-calendar {
 	background-color: #fff;
 }
+
+div .white span {
+	color: white !important;
+}

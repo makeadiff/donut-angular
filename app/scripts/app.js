@@ -66,6 +66,18 @@ angular
 		restricted : true,
 		title: "Add External Donations"
 		})
+	  .when('/add-nach-donation', {
+		templateUrl: 'views/add-nach-donation.html',
+		controller: 'AddNACHDonationCtrl',
+		restricted : true,
+		title: "Add NACH Donation"
+		})
+	  .when('/add-online-donation', {
+		templateUrl: 'views/add-online-donation.html',
+		controller: 'AddOnlineDonationCtrl',
+		restricted : true,
+		title: "Add Online Donation"
+		})
 	  .when('/approvals', {
 		templateUrl: 'views/approvals.html',
 		restricted : true,
@@ -90,6 +102,8 @@ angular
 		$rootScope.base_url = 'http://localhost/Sites/community/makeadiff/makeadiff.in/apps/exdon/api/';
 		// $rootScope.base_url = 'http://localhost/makeadiff.in/home/makeadiff/public_html/apps/exdon/api/';
 		// $rootScope.base_url = 'http://makeadiff.in/apps/exdon/api/';
+		
+		$rootScope.user_name = User.getUserName();
 		
 		$rootScope.transformRequest = function(obj) {
 			var str = [];

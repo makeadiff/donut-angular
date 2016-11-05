@@ -17,7 +17,7 @@ angular.module('donutApp')
 		vm.donation.amount = "";
 		vm.donation.email = "";
 		vm.donation.phone = "";
-		vm.donation.donation_type = $routeParams.donation_type;
+		vm.donation.donation_type = "";
 		vm.donation.created_at = new Date();
 
 		//Initializing errors
@@ -120,6 +120,10 @@ angular.module('donutApp')
 			vm.donation.phone = "";
 			vm.donation.donation_type = "";
 			vm.donation.created_at = "";
+
+			//So that form is reset after submit
+			vm.donationForm.$setUntouched();
+			vm.donationForm.$setPristine();
 		};
 
   }]);
