@@ -23,11 +23,7 @@ angular.module('donutApp')
 				method: 'GET',
 				url: $rootScope.base_url + "donation/get_approved_donations/" + poc_id,
 				headers: {'Content-Type': 'application/x-www-form-urlencoded'},
-				transformRequest: function(obj) {
-					var str = [];
-					for(var p in obj) { str.push(encodeURIComponent(p) + '=' + encodeURIComponent(obj[p])); }
-					return str.join('&');
-				}
+				transformRequest: $rootScope.transformRequest,
 			}).success(function (data) {
 				vm.is_processing = false;
 
@@ -39,35 +35,20 @@ angular.module('donutApp')
 
 			}).error(function (data) {
 				vm.is_processing = false;
-
-				var alert = $mdDialog.alert().title('Error!').content('Connection error. Please try again later.').ok('Ok');
-				$mdDialog.show(alert);
-				$location.path('/');
+				return $rootScope.errorMessage();
 			});
 
 		} else {
-			vm.is_processing = false;
-
-			var alert = $mdDialog.alert().title('Error!').content('Connection error. Please login again.').ok('Ok');
-			$mdDialog.show(alert);
-			$location.path('/login');
-
+			vm.errorMessage("/login", "Connection error. Please login once again.");
 		};
 
-		vm.transformRequest = function(obj) {
-			var str = [];
-			for(var p in obj) { str.push(encodeURIComponent(p) + '=' + encodeURIComponent(obj[p])); }
-			return str.join('&');
-		}
-
 		vm.userCheck = function() {
-			if(!User.checkLoggedIn()) {
-				var alert = $mdDialog.alert().title('Error!').content('Connection error. Please try again later.').ok('Ok');
-				$mdDialog.show(alert);
-				$location.path('/login');
-				return false;
-			}
+			if(!User.checkLoggedIn()) return vm.errorMessage("/login", "Please login to use this feature.");
 			return true;
+		}
+		vm.errorMessage = function (redirect_to, error_message) {
+			vm.is_processing = false;
+			return $rootScope.errorMessage(redirect_to, error_message);
 		}
 
 		vm.rejectDonation = function(donation_id) {
@@ -91,7 +72,7 @@ angular.module('donutApp')
 				method: 'GET',
 				url: $rootScope.base_url + "donation/" + donation_id + '/reject/' + poc_id,
 				headers: {'Content-Type': 'application/x-www-form-urlencoded'},
-				transformRequest: vm.transformRequest
+				transformRequest: $rootScope.transformRequest
 			}).success(function (data) {
 				vm.is_processing = false;
 				vm.donations[data.donation_id].donation_status = 'TO_BE_APPROVED_BY_POC';
@@ -100,7 +81,7 @@ angular.module('donutApp')
 				var alert = $mdDialog.alert().title('Success!').content('Donation Recjected. ID: ' + data.donation_id).ok('Ok');
 				$mdDialog.show(alert);
 
-			}).error(vm.connectionError);
+			}).error(vm.errorMessage);
 		}
 
 		// Delete donation option.
@@ -123,7 +104,7 @@ angular.module('donutApp')
 				method: 'GET',
 				url: $rootScope.base_url + "donation/" + donation_id + '/delete/' + poc_id,
 				headers: {'Content-Type': 'application/x-www-form-urlencoded'},
-				transformRequest: vm.transformRequest
+				transformRequest: $rootScope.transformRequest
 			}).success(function (data) {
 				vm.is_processing = false;
 				vm.donations[data.donation_id].donation_status = 'DELETED';
@@ -132,16 +113,7 @@ angular.module('donutApp')
 				var alert = $mdDialog.alert().title('Success!').content('Donation Deleted. ID: ' + data.donation_id).ok('Ok');
 				$mdDialog.show(alert);
 
-			}).error(vm.connectionError);
-		}
-
-
-		vm.connectionError = function (data) {
-			vm.is_processing = false;
-			vm.active_donation_id = 0;
-
-			var alert = $mdDialog.alert().title('Error!').content('Connection error. Please try again later.').ok('Ok');
-			$mdDialog.show(alert);
+			}).error(vm.errorMessage);
 		}
   }]);
 

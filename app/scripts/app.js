@@ -90,6 +90,23 @@ angular
 		$rootScope.base_url = 'http://localhost/Sites/community/makeadiff/makeadiff.in/apps/exdon/api/';
 		// $rootScope.base_url = 'http://localhost/makeadiff.in/home/makeadiff/public_html/apps/exdon/api/';
 		// $rootScope.base_url = 'http://makeadiff.in/apps/exdon/api/';
+		
+		$rootScope.transformRequest = function(obj) {
+			var str = [];
+			for(var p in obj) { str.push(encodeURIComponent(p) + '=' + encodeURIComponent(obj[p])); }
+			return str.join('&');
+		}
+
+		$rootScope.errorMessage = function(redirect_to, error_message) {
+			if(!error_message) error_message = 'Connection error. Please try again later.';
+			var alert = $mdDialog.alert().title('Error!').content(error_message).ok('Ok');
+			$mdDialog.show(alert);
+
+			if(!redirect_to.match(/^\/.+/)) redirect_to = '/';
+			$location.path(redirect_to);
+
+			return false;
+		}
 
 		$rootScope.$on('$routeChangeSuccess', function (event, current, previous) {
 			if(current.$$route && current.$$route.title)

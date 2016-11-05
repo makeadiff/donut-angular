@@ -9,7 +9,7 @@
  */
 angular.module('donutApp')
   .controller('ApprovalsCtrl', ['$http','$scope','$rootScope','$mdDialog','UserService','$location', '$cookies',
-  			function($http,$scope,$rootScope,$mdDialog,User, $location, $cookies){
+  			function($http,$scope,$rootScope,$mdDialog,User, $location, $cookies) {
 		var vm = this;
 		vm.is_processing = true;
 		vm.error = "";
@@ -21,60 +21,37 @@ angular.module('donutApp')
 
 			$http({
 				method: 'GET',
-				url: $rootScope.base_url + "donation/get_donations_for_approval/" + poc_id,
+				url: $rootScope.base_url + "donation/get_donations_for_poc_approval/" + poc_id,
 				headers: {'Content-Type': 'application/x-www-form-urlencoded'},
-				transformRequest: vm.transformRequest
+				transformRequest: $rootScope.transformRequest
 			}).success(function (data) {
 				vm.is_processing = false;
 
 				if(data.success) vm.donations = data.donations;
 				else vm.error = data.error;
-				
-			}).error(function (data) {
+			}).error(function() {
 				vm.is_processing = false;
-
-				var alert = $mdDialog.alert().title('Error!').content('Connection error. Please try again later.').ok('Ok');
-				$mdDialog.show(alert);
-				$location.path('/');
+				return $rootScope.errorMessage();
 			});
 
 		} else {
-			vm.is_processing = false;
-
-			var alert = $mdDialog.alert().title('Error!').content('Connection error. Please login again.').ok('Ok');
-			$mdDialog.show(alert);
-			$location.path('/login');
+			vm.errorMessage("/login", "Connection error. Please login once again.")
 		};
 
-		vm.transformRequest = function(obj) {
-			var str = [];
-			for(var p in obj) { str.push(encodeURIComponent(p) + '=' + encodeURIComponent(obj[p])); }
-			return str.join('&');
-		}
-
 		vm.userCheck = function() {
-			if(!User.checkLoggedIn()) {
-				var alert = $mdDialog.alert().title('Error!').content('Connection error. Please try again later.').ok('Ok');
-				$mdDialog.show(alert);
-				$location.path('/login');
-				return false;
-			}
+			if(!User.checkLoggedIn()) return vm.errorMessage("/login", "Please login to use this feature.");
 			return true;
 		}
-
+		vm.errorMessage = function (redirect_to, error_message) {
+			vm.is_processing = false;
+			return $rootScope.errorMessage(redirect_to, error_message);
+		}
 
 		vm.approveDonation = function(donation_id) {
 			vm.is_processing = true;
 			vm.active_donation_id = donation_id;
 
-			if(!User.checkLoggedIn()) {
-				vm.is_processing = false;
-
-				var alert = $mdDialog.alert().title('Error!').content('Connection error. Please try again later.').ok('Ok');
-				$mdDialog.show(alert);
-				$location.path('/login');
-				return;
-			}
+			if(!vm.userCheck()) return false;
 
 			var poc_id = User.getUserId();
 
@@ -106,7 +83,7 @@ angular.module('donutApp')
 				method: 'GET',
 				url: $rootScope.base_url + "donation/" + donation_id + '/approve/' + poc_id,
 				headers: {'Content-Type': 'application/x-www-form-urlencoded'},
-				transformRequest: vm.transformRequest
+				transformRequest: $rootScope.transformRequest
 			}).success(function (data) {
 				vm.is_processing = false;
 				vm.donations[data.donation_id].donation_status = 'APPROVED';
@@ -115,14 +92,7 @@ angular.module('donutApp')
 				var alert = $mdDialog.alert().title('Success!').content('Donation Approved. ID: ' + data.donation_id).ok('Ok');
 				$mdDialog.show(alert);
 
-			}).error(function (data) {
-				vm.is_processing = false;
-				vm.active_donation_id = 0;
-
-				var alert = $mdDialog.alert().title('Error!').content('Connection error. Please try again later.').ok('Ok');
-				$mdDialog.show(alert);
-
-			});
+			}).error(vm.errorMessage);
 		}
 
 
@@ -146,7 +116,7 @@ angular.module('donutApp')
 				method: 'GET',
 				url: $rootScope.base_url + "donation/" + donation_id + '/delete/' + poc_id,
 				headers: {'Content-Type': 'application/x-www-form-urlencoded'},
-				transformRequest: vm.transformRequest
+				transformRequest: $rootScope.transformRequest
 			}).success(function (data) {
 				vm.is_processing = false;
 				vm.donations[data.donation_id].donation_status = 'DELETED';
@@ -155,6 +125,6 @@ angular.module('donutApp')
 				var alert = $mdDialog.alert().title('Success!').content('Donation Deleted. ID: ' + data.donation_id).ok('Ok');
 				$mdDialog.show(alert);
 
-			}).error(vm.connectionError);
+			}).error(vm.errorMessage);
 		}
   }]);
