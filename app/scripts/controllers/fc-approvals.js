@@ -2,13 +2,13 @@
 
 /**
  * @ngdoc function
- * @name donutApp.controller:ApprovalsCtrl
+ * @name donutApp.controller:FcApprovalsCtrl
  * @description
- * # ApprovalsCtrl
+ * # FcApprovalsCtrl
  * Controller of the donutApp
  */
 angular.module('donutApp')
-  .controller('ApprovalsCtrl', ['$http','$scope','$rootScope','$mdDialog','UserService','$location', '$cookies',
+  .controller('FcApprovalsCtrl', ['$http','$scope','$rootScope','$mdDialog','UserService','$location', '$cookies',
   			function($http,$scope,$rootScope,$mdDialog,User, $location, $cookies) {
 		var vm = this;
 		vm.is_processing = true;
@@ -17,11 +17,11 @@ angular.module('donutApp')
 		vm.active_donation_id = 0;
 
 		if(User.checkLoggedIn()) {
-			var poc_id = User.getUserId();
+			var fc_id = User.getUserId();
 
 			$http({
 				method: 'GET',
-				url: $rootScope.base_url + "donation/get_donations_for_poc_approval/" + poc_id,
+				url: $rootScope.base_url + "donation/get_donations_for_fc_approval/" + fc_id,
 				headers: {'Content-Type': 'application/x-www-form-urlencoded'},
 				transformRequest: $rootScope.transformRequest
 			}).success(function (data) {
@@ -53,7 +53,7 @@ angular.module('donutApp')
 
 			if(!vm.userCheck()) return false;
 
-			var poc_id = User.getUserId();
+			var fc_id = User.getUserId();
 
 			// Show this only once per day
 			if($cookies.get('daily_confirmation')) {
@@ -81,7 +81,7 @@ angular.module('donutApp')
 			var donation_id = vm.active_donation_id;
 			$http({
 				method: 'GET',
-				url: $rootScope.base_url + "donation/" + donation_id + '/poc_approve/' + poc_id,
+				url: $rootScope.base_url + "donation/" + donation_id + '/fc_approve/' + fc_id,
 				headers: {'Content-Type': 'application/x-www-form-urlencoded'},
 				transformRequest: $rootScope.transformRequest
 			}).success(function (data) {
@@ -110,11 +110,11 @@ angular.module('donutApp')
 		vm.deleteDonationCall = function() {
 			vm.is_processing = true;
 			var donation_id = vm.active_donation_id;
-			var poc_id = User.getUserId();
+			var fc_id = User.getUserId();
 
 			$http({
 				method: 'GET',
-				url: $rootScope.base_url + "donation/" + donation_id + '/delete/' + poc_id,
+				url: $rootScope.base_url + "donation/" + donation_id + '/delete/' + fc_id,
 				headers: {'Content-Type': 'application/x-www-form-urlencoded'},
 				transformRequest: $rootScope.transformRequest
 			}).success(function (data) {

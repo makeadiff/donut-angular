@@ -88,6 +88,16 @@ angular
 		restricted : true,
 		title: "Approved Donations"
 		})
+	  .when('/fc-approvals', {
+		templateUrl: 'views/fc-approvals.html',
+		restricted : true,
+		title: "Approve Donations"
+		})
+	  .when('/fc-approved-donations', {
+		templateUrl: 'views/fc-approved-donations.html',
+		restricted : true,
+		title: "Approved Donations"
+		})
 	  .when('/change-password', {
 		templateUrl: 'views/change-password.html',
 		controller: 'ChangePasswordCtrl',
@@ -98,7 +108,7 @@ angular
 		redirectTo: '/'
 	  });
   })
-	.run(['$location', '$rootScope', function($location, $rootScope) {
+	.run(['$location', '$rootScope', 'UserService', function($location, $rootScope, User) {
 		$rootScope.base_url = 'http://localhost/Sites/community/makeadiff/makeadiff.in/apps/exdon/api/';
 		// $rootScope.base_url = 'http://localhost/makeadiff.in/home/makeadiff/public_html/apps/exdon/api/';
 		// $rootScope.base_url = 'http://makeadiff.in/apps/exdon/api/';

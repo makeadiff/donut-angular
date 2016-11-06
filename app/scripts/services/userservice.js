@@ -26,12 +26,21 @@ angular.module('donutApp')
 		};
 
 		user.getUserName = function(){
+			if(typeof $localStorage.user == "undefined") return false;
 			return $localStorage.user.name;
 		};
 
 		user.isPOC = function() {
 			for(var role in $localStorage.user.roles) {
 				if(role == 9) {return true;}
+			}
+
+			return false;
+		};
+
+		user.isFC = function() {
+			for(var role in $localStorage.user.roles) {
+				if(role == 8) {return true;}
 			}
 
 			return false;

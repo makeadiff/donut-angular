@@ -16,4 +16,5 @@ angular.module('donutApp')
 		}
 
 		vm.is_poc = User.isPOC();
+		vm.is_fc = User.isFC();
     }]);
