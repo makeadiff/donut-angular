@@ -15,13 +15,17 @@ angular.module('donutApp')
 		vm.error = "";
 		vm.donations = {};
 		vm.active_donation_id = 0;
+		vm.poc_or_fc = "poc"; // This keeps a track of what kind of volunteer the current user. poc / fc
+		// Every Ajax call will be have this variable - to change the result depending on the current user.
 
 		if(User.checkLoggedIn()) {
-			var poc_id = User.getUserId();
+			var user_id = User.getUserId();
+			if(User.isPOC()) vm.poc_or_fc = "poc";
+			else vm.poc_or_fc = "fc";
 
 			$http({
 				method: 'GET',
-				url: $rootScope.base_url + "donation/get_donations_for_poc_approval/" + poc_id,
+				url: $rootScope.base_url + "donation/get_donations_for_"+vm.poc_or_fc+"_approval/" + user_id,
 				headers: {'Content-Type': 'application/x-www-form-urlencoded'},
 				transformRequest: $rootScope.transformRequest
 			}).success(function (data) {
@@ -53,7 +57,7 @@ angular.module('donutApp')
 
 			if(!vm.userCheck()) return false;
 
-			var poc_id = User.getUserId();
+			var user_id = User.getUserId();
 
 			// Show this only once per day
 			if($cookies.get('daily_confirmation')) {
@@ -81,7 +85,7 @@ angular.module('donutApp')
 			var donation_id = vm.active_donation_id;
 			$http({
 				method: 'GET',
-				url: $rootScope.base_url + "donation/" + donation_id + '/poc_approve/' + poc_id,
+				url: $rootScope.base_url + "donation/" + donation_id + '/'+vm.poc_or_fc+'_approve/' + user_id,
 				headers: {'Content-Type': 'application/x-www-form-urlencoded'},
 				transformRequest: $rootScope.transformRequest
 			}).success(function (data) {
@@ -110,11 +114,11 @@ angular.module('donutApp')
 		vm.deleteDonationCall = function() {
 			vm.is_processing = true;
 			var donation_id = vm.active_donation_id;
-			var poc_id = User.getUserId();
+			var user_id = User.getUserId();
 
 			$http({
 				method: 'GET',
-				url: $rootScope.base_url + "donation/" + donation_id + '/delete/' + poc_id,
+				url: $rootScope.base_url + "donation/" + donation_id + '/delete/' + user_id,
 				headers: {'Content-Type': 'application/x-www-form-urlencoded'},
 				transformRequest: $rootScope.transformRequest
 			}).success(function (data) {

@@ -15,13 +15,18 @@ angular.module('donutApp')
 		vm.error = "";
 		vm.donations = {};
 		vm.active_donation_id = 0;
+		vm.poc_or_fc = "poc";
 
 		if(User.checkLoggedIn()) {
 			var poc_id = User.getUserId();
+			if(User.isPOC()) vm.poc_or_fc = "poc";
+			else vm.poc_or_fc = "fc";
+
+			console.log(vm.poc_or_fc);
 
 			$http({
 				method: 'GET',
-				url: $rootScope.base_url + "donation/get_approved_donations/" + poc_id,
+				url: $rootScope.base_url + "donation/get_" + vm.poc_or_fc + "_approved_donations/" + poc_id,
 				headers: {'Content-Type': 'application/x-www-form-urlencoded'},
 				transformRequest: $rootScope.transformRequest,
 			}).success(function (data) {
@@ -70,7 +75,7 @@ angular.module('donutApp')
 
 			$http({
 				method: 'GET',
-				url: $rootScope.base_url + "donation/" + donation_id + '/reject/' + poc_id,
+				url: $rootScope.base_url + "donation/" + donation_id + '/'+vm.poc_or_fc+'_reject/' + poc_id,
 				headers: {'Content-Type': 'application/x-www-form-urlencoded'},
 				transformRequest: $rootScope.transformRequest
 			}).success(function (data) {
