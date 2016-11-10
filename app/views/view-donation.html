@@ -1,7 +1,10 @@
 <div layout="column" ng-controller="ViewDonationCtrl as cm" layout-margin layout-fill layout-padding>
+	<h3 align="center">My Donations</h3>
 	<span layout="row" ng-show="cm.is_processing" layout-align="center center"><br><br><br><md-progress-circular  md-mode="indeterminate"></md-progress-circular></span>
+
 	<div layout="row" layout-align="center center" ng-repeat="donation in cm.donations">
 		<md-card flex-gt-lg="30" flex="100">
+		<md-card-content>
 			<table>
 			<tr><td class="md-body-2">ID</td><td>{{donation.id}}</td></tr>
 			<tr><td class="md-body-2">Name</td><td>{{donation.donour.first_name}} {{donation.donour.last_name}}</td></tr>
@@ -9,6 +12,7 @@
 			<tr><td class="md-body-2">Date</td><td>{{donation.created_at | date : 'MMM d, y'}}</td></tr>
 			<tr><td class="md-body-2">Status</td><td>{{donation.donation_status}}</td></tr>
 			</table>
+		</md-card-content>
 		</md-card>
 	</div>
 </div>

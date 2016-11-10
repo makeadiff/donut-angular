@@ -41,7 +41,15 @@ angular.module('donutApp')
 					loginCtrl.is_processing = false;
 					User.setLoggedIn(data.user);
 
-					$location.path('/');
+					var params = $location.search();
+
+					if(params.path != null) {
+						$location.path("/" + params.path);
+					}else{
+						$location.path('/');
+					}
+
+
 				}
 
 			}).error(function(data){

@@ -84,7 +84,7 @@ angular.module('donutApp')
 
 		vm.addDonation = function() {
 			vm.is_processing = true;
-
+			console.log(vm);
 			if(User.checkLoggedIn()) {
 				var fundraiser_id = User.getUserId();
 
@@ -153,6 +153,21 @@ angular.module('donutApp')
 						var alert = $mdDialog.alert().title('Success!').content('Donation successfully added. ID: ' + data.donation.id).ok('Ok');
 						$mdDialog.show(alert);
 
+						//Initializing fields to be empty otherwise fields contain undefined.
+						vm.donation = {};
+						vm.donation.name = "";
+						vm.donation.amount = "";
+						vm.donation.email = "";
+						vm.donation.phone = "";
+						vm.donation.address = "";
+						vm.donation.comment = "";
+						vm.donation.eighty_g = "false";
+
+						//So that form is reset after submit
+						vm.donationForm.$setUntouched();
+						vm.donationForm.$setPristine();
+
+
 					}).error(function (data) {
 						vm.is_processing = false;
 						vm.is_error = true;
@@ -171,19 +186,7 @@ angular.module('donutApp')
 
 			};
 
-			//Initializing fields to be empty otherwise fields contain undefined.
-			vm.donation = {};
-			vm.donation.name = "";
-			vm.donation.amount = "";
-			vm.donation.email = "";
-			vm.donation.phone = "";
-			vm.donation.address = "";
-			vm.donation.comment = "";
-			vm.donation.eighty_g = "false";
 
-			//So that form is reset after submit
-			vm.donationForm.$setUntouched();
-			vm.donationForm.$setPristine();
 		};
 
   }]);
