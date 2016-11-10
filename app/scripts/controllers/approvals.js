@@ -52,7 +52,6 @@ angular.module('donutApp')
 		}
 
 		vm.approveDonation = function(donation_id) {
-			vm.is_processing = true;
 			vm.active_donation_id = donation_id;
 
 			if(!vm.userCheck()) return false;
@@ -69,14 +68,13 @@ angular.module('donutApp')
 				.content('Please ensure that you have collected Rs. ' + vm.donations[donation_id].amount + ' from ' + vm.donations[donation_id].user_name + '. Press \'Yes\' if already collected. Press \'No\' if not collected yet.')
 				.ok('Yes').cancel('No');
 			$mdDialog.show(confirm).then(function() { // Yes
+				vm.is_processing = true;
 				// No cookie - create cookie with one day expiry.
 				var expire_date = new Date();
 	  			expire_date.setDate(expire_date.getDate() + 1);
 				$cookies.put('daily_confirmation', '1', {'expires': expire_date});
 
 				vm.approveDonationCall();
-			}, function() { // No
-				vm.is_processing = false;
 			});
 
 		}

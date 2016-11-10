@@ -8,7 +8,7 @@
  * Controller of the donutApp
  */
 angular.module('donutApp')
-  .controller('ViewDonationCtrl',['$http','$mdDialog','UserService','$location', function ($http,$mdDialog,User,$location) {
+  .controller('ViewDonationCtrl',['$http','$mdDialog','UserService','$location', '$rootScope', function ($http,$mdDialog,User,$location,$rootScope) {
 		var vm = this;
 
 		vm.is_processing = true;
@@ -18,20 +18,17 @@ angular.module('donutApp')
 			var fundraiser_id = User.getUserId();
 
 			$http({
-				method: 'POST',
-				url: 'http://cfrapp.makeadiff.in:3000/mobile_reports/vol_report.json',
-				withCredentials : true,
-				headers: {'Content-Type': 'application/x-www-form-urlencoded','Access-Control-Allow-Origin': 'Origin, X-Requested-With, Content-Type, Accept',
-					'Authorization' : 'Basic ' + window.btoa('mad:mad')},
-				transformRequest: function(obj) {
-					var str = [];
-					for(var p in obj) { str.push(encodeURIComponent(p) + '=' + encodeURIComponent(obj[p])); }
-					return str.join('&');
-				},
-				data: {id : fundraiser_id}
+				method: 'GET',
+				// url: 'http://cfrapp.makeadiff.in:3000/mobile_reports/vol_report.json',
+				// withCredentials : true,
+				// headers: {'Content-Type': 'application/x-www-form-urlencoded','Access-Control-Allow-Origin': 'Origin, X-Requested-With, Content-Type, Accept',
+				// 	'Authorization' : 'Basic ' + window.btoa('mad:mad')},
+				// 	data: {id : fundraiser_id}
 
+				url: $rootScope.base_url + "donation/get_donations_by_user/" + fundraiser_id,
+				transformRequest: $rootScope.transformRequest,
 			}).success(function (data) {
-				vm.donations = data;
+				vm.donations = data.donations;
 				vm.is_processing = false;
 
 			}).error(function (data) {
@@ -40,7 +37,6 @@ angular.module('donutApp')
 				var alert = $mdDialog.alert().title('Error!').content('Connection error. Please try again later.').ok('Ok');
 				$mdDialog.show(alert);
 				$location.path('/');
-
 			});
 
 		} else {

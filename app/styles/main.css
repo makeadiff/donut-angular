@@ -39,3 +39,7 @@ div .md-button.md-primary span {
 div .white span {
 	color: white !important;
 }
+
+button[disabled] span {
+	color: #666 !important;
+}

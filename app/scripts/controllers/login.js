@@ -23,11 +23,7 @@ angular.module('donutApp')
 				method: 'POST',
 				url: $rootScope.base_url + 'user/login',
 				headers: {'Content-Type': 'application/x-www-form-urlencoded'},
-				transformRequest: function(obj) {
-					var str = [];
-					for(var p in obj){ str.push(encodeURIComponent(p) + '=' + encodeURIComponent(obj[p]));}
-					return str.join('&');
-				},
+				transformRequest: $rootScope.transformRequest,
 				data: {phone: loginCtrl.login.phone, password: loginCtrl.login.password, format: 'xml'}
 			}).success(function (data) {
 				if(data.error) {
