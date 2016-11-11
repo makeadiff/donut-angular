@@ -5,8 +5,6 @@
  * @name donutApp
  * @description
  * # donutApp
- *
- * Main module of the application.
  */
 angular
   .module('donutApp', [
