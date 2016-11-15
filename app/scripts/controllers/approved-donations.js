@@ -105,7 +105,7 @@ angular.module('donutApp')
 
 			$http({
 				method: 'GET',
-				url: $rootScope.base_url + "donation/" + donation_id + '/delete/' + poc_id,
+				url: $rootScope.base_url + "donation/" + donation_id + '/delete/' + poc_id + '/' + vm.poc_or_fc,
 				headers: {'Content-Type': 'application/x-www-form-urlencoded'},
 				transformRequest: $rootScope.transformRequest
 			}).success(function (data) {

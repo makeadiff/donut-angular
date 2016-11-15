@@ -106,7 +106,7 @@ angular
 		redirectTo: '/'
 	  });
   })
-	.run(['$location', '$rootScope', 'UserService', function($location, $rootScope, User) {
+	.run(['$location', '$rootScope', '$mdDialog', 'UserService', function($location, $rootScope, $mdDialog, User) {
 		$rootScope.base_url = 'http://localhost/Sites/community/makeadiff/makeadiff.in/apps/exdon/api/';
 		// $rootScope.base_url = 'http://localhost/makeadiff.in/home/makeadiff/public_html/apps/exdon/api/';
 		// $rootScope.base_url = 'http://makeadiff.in/apps/exdon/api/';

@@ -60,7 +60,7 @@ angular.module('donutApp')
 
 			// Show this only once per day
 			if($cookies.get('daily_confirmation')) {
-				vm.approveDonationCall(); 
+				vm.approveDonationCall();
 				return;
 			}
 			
@@ -87,6 +87,8 @@ angular.module('donutApp')
 				headers: {'Content-Type': 'application/x-www-form-urlencoded'},
 				transformRequest: $rootScope.transformRequest
 			}).success(function (data) {
+				if(data.error) return vm.errorMessage("/approvals", data.error);
+
 				vm.is_processing = false;
 				vm.donations[data.donation_id].donation_status = 'APPROVED';
 				vm.active_donation_id = 0;
@@ -116,10 +118,12 @@ angular.module('donutApp')
 
 			$http({
 				method: 'GET',
-				url: $rootScope.base_url + "donation/" + donation_id + '/delete/' + user_id,
+				url: $rootScope.base_url + "donation/" + donation_id + '/delete/' + user_id + '/' + vm.poc_or_fc,
 				headers: {'Content-Type': 'application/x-www-form-urlencoded'},
 				transformRequest: $rootScope.transformRequest
 			}).success(function (data) {
+				if(data.error) return vm.errorMessage("/approvals", data.error);
+
 				vm.is_processing = false;
 				vm.donations[data.donation_id].donation_status = 'DELETED';
 				vm.active_donation_id = 0;
