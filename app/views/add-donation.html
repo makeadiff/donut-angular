@@ -14,12 +14,12 @@
 
 		<md-input-container>
 		<label>Donor Phone</label>
-		<input name="phone" label="Phone" ng-model="addDon.donation.phone" required >
+		<input name="phone" label="Phone" ng-model="addDon.donation.phone" required type="tel" md-maxlength="10" md-minlength="10" ng-pattern="/^[\d \-\+\.]+$/">
 		</md-input-container>
 
 		<md-input-container>
 		<label>Donor Email</label>
-		<input name="email" label="Email" ng-model="addDon.donation.email" type="email" type="email" required>
+		<input name="email" label="Email" ng-model="addDon.donation.email" type="email" required>
 		</md-input-container>
 
 		<md-input-container flex>

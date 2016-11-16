@@ -37,6 +37,11 @@ angular.module('donutApp')
 					loginCtrl.is_processing = false;
 					User.setLoggedIn(data.user);
 
+					// Update name at the top right corner
+					$rootScope.user_name = User.getUserName();
+					if(User.isPOC()) $rootScope.user_name += "(Coach)";
+					if(User.isFC()) $rootScope.user_name += "(Finance Fellow)";
+
 					var params = $location.search();
 
 					if(params.path != null) {

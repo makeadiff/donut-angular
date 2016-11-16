@@ -93,7 +93,9 @@ angular.module('donutApp')
 				vm.donations[data.donation_id].donation_status = 'APPROVED';
 				vm.active_donation_id = 0;
 
-				var alert = $mdDialog.alert().title('Success!').content('Donation Approved. ID: ' + data.donation_id).ok('Ok');
+				var from = vm.donations[data.donation_id].user_name;
+
+				var alert = $mdDialog.alert().title('Success!').content('Donation of Rs '+vm.donations[data.donation_id].amount+' from \''+ from +'\' has been approved(ID: ' + data.donation_id + ')').ok('Ok');
 				$mdDialog.show(alert);
 
 			}).error(vm.errorMessage);
@@ -128,7 +130,7 @@ angular.module('donutApp')
 				vm.donations[data.donation_id].donation_status = 'DELETED';
 				vm.active_donation_id = 0;
 
-				var alert = $mdDialog.alert().title('Success!').content('Donation Deleted. ID: ' + data.donation_id).ok('Ok');
+				var alert = $mdDialog.alert().title('Success!').content('Donation Deleted(ID: ' + data.donation_id + ')').ok('Ok');
 				$mdDialog.show(alert);
 
 			}).error(vm.errorMessage);

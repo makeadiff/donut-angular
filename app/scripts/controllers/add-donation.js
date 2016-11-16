@@ -19,31 +19,31 @@ angular.module('donutApp')
 
 		if(params.donor_name != null) {
 			vm.donation.name = params.donor_name;
-		}else{
+		} else {
 			vm.donation.name = "";
 		}
 
 		if(params.donor_phone != null) {
 			vm.donation.phone = params.donor_phone;
-		}else{
+		} else {
 			vm.donation.phone = "";
 		}
 
 		if(params.donor_email != null) {
 			vm.donation.email = params.donor_email;
-		}else{
+		} else {
 			vm.donation.email = "";
 		}
 
 		if(params.donor_city != null) {
 			vm.donation.address = params.donor_city;
-		}else{
+		} else {
 			vm.donation.address = "";
 		}
 
 		if(params.amount != null) {
 			vm.donation.amount = params.amount;
-		}else{
+		} else {
 			vm.donation.amount = "";
 		}
 
@@ -84,7 +84,6 @@ angular.module('donutApp')
 
 		vm.addDonation = function() {
 			vm.is_processing = true;
-			console.log(vm);
 			if(User.checkLoggedIn()) {
 				var fundraiser_id = User.getUserId();
 
@@ -134,7 +133,7 @@ angular.module('donutApp')
 
 					}).success(function (data) {
 						vm.is_processing = false;
-						var alert = $mdDialog.alert().title('Success!').content('Donation successfully added. ID: ' + data.donation.id).ok('Ok');
+						var alert = $mdDialog.alert().title('Success!').content('Donation of Rs '+vm.donation.amount+' from donor \''+vm.donation.name+'\' added succesfully(Donation ID: ' + data.donation.id + ')').ok('Ok');
 						$mdDialog.show(alert);
 
 						//Initializing fields to be empty otherwise fields contain undefined.

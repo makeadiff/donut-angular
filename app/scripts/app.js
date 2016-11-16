@@ -112,7 +112,12 @@ angular
 		// $rootScope.base_url = 'http://makeadiff.in/apps/exdon/api/';
 		// $rootScope.base_url = 'http://makeadiff.in/apps/exdon-beta/api/';
 		
-		$rootScope.user_name = User.getUserName();
+		if(User.getUserName()) {
+			$rootScope.user_name = User.getUserName();
+
+			if(User.isPOC()) $rootScope.user_name += "(Coach)";
+			if(User.isFC()) $rootScope.user_name += "(Finance Fellow)";
+		}
 		
 		$rootScope.transformRequest = function(obj) {
 			var str = [];
