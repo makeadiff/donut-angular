@@ -5,8 +5,6 @@
  * @name donutApp
  * @description
  * # donutApp
- *
- * Main module of the application.
  */
 angular
   .module('donutApp', [
@@ -108,11 +106,11 @@ angular
 		redirectTo: '/'
 	  });
   })
-	.run(['$location', '$rootScope', 'UserService', function($location, $rootScope, User) {
-		//$rootScope.base_url = 'http://localhost/Sites/community/makeadiff/makeadiff.in/apps/exdon/api/';
-		//$rootScope.base_url = 'http://localhost/makeadiff.in/home/makeadiff/public_html/apps/exdon/api/';
+	.run(['$location', '$rootScope', '$mdDialog', 'UserService', function($location, $rootScope, $mdDialog, User) {
+		$rootScope.base_url = 'http://localhost/Sites/community/makeadiff/makeadiff.in/apps/exdon/api/';
+		// $rootScope.base_url = 'http://localhost/makeadiff.in/home/makeadiff/public_html/apps/exdon/api/';
 		// $rootScope.base_url = 'http://makeadiff.in/apps/exdon/api/';
-		$rootScope.base_url = 'http://makeadiff.in/apps/exdon-beta/api/';
+		// $rootScope.base_url = 'http://makeadiff.in/apps/exdon-beta/api/';
 		
 		$rootScope.user_name = User.getUserName();
 		

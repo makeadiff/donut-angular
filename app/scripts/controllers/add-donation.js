@@ -88,31 +88,21 @@ angular.module('donutApp')
 			if(User.checkLoggedIn()) {
 				var fundraiser_id = User.getUserId();
 
-
 				//Validate donation
 				$http({
 					method: 'POST',
 					url: $rootScope.base_url + 'donation/validate',
 					headers: {'Content-Type': 'application/x-www-form-urlencoded'},
-					transformRequest: function(obj) {
-						var str = [];
-						for(var p in obj) { str.push(encodeURIComponent(p) + '=' + encodeURIComponent(obj[p])); }
-						return str.join('&');
-					},
+					transformRequest: $rootScope.transformRequest,
 					data: {amount : vm.donation.amount, donor_name : vm.donation.name, donor_email : vm.donation.email,
 						donor_phone : vm.donation.phone, eighty_g_required : vm.donation.eighty_g, address : vm.donation.address,
 						comment: vm.donation.comment, fundraiser_id : fundraiser_id,
 						created_at : $filter("date")(vm.donation.created_at, "yyyy-MM-dd"), format : 'json'}
 
 				}).success(function (data) {
-
-					console.log(data);
 					if(data.success){
-
 						insertDonation();
-
-					}else{
-
+					} else {
 						var confirm_dialog = $mdDialog.confirm().title('Confirm').content(data.error).ok('Yes').cancel('No');
 						$mdDialog.show(confirm_dialog).then(function() {
 							insertDonation();
@@ -131,17 +121,12 @@ angular.module('donutApp')
 				});
 
 
-
 				var insertDonation = function(){
 					$http({
 						method: 'POST',
 						url: $rootScope.base_url + 'donation/add',
 						headers: {'Content-Type': 'application/x-www-form-urlencoded'},
-						transformRequest: function(obj) {
-							var str = [];
-							for(var p in obj) { str.push(encodeURIComponent(p) + '=' + encodeURIComponent(obj[p])); }
-							return str.join('&');
-						},
+						transformRequest: $rootScope.transformRequest,
 						data: {amount : vm.donation.amount, donor_name : vm.donation.name, donor_email : vm.donation.email,
 							donor_phone : vm.donation.phone, eighty_g_required : vm.donation.eighty_g, address : vm.donation.address,
 							comment: vm.donation.comment, fundraiser_id : fundraiser_id,
@@ -149,7 +134,6 @@ angular.module('donutApp')
 
 					}).success(function (data) {
 						vm.is_processing = false;
-						console.log(data);
 						var alert = $mdDialog.alert().title('Success!').content('Donation successfully added. ID: ' + data.donation.id).ok('Ok');
 						$mdDialog.show(alert);
 

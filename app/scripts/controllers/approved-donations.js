@@ -22,8 +22,6 @@ angular.module('donutApp')
 			if(User.isPOC()) vm.poc_or_fc = "poc";
 			else vm.poc_or_fc = "fc";
 
-			console.log(vm.poc_or_fc);
-
 			$http({
 				method: 'GET',
 				url: $rootScope.base_url + "donation/get_" + vm.poc_or_fc + "_approved_donations/" + poc_id,
@@ -107,7 +105,7 @@ angular.module('donutApp')
 
 			$http({
 				method: 'GET',
-				url: $rootScope.base_url + "donation/" + donation_id + '/delete/' + poc_id,
+				url: $rootScope.base_url + "donation/" + donation_id + '/delete/' + poc_id + '/' + vm.poc_or_fc,
 				headers: {'Content-Type': 'application/x-www-form-urlencoded'},
 				transformRequest: $rootScope.transformRequest
 			}).success(function (data) {

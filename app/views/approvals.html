@@ -14,9 +14,10 @@
 			<tr><td class="md-body-2">Amount</td><td>{{donation.amount}}</td></tr>
 			<tr><td class="md-body-2">Date</td><td>{{donation.created_at | dateToISO | date : 'MMM d, y'}}</td></tr>
 			<tr><td class="md-body-2">Status</td><td><strong>{{donation.donation_status | statusFormat}}</strong></td></tr>
-			<tr><td><md-button	ng-disabled="donation.donation_status == 'APPROVED'"
-											ng-click="ctrl.approveDonation(donation.id)" class="md-raised md-primary">Collected</md-button></td>
-					<td><md-button ng-click="ctrl.deleteDonation(donation.id)" class="md-raised md-warn">Mistaken Entry</md-button></td></tr>
+			<tr><td><md-button ng-disabled="donation.donation_status == 'APPROVED' || donation.donation_status == 'DELETED'"
+							ng-click="ctrl.approveDonation(donation.id)" class="md-raised md-primary">Collected</md-button></td>
+				<td><md-button ng-disabled="donation.donation_status == 'DELETED'" 
+							ng-click="ctrl.deleteDonation(donation.id)" class="md-raised md-warn">Mistaken Entry</md-button></td></tr>
 			</table>
 		</md-card>
 		</md-card-content>

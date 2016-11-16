@@ -31,6 +31,9 @@ div .md-button.md-primary span {
 .md-dialog-container .md-button.md-primary span {
 	color: #000;
 }
+.md-button.md-warn {
+	color: #fff !important;
+}
 
 .md-datepicker-calendar {
 	background-color: #fff;
@@ -38,4 +41,8 @@ div .md-button.md-primary span {
 
 div .white span {
 	color: white !important;
+}
+
+button[disabled] span {
+	color: #666 !important;
 }
