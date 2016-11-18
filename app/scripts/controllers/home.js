@@ -17,4 +17,11 @@ angular.module('donutApp')
 
 		vm.is_poc = User.isPOC();
 		vm.is_fc = User.isFC();
+
+		vm.approve = false;
+		var params = $location.search();
+		if(params.approve != null) {
+			vm.approve = params.approve;
+		}
+
     }]);

@@ -15,6 +15,8 @@ module.exports = function (grunt) {
   // Time how long tasks take. Can help when optimizing build times
   require('time-grunt')(grunt);
 
+  grunt.loadNpmTasks('grunt-ssh-deploy');
+
   // Configurable paths for the application
   var appConfig = {
     app: require('./bower.json').appPath || 'app',
@@ -26,6 +28,37 @@ module.exports = function (grunt) {
 
     // Project settings
     yeoman: appConfig,
+    secret: grunt.file.readJSON('secret.json'),
+
+    environments: {
+      options: {
+        local_path: 'dist',
+        deploy_path: '/home/makeadiff/public_html/'
+      },
+      staging: {
+          options: {
+              host: '<%= secret.staging.host %>',
+              username: '<%= secret.staging.username %>',
+              password: '<%= secret.staging.password %>',
+              port: '<%= secret.staging.port %>',
+              debug: true,
+              releases_to_keep: '3',
+              release_subdir: "apps/donut-beta/",
+              current_symlink: 'apps/donut-beta'
+          }
+      },
+      production: {
+          options: {
+              host: '<%= secret.production.host %>',
+              username: '<%= secret.production.username %>',
+              password: '<%= secret.production.password %>',
+              port: '<%= secret.production.port %>',
+              releases_to_keep: '5',
+              release_subdir: 'donut',
+              current_symlink: 'donut'
+          }
+      }
+    },
 
     // Watches files for changes and runs tasks based on the changed files
     watch: {

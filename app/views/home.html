@@ -1,13 +1,13 @@
 <div layout="column" ng-controller="HomeCtrl as ctrl" layout-margin layout-fill layout-padding>
 <br>
 <div layout="column" layout-align="center center" layout-margin layout-padding >
-    <div layout="row" layout-align="center center"> <md-button ng-href="#add-donation" class="md-raised md-primary" >Add Cash/Cheque Donation</md-button></div>
-    <div layout="row" layout-align="center center"> <md-button ng-href="#add-nach-donation" class="md-raised md-primary" >Add NACH Donation</md-button></div>
-    <div layout="row" layout-align="center center"> <md-button ng-href="#add-online-donation" class="md-raised md-primary" >Add Online Donation</md-button></div>
-    <div layout="row" layout-align="center center"> <md-button ng-href="#view-donation" class="md-raised" >View My Donations</md-button></div>
+    <div layout="row" layout-align="center center"><md-button ng-href="#add-donation" class="md-raised md-primary" >Add Cash/Cheque Donation</md-button></div>
+    <div layout="row" layout-align="center center"><md-button ng-href="#add-nach-donation" class="md-raised md-primary" >Add NACH Donation</md-button></div>
+    <div layout="row" layout-align="center center"><md-button ng-href="#add-online-donation" class="md-raised md-primary" >Add Online Donation</md-button></div>
+    <div layout="row" layout-align="center center"><md-button ng-href="#view-donation" class="md-raised" >View My Donations</md-button></div>
 
-	<div layout="row" layout-align="center center" ng-show="ctrl.is_poc || ctrl.is_fc"><br /><br /><md-button ng-href="#approvals" class="md-raised">Approve Donations</md-button></div>
-	<div layout="row" layout-align="center center" ng-show="ctrl.is_poc || ctrl.is_fc"><br /><br /><md-button ng-href="#approved-donations" class="md-raised">List Approved Donations</md-button></div>
+	<div layout="row" layout-align="center center" ng-show="ctrl.approve && (ctrl.is_poc || ctrl.is_fc)"><md-button ng-href="#approvals" class="md-raised">Approve Donations</md-button></div>
+	<div layout="row" layout-align="center center" ng-show="ctrl.approve && (ctrl.is_poc || ctrl.is_fc)"><md-button ng-href="#approved-donations" class="md-raised">List Approved Donations</md-button></div>
 <!-- 
 	<div layout="row" layout-align="center center" ng-show="ctrl.is_fc"><br /><br /><md-button ng-href="#fc-approvals" class="md-raised">Approve Donations</md-button></div>
 	<div layout="row" layout-align="center center" ng-show="ctrl.is_fc"><br /><br /><md-button ng-href="#fc-approved-donations" class="md-raised">List Approved Donations</md-button></div> -->
