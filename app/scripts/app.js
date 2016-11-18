@@ -86,16 +86,6 @@ angular
 		restricted : true,
 		title: "Approved Donations"
 		})
-	  .when('/fc-approvals', {
-		templateUrl: 'views/fc-approvals.html',
-		restricted : true,
-		title: "Approve Donations"
-		})
-	  .when('/fc-approved-donations', {
-		templateUrl: 'views/fc-approved-donations.html',
-		restricted : true,
-		title: "Approved Donations"
-		})
 	  .when('/change-password', {
 		templateUrl: 'views/change-password.html',
 		controller: 'ChangePasswordCtrl',
