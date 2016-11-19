@@ -72,7 +72,7 @@ angular.module('donutApp')
                 vm.email_absent = true;
                 return false;
 
-            } else if(vm.donation.phone.length != 10 || (isNaN(vm.donation.phone))) {
+            } else if(vm.donation.phone.length < 10 || vm.donation.phone.length > 15) {
                 vm.phone_invalid = true;
                 return false;
 

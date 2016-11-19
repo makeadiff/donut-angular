@@ -11,7 +11,9 @@
 			<tr><td class="md-body-2">ID</td><td>{{donation.id}}</td></tr>
 			<tr><td class="md-body-2">Donor Name</td><td>{{donation.donor_name}} {{donation.donour.last_name}}</td></tr>
 			<tr><td class="md-body-2">Amount</td><td>{{donation.amount}}</td></tr>
-			<tr><td class="md-body-2">Date</td><td>{{donation.created_at | date : 'MMM d, y'}}</td></tr>
+			<tr ng-show="donation.donation_type && donation.donation_type != 'GEN'"><td class="md-body-2">Donation Type</td>
+				<td><strong>{{donation.donation_type | statusFormat}}</strong></td></tr>
+			<tr><td class="md-body-2">Date</td><td>{{donation.created_at | dateToISO | date : 'MMM d, y'}}</td></tr>
 			<tr><td class="md-body-2">Status</td><td><strong>{{donation.donation_status | statusFormat}}</strong></td></tr>
 			</table>
 		</md-card-content>

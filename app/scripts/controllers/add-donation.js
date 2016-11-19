@@ -65,7 +65,7 @@ angular.module('donutApp')
 			} else if(parseInt(vm.donation.amount) > 200 && vm.donation.phone == "" && vm.donation.email == "") {
 				vm.phone_email_absent = true;
 				return false;
-			} else if(vm.donation.phone.length !=0 && (isNaN(vm.donation.phone))) {
+			} else if(vm.donation.phone.length < 10 || vm.donation.phone.length > 15) {
 				vm.phone_invalid = true;
 				return false;
 			} else if(vm.donation.amount.length !=0 && (isNaN(vm.donation.amount))) {

@@ -14,7 +14,7 @@
 
 		<md-input-container>
 		<label>Donor Phone</label>
-		<input name="phone" label="Phone" ng-model="addDon.donation.phone" required type="tel" md-maxlength="10" md-minlength="15" ng-pattern="/^[\d \-\+\.]+$/">
+		<input name="phone" label="Phone" ng-model="addDon.donation.phone" required type="tel" md-minlength="10" md-maxlength="15" ng-pattern="/^[\d \-\+\.]{10,15}$/">
 		</md-input-container>
 
 		<md-input-container>
@@ -44,7 +44,7 @@
 	</form>
 
 	<span ng-show="addDon.phone_email_absent"><p class="error">If amount is greater than Rs. 200, then either phone or email is compulsory</p></span>
-	<span ng-show="addDon.phone_invalid"><p class="error">Phone number should be 10 digits in length</p></span>
+	<span ng-show="addDon.phone_invalid"><p class="error">Phone number should be 10 to 15 digits in length</p></span>
 	<span ng-show="addDon.amount_invalid"><p class="error">Amount is not a valid number</p></span>
 </div>
 

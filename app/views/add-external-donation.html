@@ -14,7 +14,7 @@
 
 		<md-input-container>
 		<label>Donor Phone</label>
-		<input name="phone" label="Phone" ng-model="addExDon.donation.phone" required  type="tel" md-maxlength="10" md-minlength="15" ng-pattern="/^[\d \-\+\.]+$/">
+		<input name="phone" label="Phone" ng-model="addExDon.donation.phone" required type="tel" md-minlength="10" md-maxlength="15" ng-pattern="/^[\d \-\+\.]{10,15}$/">
 		</md-input-container>
 
 		<md-input-container>
@@ -37,7 +37,7 @@
 	<span ng-show="addExDon.phone_absent"><p class="error">Phone is a mandatory field</p></span>
 	<span ng-show="addExDon.email_absent"><p class="error">Email is a mandatory field</p></span>
 	<span ng-show="addExDon.email_invalid"><p class="error">Invalid Email</p></span>
-	<span ng-show="addExDon.phone_invalid"><p class="error">Phone number should be 10 digits in length</p></span>
+	<span ng-show="addExDon.phone_invalid"><p class="error">Phone number should be 10 to 15 digits in length</p></span>
 	<span ng-show="addExDon.amount_invalid"><p class="error">Amount is not a valid number</p></span>
 </div>
 

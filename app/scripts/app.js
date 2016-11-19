@@ -141,10 +141,37 @@ angular
 		};
 	})
 	.filter('statusFormat', function() {
-		// :TODO:
-		// Make a mapping of all the possible status and a text for it - rather than just a formatting.
-		// 
+		// A mapping of all the possible status and a text for it - rather than just a formatting.
+		var mapping = {
+			'ecs' : 'ECS',
+			'globalgiving' : 'Global Giving',
+			'online' : 'Online',
+			'other' : 'Other',
+			'nach' : 'NACH',
+			'global_giving' : 'Global Giving',
+			'mad_website' : 'Website',
+			'give_india' : 'Give India',
+			'DEPOSIT COMPLETE' : 'Deposit Complete',
+			'DEPOSIT_PENDING' : 'Deposit Pending',
+			'HAND_OVER_TO_FC_PENDING' : 'Collection by Finance Fellow Pending',
+			'RECEIPT PENDING' : 'Receipt Pending',
+			'RECEIPT SENT' : 'Receipt Sent',
+			'TO_BE_APPROVED_BY_POC' : 'To be collected by Coach'
+		};
+
 		return function(input) {
+			var text = input;
+			for(var replace_this in mapping) {
+				var replace_that = mapping[replace_this];
+
+				text = text.replace(replace_this, replace_that);
+			}
+			return text;
+		}
+	})
+	.filter('textFormat', function() {
+		return function(input) {
+			if(!input) return "";
 			input = input.replace(/[_\-]/g, ' ')		//Changes 'hello_cruel-world' to 'hello cruel world'
 				.replace(/([a-zA-Z])(\d)/g, '$1 $2')	//Changes 'no1' to 'no 1'
 				.replace(/([a-z])([A-Z])/g, '$1 $2');	//Changes 'helloWorld' to 'hello World'
@@ -153,9 +180,7 @@ angular
 					return word.replace(word[0], word[0].toUpperCase());
 				}).join(' ');
 
-			text = text.replace('Poc', 'POC').replace('Fc', 'Finance Fellow');
-
 			return text;
 		};
-	});;
+	});
 
