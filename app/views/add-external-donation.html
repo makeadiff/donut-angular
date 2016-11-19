@@ -14,7 +14,7 @@
 
 		<md-input-container>
 		<label>Donor Phone</label>
-		<input name="phone" label="Phone" ng-model="addExDon.donation.phone" required >
+		<input name="phone" label="Phone" ng-model="addExDon.donation.phone" required  type="tel" md-maxlength="10" md-minlength="15" ng-pattern="/^[\d \-\+\.]+$/">
 		</md-input-container>
 
 		<md-input-container>

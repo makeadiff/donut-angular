@@ -7,16 +7,16 @@
 
         <md-input-container>
         <label>Phone / Email</label>
-        <input name="name" label="Name" ng-model="loginCtrl.login.phone" required autofocus>
+        <input id="name" name="name" label="Name" ng-model="loginCtrl.login.phone" required autofocus>
         </md-input-container>
 
         <md-input-container>
         <label>Password</label>
-        <input name="password" label="Password" ng-model="loginCtrl.login.password" required type="password">
+        <input id="password" name="password" label="Password" ng-model="loginCtrl.login.password" required type="password">
         </md-input-container>
 
         <br>
-        <md-button ng-disabled="loginForm.$invalid" class="md-raised" type="submit">Login</md-button>
+        <md-button id="action" ng-disabled="loginForm.$invalid" class="md-raised" type="submit">Login</md-button>
 
     </form>
     <span ng-show="loginCtrl.is_processing"><br><md-progress-circular  md-mode="indeterminate"></md-progress-circular></span>

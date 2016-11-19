@@ -4,6 +4,7 @@
   "dependencies": {},
   "devDependencies": {
     "chai": "^3.5.0",
+    "chai-as-promised": "^6.0.0",
     "grunt": "^0.4.1",
     "grunt-autoprefixer": "^0.7.3",
     "grunt-build-control": "^0.2.2",
