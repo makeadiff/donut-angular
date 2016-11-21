@@ -57,9 +57,12 @@ angular.module('donutApp')
 		vm.rejectDonation = function(donation_id) {
 			if(!vm.userCheck()) return false;
 			vm.active_donation_id = donation_id;
+
+			var donation_source = vm.donations[donation_id].user_name;
+			if(vm.poc_or_fc == "fc") donation_source = vm.donations[donation_id].poc_name;
 			
 			var confirm = $mdDialog.confirm().title('Reject Donation?')
-				.content('Are you sure you want to reject the donation of Rs. ' + vm.donations[donation_id].amount + ' from ' + vm.donations[donation_id].user_name)
+				.content("Are you sure you didn't Rs." + vm.donations[donation_id].amount + " from " + donation_source + "?")
 				.ok('Yes').cancel('No');
 			$mdDialog.show(confirm).then(vm.rejectDonationCall, function() { // No
 				

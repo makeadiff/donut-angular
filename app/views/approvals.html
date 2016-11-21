@@ -16,7 +16,7 @@
 			<tr><td class="md-body-2">Status</td><td><strong>{{donation.donation_status | statusFormat}}</strong></td></tr>
 			<tr ng-show="ctrl.poc_or_fc == 'fc'"><td class="md-body-2">Coach Name</td><td>{{donation.poc_name}}</td></tr>
 			<tr><td><md-button ng-disabled="donation.donation_status == 'APPROVED' || donation.donation_status == 'DELETED'"
-							ng-click="ctrl.approveDonation(donation.id)" class="md-raised md-primary">Collected</md-button></td>
+							ng-click="ctrl.approveDonation(donation.id)" class="md-raised md-primary">{{ ctrl.poc_or_fc == 'fc' ? 'Deposited' : 'Collected' }}</md-button></td>
 				<td><md-button ng-disabled="donation.donation_status == 'DELETED'" 
 							ng-click="ctrl.deleteDonation(donation.id)" class="md-raised md-warn">Mistaken Entry</md-button></td></tr>
 			</table>

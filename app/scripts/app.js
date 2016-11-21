@@ -152,7 +152,7 @@ angular
 			'mad_website' : 'Website',
 			'give_india' : 'Give India',
 			'DEPOSIT COMPLETE' : 'Deposit Complete',
-			'DEPOSIT_PENDING' : 'Deposit Pending',
+			'DEPOSIT_PENDING' : 'Deposited', // 'Deposit Pending',
 			'HAND_OVER_TO_FC_PENDING' : 'Collection by Finance Fellow Pending',
 			'RECEIPT PENDING' : 'Receipt Pending',
 			'RECEIPT SENT' : 'Receipt Sent',
