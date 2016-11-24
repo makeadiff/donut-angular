@@ -9,7 +9,7 @@
 
 		<md-input-container>
 		<label>Donated Amount</label>
-		<input name="amount" label="Amount" ng-model="addDon.donation.amount" required>
+		<input name="amount" label="Amount" ng-model="addDon.donation.amount" required ng-pattern="/^\d+$/">
 		</md-input-container>
 
 		<md-input-container>
@@ -40,7 +40,7 @@
 
 		<br>
 
-		<md-button ng-disabled="!addDon.validCheck() || addDon.is_processing" class="md-raised" type="submit">Submit</md-button>
+		<md-button id="action" ng-disabled="!addDon.validCheck() || addDon.is_processing" class="md-raised" type="submit">Submit</md-button>
 	</form>
 
 	<span ng-show="addDon.phone_email_absent"><p class="error">If amount is greater than Rs. 200, then either phone or email is compulsory</p></span>

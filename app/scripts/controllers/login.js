@@ -49,8 +49,6 @@ angular.module('donutApp')
 					}else{
 						$location.path('/');
 					}
-
-
 				}
 
 			}).error(function(data){
