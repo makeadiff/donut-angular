@@ -1,6 +1,8 @@
 // Created using http://www.protractortest.org/#/tutorial
+var skip = false;
+
 describe('Donut Tests', function() {
-	if(0) {
+	if(!skip) {
 	it('shows an error if password is wrong', function() {
 		browser.get('http://localhost/Sites/community/makeadiff/makeadiff.in/apps/donut/app/#/login');
 		expect(browser.getTitle()).toEqual('Login');
