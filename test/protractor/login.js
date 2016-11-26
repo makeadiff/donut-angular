@@ -1,5 +1,5 @@
 // Created using http://www.protractortest.org/#/tutorial
-var skip = false;
+var skip = true;
 
 describe('Donut Tests', function() {
 	if(!skip) {

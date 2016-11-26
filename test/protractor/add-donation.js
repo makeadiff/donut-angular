@@ -2,7 +2,7 @@
 // var db_connection = new ConnectDatabase();
 // db = db_connection.connection;
 // db.connect();
-var skip = false;
+var skip = true;
 
 // Created using http://www.protractortest.org/#/tutorial
 describe('Donut Tests', function() {
