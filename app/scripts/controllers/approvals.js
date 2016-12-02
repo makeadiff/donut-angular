@@ -63,9 +63,13 @@ angular.module('donutApp')
 				vm.approveDonationCall();
 				return;
 			}
+
+			var message = '';
+			if(vm.poc_or_fc == 'fc') message = 'Please ensure that you have deposited Rs. ' + vm.donations[donation_id].amount + ' from ' + vm.donations[donation_id].poc_name + '. Press \'Yes\' if already deposited. Press \'No\' if not depsoited yet.';
+			else message = 'Please ensure that you have collected Rs. ' + vm.donations[donation_id].amount + ' from ' + vm.donations[donation_id].user_name + '. Press \'Yes\' if already collected. Press \'No\' if not collected yet.';
 			
 			var confirm = $mdDialog.confirm().title('Collected?')
-				.content('Please ensure that you have collected Rs. ' + vm.donations[donation_id].amount + ' from ' + vm.donations[donation_id].user_name + '. Press \'Yes\' if already collected. Press \'No\' if not collected yet.')
+				.content(message)
 				.ok('Yes').cancel('No');
 			$mdDialog.show(confirm).then(function() { // Yes
 				vm.is_processing = true;
@@ -90,17 +94,10 @@ angular.module('donutApp')
 				if(data.error) return vm.errorMessage("/approvals", data.error);
 
 				vm.is_processing = false;
-				vm.donations[data.donation_id].donation_status = 'APPROVED';
+				vm.donations[data.donation_id].donation_status = 'DONE';
 				vm.active_donation_id = 0;
-
-				var from = vm.donations[data.donation_id].user_name;
-
-				var alert = $mdDialog.alert().title('Success!').content('Donation of Rs '+vm.donations[data.donation_id].amount+' from \''+ from +'\' has been approved(ID: ' + data.donation_id + ')').ok('Ok');
-				$mdDialog.show(alert);
-
 			}).error(vm.errorMessage);
 		}
-
 
 		// Delete donation option.
 		vm.deleteDonation = function(donation_id) {

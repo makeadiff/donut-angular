@@ -1,4 +1,11 @@
-<div layout="column" ng-controller="HomeCtrl as ctrl" layout-margin layout-fill layout-padding>
+<div ng-controller="HomeCtrl as ctrl">
+
+<div layout="column" layout-align="center center">
+	<p  class="info" ng-show="ctrl.coach_assigned == false && !ctrl.is_poc && !ctrl.is_fc"><img src="images/silk_icons/error.png" /> You have <strong>not been assigned a coach</strong> for CFR. You won't be able to hand over the collected cash/cheques until you have been assigned a coach. Please <strong>contact your Finance Fellow</strong> to resolve this.</p>
+	<p  class="info" ng-show="ctrl.coach_assigned != false && !ctrl.is_poc && !ctrl.is_fc"><img src="images/silk_icons/information.png" /> Your coach is <strong>{{ctrl.coach_assigned.first_name}}</strong>({{ctrl.coach_assigned.phone_no}}). Contact your coach to handover your collected cash/cheques.</p>
+</div>
+
+<div layout="column" layout-margin layout-fill layout-padding>
 <br>
 <div layout="column" layout-align="center center" layout-margin layout-padding >
     <div layout="row" layout-align="center center"><md-button ng-href="#add-donation" class="md-raised md-primary" >Add Cash/Cheque Donation</md-button></div>
@@ -6,7 +13,11 @@
     <div layout="row" layout-align="center center"><md-button ng-href="#add-online-donation" class="md-raised md-primary" >Add Online Donation</md-button></div>
     <div layout="row" layout-align="center center"><md-button ng-href="#view-donation" class="md-raised" >View My Donations</md-button></div>
 
-	<div layout="row" layout-align="center center" ng-show="ctrl.approve && (ctrl.is_poc || ctrl.is_fc)"><md-button ng-href="#approvals" class="md-raised">Approve Donations</md-button></div>
-	<div layout="row" layout-align="center center" ng-show="ctrl.approve && (ctrl.is_poc || ctrl.is_fc)"><md-button ng-href="#approved-donations" class="md-raised">List Approved Donations</md-button></div>
+	<div layout="row" layout-align="center center" ng-show="ctrl.is_poc"><md-button ng-href="#approvals" class="md-raised">Donations for Collection</md-button></div>
+	<div layout="row" layout-align="center center" ng-show="ctrl.is_poc"><md-button ng-href="#approved-donations" class="md-raised">List Collected Donations</md-button></div>
+
+	<div layout="row" layout-align="center center" ng-show="ctrl.is_fc"><md-button ng-href="#approvals" class="md-raised">Donations for Depositing</md-button></div>
+	<div layout="row" layout-align="center center" ng-show="ctrl.is_fc"><md-button ng-href="#approved-donations" class="md-raised">List Deposited Donations</md-button></div>
+</div>
 </div>
 </div>

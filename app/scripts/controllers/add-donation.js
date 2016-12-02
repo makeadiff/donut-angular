@@ -48,7 +48,7 @@ angular.module('donutApp')
 		}
 
 		vm.donation.comment = "";
-		vm.donation.eighty_g = "false";
+		vm.donation.eighty_g = "true";
 
 		//Initializing errors
 		vm.phone_email_absent = false;
@@ -144,7 +144,7 @@ angular.module('donutApp')
 						vm.donation.phone = "";
 						vm.donation.address = "";
 						vm.donation.comment = "";
-						vm.donation.eighty_g = "false";
+						vm.donation.eighty_g = "true";
 
 						//So that form is reset after submit
 						vm.donationForm.$setUntouched();

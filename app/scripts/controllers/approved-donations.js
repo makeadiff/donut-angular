@@ -58,11 +58,11 @@ angular.module('donutApp')
 			if(!vm.userCheck()) return false;
 			vm.active_donation_id = donation_id;
 
-			var donation_source = vm.donations[donation_id].user_name;
-			if(vm.poc_or_fc == "fc") donation_source = vm.donations[donation_id].poc_name;
+			var message = "Are you sure you haven't collected Rs." + vm.donations[donation_id].amount + " from " + vm.donations[donation_id].user_name + "?";
+			if(vm.poc_or_fc == 'fc') var message = "Are you sure you haven't deposited Rs." + vm.donations[donation_id].amount + " from " + vm.donations[donation_id].poc_name + "?";
 			
-			var confirm = $mdDialog.confirm().title('Reject Donation?')
-				.content("Are you sure you didn't Rs." + vm.donations[donation_id].amount + " from " + donation_source + "?")
+			var confirm = $mdDialog.confirm().title('Confirm')
+				.content(message)
 				.ok('Yes').cancel('No');
 			$mdDialog.show(confirm).then(vm.rejectDonationCall, function() { // No
 				
@@ -81,12 +81,8 @@ angular.module('donutApp')
 				transformRequest: $rootScope.transformRequest
 			}).success(function (data) {
 				vm.is_processing = false;
-				vm.donations[data.donation_id].donation_status = 'TO_BE_APPROVED_BY_POC';
+				vm.donations[data.donation_id].donation_status = 'REJECTED';
 				vm.active_donation_id = 0;
-
-				var alert = $mdDialog.alert().title('Success!').content('Donation Recjected. ID: ' + data.donation_id).ok('Ok');
-				$mdDialog.show(alert);
-
 			}).error(vm.errorMessage);
 		}
 

@@ -24,7 +24,7 @@ angular.module('donutApp')
 				url: $rootScope.base_url + 'user/login',
 				headers: {'Content-Type': 'application/x-www-form-urlencoded'},
 				transformRequest: $rootScope.transformRequest,
-				data: {phone: loginCtrl.login.phone, password: loginCtrl.login.password, format: 'xml'}
+				data: {phone: loginCtrl.login.phone, password: loginCtrl.login.password}
 			}).success(function (data) {
 				if(data.error) {
 					loginCtrl.is_processing = false;
@@ -46,7 +46,7 @@ angular.module('donutApp')
 
 					if(params.path != null) {
 						$location.path("/" + params.path);
-					}else{
+					} else {
 						$location.path('/');
 					}
 				}

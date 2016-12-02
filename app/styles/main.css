@@ -46,3 +46,7 @@ div .white span {
 button[disabled] span {
 	color: #666 !important;
 }
+
+.info {
+	padding:5px;
+}

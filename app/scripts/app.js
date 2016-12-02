@@ -97,9 +97,9 @@ angular
 	  });
   })
 	.run(['$location', '$rootScope', '$mdDialog', 'UserService', function($location, $rootScope, $mdDialog, User) {
-		$rootScope.base_url = 'http://localhost/Sites/community/makeadiff/makeadiff.in/apps/exdon/api/';
+		// $rootScope.base_url = 'http://localhost/Sites/community/makeadiff/makeadiff.in/apps/exdon/api/';
 		// $rootScope.base_url = 'http://localhost/makeadiff.in/home/makeadiff/public_html/apps/exdon/api/';
-		// $rootScope.base_url = 'http://makeadiff.in/apps/exdon/api/';
+		$rootScope.base_url = 'http://makeadiff.in/apps/exdon/api/';
 		// $rootScope.base_url = 'http://makeadiff.in/apps/exdon-beta/api/';
 		
 		if(User.getUserName()) {
@@ -151,11 +151,11 @@ angular
 			'global_giving' : 'Global Giving',
 			'mad_website' : 'Website',
 			'give_india' : 'Give India',
-			'DEPOSIT COMPLETE' : 'Deposit Complete',
-			'DEPOSIT_PENDING' : 'Deposited', // 'Deposit Pending',
-			'HAND_OVER_TO_FC_PENDING' : 'Collection by Finance Fellow Pending',
-			'RECEIPT PENDING' : 'Receipt Pending',
-			'RECEIPT SENT' : 'Receipt Sent',
+			'DEPOSIT COMPLETE' : 'Deposit Approved',
+			'DEPOSIT_PENDING' : 'Donation Deposited', // 'Deposit Pending',
+			'HAND_OVER_TO_FC_PENDING' : 'Deposit by Finance Fellow Pending',
+			'RECEIPT PENDING' : 'Deposit Approved, 80G Receipt Pending',
+			'RECEIPT SENT' : 'Deposit Approved, 80G Receipt Sent',
 			'TO_BE_APPROVED_BY_POC' : 'To be collected by Coach'
 		};
 

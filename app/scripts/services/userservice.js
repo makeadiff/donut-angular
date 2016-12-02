@@ -30,9 +30,13 @@ angular.module('donutApp')
 			return $localStorage.user.name;
 		};
 
+		user.getUser = function() {
+			return $localStorage.user;
+		}
+
 		user.isPOC = function() {
 			for(var role in $localStorage.user.roles) {
-				if(role == 9) {return true;}
+				if(role == 9) return true;
 			}
 
 			return false;
@@ -40,7 +44,7 @@ angular.module('donutApp')
 
 		user.isFC = function() {
 			for(var role in $localStorage.user.roles) {
-				if(role == 8) {return true;}
+				if(role == 8) return true;
 			}
 
 			return false;

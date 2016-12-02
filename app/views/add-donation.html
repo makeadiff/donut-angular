@@ -31,13 +31,6 @@
 		<label>Cheque Number</label>
 		<input name="comment" label="Cheque Number" ng-model="addDon.donation.comment">
 		</md-input-container>
- 
-		<md-radio-group layout="row" layout-align="start center" ng-model="addDon.donation.eighty_g">
-			<p>80G :</p>
-			<md-radio-button value ="true">Yes</md-radio-button>
-			<md-radio-button value="false">No</md-radio-button>
-		</md-radio-group>
-
 		<br>
 
 		<md-button id="action" ng-disabled="!addDon.validCheck() || addDon.is_processing" class="md-raised" type="submit">Submit</md-button>
