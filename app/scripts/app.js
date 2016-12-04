@@ -149,7 +149,7 @@ angular
 			'other' : 'Other',
 			'nach' : 'NACH',
 			'global_giving' : 'Global Giving',
-			'mad_website' : 'Website',
+			'mad_website' : 'MAD Website',
 			'give_india' : 'Give India',
 			'DEPOSIT COMPLETE' : 'Deposit Approved',
 			'DEPOSIT_PENDING' : 'Donation Deposited', // 'Deposit Pending',
