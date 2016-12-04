@@ -9,46 +9,24 @@
  */
 angular.module('donutApp')
   .controller('AddDonationCtrl', ['$http','$mdDialog','UserService','$location', '$filter', '$rootScope',function ($http,$mdDialog,User,$location,$filter,$rootScope) {
-
 		var vm = this; //vm stands for view-model
-
-		//Initializing fields to be empty otherwise fields contain undefined.
-		vm.donation = {};
-
 		var params = $location.search();
 
-		if(params.donor_name != null) {
-			vm.donation.name = params.donor_name;
-		} else {
-			vm.donation.name = "";
-		}
-
-		if(params.donor_phone != null) {
-			vm.donation.phone = params.donor_phone;
-		} else {
-			vm.donation.phone = "";
-		}
-
-		if(params.donor_email != null) {
-			vm.donation.email = params.donor_email;
-		} else {
-			vm.donation.email = "";
-		}
-
-		if(params.donor_city != null) {
-			vm.donation.address = params.donor_city;
-		} else {
-			vm.donation.address = "";
-		}
-
-		if(params.amount != null) {
-			vm.donation.amount = params.amount;
-		} else {
-			vm.donation.amount = "";
-		}
-
-		vm.donation.comment = "";
-		vm.donation.eighty_g = "true";
+		//Initializing fields to be empty otherwise fields contain undefined.
+		vm.donation = {
+			'name': "",
+			'phone': "",
+			'email': "",
+			'address': "",
+			'amount': "",
+			'comment': "",
+			'eighty_g': "true"
+		};
+		if(params.donor_name) vm.donation.name = params.donor_name;
+		if(params.donor_phone) vm.donation.phone = params.donor_phone;
+		if(params.donor_email) vm.donation.email = params.donor_email;
+		if(params.donor_city) vm.donation.address = params.donor_city;
+		if(params.amount) vm.donation.amount = params.amount;
 
 		//Initializing errors
 		vm.phone_email_absent = false;
@@ -56,6 +34,11 @@ angular.module('donutApp')
 		vm.amount_invalid = false;
 		vm.is_processing = false;
 
+		vm.is_poc = User.isPOC();
+		vm.is_fc = User.isFC();
+
+		var user = User.getUser();
+		vm.coach_assigned = user.coach_assigned;
 
 		var fundraiser_id = User.getUserId();
 
@@ -150,7 +133,6 @@ angular.module('donutApp')
 						vm.donationForm.$setUntouched();
 						vm.donationForm.$setPristine();
 
-
 					}).error(function (data) {
 						vm.is_processing = false;
 						vm.is_error = true;
@@ -166,10 +148,6 @@ angular.module('donutApp')
 				var alert = $mdDialog.alert().title('Error!').content('Connection error. Please try again later.').ok('Ok');
 				$mdDialog.show(alert);
 				$location.path('/login');
-
 			};
-
-
 		};
-
   }]);

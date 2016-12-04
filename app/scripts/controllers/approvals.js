@@ -14,6 +14,7 @@ angular.module('donutApp')
 		vm.is_processing = true;
 		vm.error = "";
 		vm.donations = {};
+		vm.subordinates = {};
 		vm.active_donation_id = 0;
 		vm.poc_or_fc = "poc"; // This keeps a track of what kind of volunteer the current user. poc / fc
 		// Every Ajax call will be have this variable - to change the result depending on the current user.
@@ -36,6 +37,21 @@ angular.module('donutApp')
 			}).error(function() {
 				vm.is_processing = false;
 				return $rootScope.errorMessage();
+			});
+
+			$http({
+				method: 'GET',
+				url: $rootScope.base_url + "user/get_subordinates/" + user_id,
+				headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+				transformRequest: $rootScope.transformRequest
+			}).success(function (data) {
+				if(data.success) {
+					var subs = [];
+					for (var key in data.subordinates) {
+						subs[subs.length] = data.subordinates[key];
+					}
+					vm.subordinates = subs;
+				}
 			});
 
 		} else {

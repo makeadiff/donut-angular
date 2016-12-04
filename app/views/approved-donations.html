@@ -29,7 +29,7 @@
 			<tr><td class="md-body-2">Status</td><td><strong>{{donation.donation_status | statusFormat}}</strong></td></tr>
 			<tr ng-show="ctrl.poc_or_fc == 'fc'"><td class="md-body-2">Coach Name</td><td>{{donation.poc_name}}</td></tr>
 			<tr><td class="md-body-2">Donation ID</td><td>{{donation.id}}</td></tr>
-			<tr><td>
+			<tr ng-show="donation.donation_status != 'RECEIPT SENT' && donation.donation_status != 'RECEIPT PENDING'"><td>
 				<md-button ng-disabled="(donation.donation_status == 'REJECTED' || donation.donation_status == 'DELETED') && ctrl.poc_or_fc == 'poc'"
 						ng-show="ctrl.poc_or_fc == 'poc'" ng-click="ctrl.rejectDonation(donation.id)" class="md-raised md-warn md-hue-3">Didn't Collect the Money</md-button>
 

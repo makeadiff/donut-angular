@@ -15,6 +15,10 @@
 	</p>
 	</div>
 
+	<div layout="row" layout-align="center center" ng-show="ctrl.subordinates">
+		<p>Volunteers assigned to you: {{ctrl.subordinates.join(", ")}} </p>
+	</div>
+
 
 	<span ng-show="ctrl.error" style="color:red;">{{ctrl.error}}</span>
 	

@@ -1,5 +1,10 @@
+<div  ng-controller="AddDonationCtrl as addDon">
+<div layout="column" layout-align="center center">
+	<p  class="info" ng-show="addDon.coach_assigned == false && !addDon.is_poc && !addDon.is_fc"><img src="images/silk_icons/error.png" /> You have <strong>not been assigned a coach</strong> for CFR. You won't be able to hand over the collected cash/cheques until you have been assigned a coach. Please <strong>contact your Finance Fellow</strong> to resolve this.</p>
+	<p  class="info" ng-show="addDon.coach_assigned != false && !addDon.is_poc && !addDon.is_fc"><img src="images/silk_icons/information.png" /> Your coach is <strong>{{addDon.coach_assigned.first_name}}</strong>({{addDon.coach_assigned.phone_no}}). Contact your coach to handover your collected cash/cheques.</p>
+</div>
 
-<div layout="column" layout-align="center center" ng-controller="AddDonationCtrl as addDon" >
+<div layout="column" layout-align="center center">
 	<span ng-show="addDon.is_processing"><br><md-progress-circular  md-mode="indeterminate"></md-progress-circular></span>
 	<form name="addDon.donationForm" layout="column" ng-submit="addDon.addDonation()" novalidate>
 		<md-input-container>
@@ -41,4 +46,4 @@
 	<span ng-show="addDon.amount_invalid"><p class="error">Amount is not a valid number</p></span>
 </div>
 
-
+</div>
