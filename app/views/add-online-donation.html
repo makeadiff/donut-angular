@@ -9,7 +9,7 @@
 
         <md-input-container>
             <label>Donated Amount</label>
-            <input name="amount" label="Amount" ng-model="addExDon.donation.amount" required>
+            <input name="amount" label="Amount" ng-model="addExDon.donation.amount" required ng-pattern="/^\d+$/">
         </md-input-container>
 
         <md-input-container>
@@ -33,7 +33,7 @@
             <md-radio-button value="give_india">Give India (giveindia.org)</md-radio-button>
         </md-radio-group>
 
-        <md-button ng-disabled="!addExDon.validCheck() || addExDon.is_processing" class="md-raised" type="submit">Submit</md-button>
+        <md-button id="action" ng-disabled="!addExDon.validCheck() || addExDon.is_processing" class="md-raised" type="submit">Submit</md-button>
 
     </form>
 
