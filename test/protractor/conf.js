@@ -3,23 +3,26 @@
 exports.config = {
 	seleniumAddress: 'http://localhost:4444/wd/hub',
 	specs: [
-		'login.js', 
-		'add-donation.js'
+		'globals.js',
+		'login.js',
+		'add-donation.js',
+		'add-nach-donation.js',
+		'add-online-donation.js'
 	],
 
 	onPrepare: function() {
 		/* global angular: false, browser: false, jasmine: false */
 
-		var ConnectDatabase = require("../db-connect");
-		var db_connection = new ConnectDatabase();
-		var db = db_connection.connection;
-		db.connect();
+		// var ConnectDatabase = require("../db-connect");
+		// var db_connection = new ConnectDatabase();
+		// var db = db_connection.connection;
+		// db.connect();
 
-		// Delete all donations by the test user.
-		db.query('DELETE FROM donations WHERE donour_id=7062', function(err, rows, fields) {
-			if (err) console.log("Pretest Prepare - SQL Query returns Error: DELETE FROM donations WHERE donour_id=7062");
-		});
-		db.end();
+		// // Delete all donations by the test user.
+		// db.query('DELETE FROM donations WHERE donour_id=7062', function(err, rows, fields) {
+		// 	if (err) console.log("Pretest Prepare - SQL Query returns Error: DELETE FROM donations WHERE donour_id=7062");
+		// });
+		// db.end();
 
 		// Disable animations so e2e tests run more quickly
 		var disableNgAnimate = function() {

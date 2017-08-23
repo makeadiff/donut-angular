@@ -1,15 +1,15 @@
-describe('Add Donation', function() {
+describe('Add Online Donation', function() {
 	it('should have a disabled submit button if necessary details are not entered', function() {
-		browser.get('http://localhost/Sites/community/makeadiff/makeadiff.in/apps/donut/app/#/add-donation');
-		expect(browser.getTitle()).toEqual('Add Donation');
+		browser.get('http://localhost/Sites/community/makeadiff/makeadiff.in/apps/donut/app/#/add-online-donation');
+		expect(browser.getTitle()).toEqual('Add Online Donation');
 
 		var action = element(by.css('#action'));
 		expect(action.isEnabled()).toBe(false);
 
-		element(by.model('addDon.donation.name')).sendKeys('Protractor Test Donor');
+		element(by.model('addExDon.donation.name')).sendKeys('Protractor Test Donor');
 		expect(action.isEnabled()).toBe(false);
 
-		var amount = element(by.model('addDon.donation.amount'));
+		var amount = element(by.model('addExDon.donation.amount'));
 		if(!skip) {
 			amount.sendKeys('abcd');
 			expect(hasClass(amount, 'ng-invalid')).toBe(true);
@@ -17,7 +17,7 @@ describe('Add Donation', function() {
 		amount.clear();amount.sendKeys('13');
 		expect(action.isEnabled()).toBe(false);
 
-		var phone = element(by.model('addDon.donation.phone'));
+		var phone = element(by.model('addExDon.donation.phone'));
 		if(!skip) {
 			phone.sendKeys('Bad Number');
 			expect(hasClass(phone, 'ng-invalid')).toBe(true);
@@ -34,7 +34,7 @@ describe('Add Donation', function() {
 		expect(hasClass(phone, 'ng-invalid')).toBe(false);
 		expect(action.isEnabled()).toBe(false);
 
-		var email = element(by.model('addDon.donation.email'));
+		var email = element(by.model('addExDon.donation.email'));
 		if(!skip) {
 			email.sendKeys('Bad Email');
 			expect(hasClass(email, 'ng-invalid')).toBe(true);
@@ -56,24 +56,24 @@ describe('Add Donation', function() {
 
 		expect(success_message).toContain("Donation of Rs 13 from donor 'Protractor Test Donor' added succesfully");
 		success_message.then(function (text) {
-			donation_id = text.replace(/^.+\(Donation ID\: (\d+)\)/, "$1");
+			donation_id = text.replace(/^.+\(Donation ID\: Ex\:(\d+)\)/, "$1");
 		});
 		element(by.css("md-dialog .md-button")).click(); // Click OK
 	});
 
 	it("should insert given data into the database", function() {
 		browser.sleep(1000);
-		// browser.wait(donation_id);
-		db.query('SELECT * FROM donations WHERE id=' + donation_id, function(err, rows, fields) {
+		db.query('SELECT * FROM external_donations WHERE id=' + donation_id, function(err, rows, fields) {
 			if (err) {
 				expect(1).toBe(0); // Always fail if it reaches this point.
 				return;
 			}
-			expect(rows[0].donation_amount).toBe(13);
+			expect(rows[0].amount).toBe(13);
 			expect(rows[0].donation_status).toBe('TO_BE_APPROVED_BY_POC');
+			expect(rows[0].donation_type).toBe('mad_website');
 			expect(rows[0].fundraiser_id).toBe(8902); // User with phone '9746068565'
 
-			db.query('SELECT * FROM donours WHERE id=' + rows[0].donour_id, function(err, donor_row, fields) {
+			db.query('SELECT * FROM donours WHERE id=' + rows[0].donor_id, function(err, donor_row, fields) {
 				if (err) {
 					expect(1).toBe(0); // Always fail if it reaches this point.
 					return;
@@ -86,6 +86,7 @@ describe('Add Donation', function() {
 		});
 	});
 });
+
 // db.end();
 
 var hasClass = function (element, cls, debug) {

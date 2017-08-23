@@ -1,6 +1,4 @@
 // Created using http://www.protractortest.org/#/tutorial
-var skip = true;
-
 describe('Donut Tests', function() {
 	if(!skip) {
 	it('shows an error if password is wrong', function() {
