@@ -96,12 +96,12 @@ angular
 		redirectTo: '/'
 	  });
   })
-	.run(['$location', '$rootScope', '$mdDialog', 'UserService', function($location, $rootScope, $mdDialog, User) {
-		$rootScope.base_url = 'http://localhost/Sites/community/makeadiff/makeadiff.in/apps/exdon/api/';
+	.run(['$location', '$rootScope', '$mdDialog', '$localStorage', 'UserService', function($location, $rootScope, $mdDialog, $localStorage, User) {
+		// $rootScope.base_url = 'http://localhost/Sites/community/makeadiff/makeadiff.in/apps/exdon/api/';
 		// $rootScope.base_url = 'http://localhost/makeadiff.in/home/makeadiff/public_html/apps/exdon/api/';
 		// $rootScope.base_url = 'http://makeadiff.in/apps/exdon/api/';
-		// $rootScope.base_url = 'http://makeadiff.in/apps/exdon-beta/api/';
-		
+		$rootScope.base_url = 'http://makeadiff.in/apps/exdon-beta/api/';
+
 		if(User.getUserName()) {
 			$rootScope.user_name = User.getUserName();
 
@@ -131,6 +131,16 @@ angular
 				$rootScope.title = current.$$route.title;
 			else 
 				$rootScope.title = "Donut";
+
+			window.Intercom("boot", {
+		        app_id: "xnngu157",
+		        email: $localStorage.user.email,
+		        name: $localStorage.user.name,
+		        user_id: $localStorage.user.user_id,
+		        widget: {
+		          activator: "#IntercomDefaultWidget"
+		        }
+		    });
 		});
 	}])
 	.filter('dateToISO', function() {
