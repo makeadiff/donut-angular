@@ -13,8 +13,8 @@ angular.module('donutApp')
 		var vm = this;
 		vm.is_processing = true;
 		vm.error = "";
-		vm.donations = {};
-		vm.active_donation_id = 0;
+		vm.deposits = {};
+		vm.active_deposit_id = 0;
 		vm.poc_or_fc = "poc"; // This keeps a track of what kind of volunteer the current user. poc / fc
 		// Every Ajax call will be have this variable - to change the result depending on the current user.
 
@@ -25,13 +25,13 @@ angular.module('donutApp')
 
 			$http({
 				method: 'GET',
-				url: $rootScope.base_url + "donation/get_donations_for_"+vm.poc_or_fc+"_approval/" + user_id,
+				url: $rootScope.base_url + "deposit/for_review_by/" + user_id,
 				headers: {'Content-Type': 'application/x-www-form-urlencoded'},
 				transformRequest: $rootScope.transformRequest
 			}).success(function (data) {
 				vm.is_processing = false;
 
-				if(data.success) vm.donations = data.donations;
+				if(data.success) vm.deposits = data.deposits;
 				else vm.error = data.error;
 			}).error(function() {
 				vm.is_processing = false;
@@ -51,8 +51,8 @@ angular.module('donutApp')
 			return $rootScope.errorMessage(redirect_to, error_message);
 		}
 
-		vm.approveDonation = function(donation_id) {
-			vm.active_donation_id = donation_id;
+		vm.approve = function(deposit_id) {
+			vm.active_deposit_id = deposit_id;
 
 			if(!vm.userCheck()) return false;
 
@@ -60,12 +60,12 @@ angular.module('donutApp')
 
 			// Show this only once per day
 			if($cookies.get('daily_confirmation')) {
-				vm.approveDonationCall();
+				vm.approveCall();
 				return;
 			}
 			
 			var confirm = $mdDialog.confirm().title('Collected?')
-				.content('Please ensure that you have collected Rs. ' + vm.donations[donation_id].amount + ' from ' + vm.donations[donation_id].user_name + '. Press \'Yes\' if already collected. Press \'No\' if not collected yet.')
+				.content('Please ensure that you have collected Rs. ' + vm.deposits[deposit_id].amount + ' from ' + vm.deposits[deposit_id].user_name + '. Press \'Yes\' if already collected. Press \'No\' if not collected yet.')
 				.ok('Yes').cancel('No');
 			$mdDialog.show(confirm).then(function() { // Yes
 				vm.is_processing = true;
@@ -74,28 +74,28 @@ angular.module('donutApp')
 	  			expire_date.setDate(expire_date.getDate() + 1);
 				$cookies.put('daily_confirmation', '1', {'expires': expire_date});
 
-				vm.approveDonationCall();
+				vm.approveCall();
 			});
 
 		}
 
-		vm.approveDonationCall = function() {
-			var donation_id = vm.active_donation_id;
+		vm.approveCall = function() {
+			var deposit_id = vm.active_deposit_id;
 			$http({
 				method: 'GET',
-				url: $rootScope.base_url + "donation/" + donation_id + '/'+vm.poc_or_fc+'_approve/' + user_id,
+				url: $rootScope.base_url + "donation/" + deposit_id + '/'+vm.poc_or_fc+'_approve/' + user_id,
 				headers: {'Content-Type': 'application/x-www-form-urlencoded'},
 				transformRequest: $rootScope.transformRequest
 			}).success(function (data) {
 				if(data.error) return vm.errorMessage("/approvals", data.error);
 
 				vm.is_processing = false;
-				vm.donations[data.donation_id].donation_status = 'APPROVED';
-				vm.active_donation_id = 0;
+				vm.donations[data.deposit_id].donation_status = 'APPROVED';
+				vm.active_deposit_id = 0;
 
-				var from = vm.donations[data.donation_id].user_name;
+				var from = vm.donations[data.deposit_id].user_name;
 
-				var alert = $mdDialog.alert().title('Success!').content('Donation of Rs '+vm.donations[data.donation_id].amount+' from \''+ from +'\' has been approved(ID: ' + data.donation_id + ')').ok('Ok');
+				var alert = $mdDialog.alert().title('Success!').content('Donation of Rs '+vm.deposits[data.deposit_id].amount+' from \''+ from +'\' has been approved(ID: ' + data.deposit_id + ')').ok('Ok');
 				$mdDialog.show(alert);
 
 			}).error(vm.errorMessage);
@@ -103,34 +103,34 @@ angular.module('donutApp')
 
 
 		// Delete donation option.
-		vm.deleteDonation = function(donation_id) {
+		vm.reject = function(deposit_id) {
 			if(!vm.userCheck()) return false;
-			vm.active_donation_id = donation_id;
+			vm.active_deposit_id = deposit_id;
 			
 			var confirm = $mdDialog.confirm().title('Delete Donation?')
-				.content('Are you sure you want to delete the donation of Rs. ' + vm.donations[donation_id].amount + ' from ' + vm.donations[donation_id].user_name)
+				.content('Are you sure you want to delete the donation of Rs. ' + vm.deposits[deposit_id].amount + ' from ' + vm.deposits[deposit_id].user_name)
 				.ok('Yes').cancel('No');
-			$mdDialog.show(confirm).then(vm.deleteDonationCall);
+			$mdDialog.show(confirm).then(vm.rejectCall);
 		}
 
-		vm.deleteDonationCall = function() {
+		vm.rejectCall = function() {
 			vm.is_processing = true;
-			var donation_id = vm.active_donation_id;
+			var deposit_id = vm.active_deposit_id;
 			var user_id = User.getUserId();
 
 			$http({
 				method: 'GET',
-				url: $rootScope.base_url + "donation/" + donation_id + '/delete/' + user_id + '/' + vm.poc_or_fc,
+				url: $rootScope.base_url + "donation/" + deposit_id + '/delete/' + user_id + '/' + vm.poc_or_fc,
 				headers: {'Content-Type': 'application/x-www-form-urlencoded'},
 				transformRequest: $rootScope.transformRequest
 			}).success(function (data) {
 				if(data.error) return vm.errorMessage("/approvals", data.error);
 
 				vm.is_processing = false;
-				vm.donations[data.donation_id].donation_status = 'DELETED';
-				vm.active_donation_id = 0;
+				vm.deposits[data.deposit_id].donation_status = 'DELETED';
+				vm.active_deposit_id = 0;
 
-				var alert = $mdDialog.alert().title('Success!').content('Donation Deleted(ID: ' + data.donation_id + ')').ok('Ok');
+				var alert = $mdDialog.alert().title('Success!').content('Donation Deleted(ID: ' + data.deposit_id + ')').ok('Ok');
 				$mdDialog.show(alert);
 
 			}).error(vm.errorMessage);

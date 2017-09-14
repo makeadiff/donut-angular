@@ -1,0 +1,48 @@
+<div layout="column" ng-controller="DepositCtrl as ctrl" layout-margin layout-fill layout-padding id="deposit-page">
+	<h3 align="center">Make a Deposit</h3>
+	<span layout="row" ng-show="ctrl.is_processing" layout-align="center center"><br><br><br><md-progress-circular  md-mode="indeterminate"></md-progress-circular></span>
+
+	<span ng-show="ctrl.error" style="color:red;">{{ctrl.error}}</span>
+
+	<div ng-show="ctrl.show_mode == 'donation-list'">
+	<p align="center">Select all the donations that you wish to include in the deposit...</p>
+
+	<div layout="row" layout-align="center center" ng-repeat="donation in ctrl.donations">
+		<md-card flex-gt-lg="30" flex="100">
+		<md-card-content>
+			<table class="donation-info">
+			<tr><td colspan="2">
+				<md-checkbox ng-model="ctrl.include_donation[donation.id]" aria-label="Include">{{donation.donor_name}} {{donation.donour.last_name}} 
+					- {{donation.amount}} Rs</md-checkbox>
+				<span class="show-hide-info" ng-show="!ctrl.show_donation[donation.id]" ng-click="ctrl.show_donation[donation.id] = true">[show info...]</span>
+				<span class="show-hide-info" ng-show="ctrl.show_donation[donation.id] == true" ng-click="ctrl.show_donation[donation.id] = false">[hide info...]</span>
+			</td></tr>
+			<tr ng-show="ctrl.show_donation[donation.id] == true"><td class="md-body-2">ID</td><td>{{donation.id}}</td></tr>
+			<tr ng-show="ctrl.show_donation[donation.id] == true"><td class="md-body-2">Donor Name</td><td>{{donation.donor_name}} {{donation.donour.last_name}}</td></tr>
+			<tr ng-show="ctrl.show_donation[donation.id] == true"><td class="md-body-2">Amount</td><td>{{donation.amount}}</td></tr>
+			<tr ng-show="ctrl.show_donation[donation.id] == true"><td class="md-body-2">Date</td><td>{{donation.created_at | dateToISO | date : 'MMM d, y'}}</td></tr>
+			<tr ng-show="ctrl.show_donation[donation.id] == true"><td class="md-body-2">Status</td><td><strong>{{donation.donation_status | statusFormat}}</strong></td></tr>
+			</table>
+		</md-card-content>
+		</md-card>
+	</div>
+
+		<div layout="row" layout-align="center center">
+			<md-button class="md-raised md-primary" ng-click="ctrl.show_mode='coach-list'">Select Coach for Handover</md-button>
+		</div>
+	</div>
+
+	<div ng-show="ctrl.show_mode == 'coach-list'">
+		<div layout="row" layout-align="center center">
+		<md-radio-group ng-model="ctrl.selected_coach">
+			<md-radio-button ng-repeat="coach in ctrl.city_coaches" ng-value="coach.id" label="{{coach.name}}">{{coach.name}}</md-radio-button>
+		</md-radio-group>
+		</div>
+	
+		<div layout="row" layout-align="center center">
+		<md-button ng-href="#deposit" class="md-raised md-primary" ng-click="ctrl.addDeposit()">Make a Deposit</md-button>
+		</div>
+	</div>
+	</div>
+
+</div> 

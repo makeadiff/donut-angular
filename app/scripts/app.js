@@ -36,6 +36,12 @@ angular
 		restricted : true,
 		title : 'View Donation'
 	  })
+	  .when('/deposit', {
+		templateUrl: 'views/deposit.html',
+		controller: 'DepositCtrl',
+		restricted : true,
+		title : 'Make a Deposit'
+	  })
 	  .when('/login', {
 		templateUrl: 'views/login.html',
 		controller: 'LoginCtrl',
@@ -97,10 +103,10 @@ angular
 	  });
   })
 	.run(['$location', '$rootScope', '$mdDialog', '$localStorage', 'UserService', function($location, $rootScope, $mdDialog, $localStorage, User) {
-		// $rootScope.base_url = 'http://localhost/Sites/community/makeadiff/makeadiff.in/apps/exdon/api/';
+		$rootScope.base_url = 'http://localhost/Sites/community/makeadiff/makeadiff.in/apps/exdon/api/';
 		// $rootScope.base_url = 'http://localhost/makeadiff.in/home/makeadiff/public_html/apps/exdon/api/';
 		// $rootScope.base_url = 'http://makeadiff.in/apps/exdon/api/';
-		$rootScope.base_url = 'http://makeadiff.in/apps/exdon-beta/api/';
+		// $rootScope.base_url = 'http://makeadiff.in/apps/exdon-beta/api/';
 
 		if(User.getUserName()) {
 			$rootScope.user_name = User.getUserName();

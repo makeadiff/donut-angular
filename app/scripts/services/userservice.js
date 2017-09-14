@@ -25,6 +25,10 @@ angular.module('donutApp')
 			return $localStorage.user_id;
 		};
 
+		user.getUserCityId = function(){
+			return $localStorage.user.city_id;
+		};
+
 		user.getUserName = function(){
 			if(typeof $localStorage.user == "undefined") return false;
 			return $localStorage.user.name;

@@ -130,7 +130,6 @@ angular.module('donutApp')
 							donor_phone : vm.donation.phone, eighty_g_required : vm.donation.eighty_g, address : vm.donation.address,
 							comment: vm.donation.comment, fundraiser_id : fundraiser_id,
 							created_at : $filter("date")(vm.donation.created_at, "yyyy-MM-dd"), format : 'json'}
-
 					}).success(function (data) {
 						vm.is_processing = false;
 						var alert = $mdDialog.alert().title('Success!').content('Donation of Rs '+vm.donation.amount+' from donor \''+vm.donation.name+'\' added succesfully(Donation ID: ' + data.donation.id + ')').ok('Ok');
@@ -149,7 +148,6 @@ angular.module('donutApp')
 						//So that form is reset after submit
 						vm.donationForm.$setUntouched();
 						vm.donationForm.$setPristine();
-
 
 					}).error(function (data) {
 						vm.is_processing = false;

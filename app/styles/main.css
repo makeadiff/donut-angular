@@ -46,3 +46,26 @@ div .white span {
 button[disabled] span {
 	color: #666 !important;
 }
+
+#approval-page .md-body-2 {
+	width:150px;
+}
+#deposit-page .md-body-2 {
+	padding-left:50px;
+	width:150px;
+}
+
+/*
+#deposit-page .donation-info tr {
+	display: none;
+}
+#deposit-page .donation-info tr.summary {
+	display: table-row;
+}*/
+.show-hide-info {
+	color: #666;
+	font-size: 11px;
+}
+md-checkbox {
+	display: inline;
+}
