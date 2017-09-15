@@ -2,17 +2,20 @@
 	<h3 align="center">Deposits for Approval</h3>
 	<span layout="row" ng-show="ctrl.is_processing" layout-align="center center"><br><br><br><md-progress-circular  md-mode="indeterminate"></md-progress-circular></span>
 
-	<span ng-show="ctrl.error" style="color:red;">{{ctrl.error}}</span>
+	<span layout="row" layout-align="center center" ng-show="ctrl.error" style="color:red;">{{ctrl.error}}</span>
 	
 	<div layout="row" layout-align="center center" ng-repeat="deposit in ctrl.deposits">
 		<md-card flex-gt-lg="30" flex="100">
 		<md-card-content> 
 			<table width="100%">
-			<tr><td class="md-body-2">Deposit ID</td><td>{{deposit.id}}</td></tr>
-			<tr><td class="md-body-2">Total Amount</td><td>{{deposit.amount}}</td></tr>
+			<tr><td class="md-body-2">Total Amount</td><td>{{deposit.amount}} Rs</td></tr>
 			<tr><td class="md-body-2">Collected From</td><td>{{deposit.collected_from_user_name}}</td></tr>
-			<tr><td colspan="2" class="md-body-2">Donations...</td></tr>
-			<tr><td colspan="2">
+			<tr><td colspan="2" class="md-body-2">
+				<span class="show-hide-info" ng-show="!ctrl.show_donations[deposit.id]" ng-click="ctrl.show_donations[deposit.id] = true">[show info...]</span>
+				<span class="show-hide-info" ng-show="ctrl.show_donations[deposit.id] == true" ng-click="ctrl.show_donations[deposit.id] = false">[hide info...]</span>
+			</td></tr>
+			<tr ng-show="ctrl.show_donations[deposit.id] == true"><td class="md-body-2">Deposit ID</td><td>{{deposit.id}}</td></tr>
+			<tr ng-show="ctrl.show_donations[deposit.id] == true"><td colspan="2">
 				<div ng-repeat="donation in deposit.donations">
 				<md-card flex="100">
 				<md-card-content> 

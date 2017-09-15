@@ -16,8 +16,10 @@ angular.module('donutApp')
 	vm.show_donation = {};
 	vm.include_donation = {};
 	vm.show_mode = "donation-list";
-	vm.selected_coach = 0;
-	vm.city_coaches = {};
+	vm.selected_manager = 0;
+	vm.city_managers = {};
+	vm.manager = "Coach";
+	if(User.isPOC()) vm.manager = "Finance Fellow";
 
 	if(User.checkLoggedIn()) {
 		var fundraiser_id = User.getUserId();
@@ -27,14 +29,24 @@ angular.module('donutApp')
 			url: $rootScope.base_url + "donation/undeposited/" + fundraiser_id,
 			transformRequest: $rootScope.transformRequest,
 		}).success(function (data) {
-			for (var i in data.donations) {
-				vm.show_donation[i] = false;
-				vm.include_donation[i] = false;
-			}
-			vm.donations = data.donations;
-			vm.show_mode = "donation-list";
 			vm.is_processing = false;
 
+			if(data.error) {
+				var alert = $mdDialog.alert().title('Error!').content(data.error).ok('Ok');
+				$mdDialog.show(alert);
+				$location.path('/');
+			} else {
+				for (var i in data.donations) {
+					vm.show_donation[i] = false;
+					vm.include_donation[i] = false;
+				}
+				vm.donation_collection = {
+					"donations": data.donations,
+					"approved_donations": data.approved_donations
+				}
+				vm.donation_count = Object.keys(data.donations).length + Object.keys(data.approved_donations).length;
+				vm.show_mode = "donation-list";
+			}
 		}).error(function (data) {
 			vm.is_processing = false;
 
@@ -43,12 +55,14 @@ angular.module('donutApp')
 			$location.path('/');
 		});
 
+		var fetch_user_type = 'get_coaches_in_city';
+		if(User.isPOC()) fetch_user_type = 'get_finace_fellow_in_city';
 		$http({
 			method: 'GET',
-			url: $rootScope.base_url + "user/get_coaches_in_city/" + User.getUserCityId(),
+			url: $rootScope.base_url + "user/"+fetch_user_type+"/" + User.getUserCityId(),
 			transformRequest: $rootScope.transformRequest,
 		}).success(function (data) {
-			vm.city_coaches = data.coaches;
+			vm.city_managers = data.users;
 		});
 
 	} else {
@@ -64,7 +78,7 @@ angular.module('donutApp')
 
 		var donation_ids = Object.keys(vm.include_donation).join(",");
 		var collected_from_user_id = User.getUserId();
-		var given_to_user_id = vm.selected_coach;
+		var given_to_user_id = vm.selected_manager;
 
 		$http({
 			method: 'POST',
@@ -74,7 +88,14 @@ angular.module('donutApp')
 			data: {"donation_ids": donation_ids, "collected_from_user_id": collected_from_user_id, "given_to_user_id": given_to_user_id}
 		}).success(function (data) {
 			vm.is_processing = false;
-			var alert = $mdDialog.alert().title('Success!').content('Deposit of ' + Object.keys(vm.include_donation).length + ' donations made to ' + vm.city_coaches[vm.selected_coach].name).ok('Ok');
+			if(data.error) {
+				var alert = $mdDialog.alert().title('Error!').content(data.error).ok('Ok');
+				$mdDialog.show(alert);
+				$location.path('/deposit');
+				return;
+			}
+
+			var alert = $mdDialog.alert().title('Success!').content('Deposit of ' + Object.keys(vm.include_donation).length + ' donations made to ' + vm.city_managers[vm.selected_manager].name).ok('Ok');
 			$mdDialog.show(alert);
 			$location.path('/');
 
@@ -85,5 +106,9 @@ angular.module('donutApp')
 			$mdDialog.show(alert);
 			$location.path('/');
 		});
+	}
+
+	$rootScope.isObjectEmpty = function(card){
+	   return Object.keys(card).length === 0;
 	}
 }]);

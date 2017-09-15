@@ -26,25 +26,25 @@ angular
 	  })
 	  .when('/add-donation', {
 		templateUrl: 'views/add-donation.html',
-		controller: 'AddDonationCtrl',
+		// controller: 'AddDonationCtrl',
 		restricted : true,
 		title : 'Add Donation'
 	  })
 	  .when('/view-donation', {
 		templateUrl: 'views/view-donation.html',
-		controller: 'ViewDonationCtrl',
+		// controller: 'ViewDonationCtrl',
 		restricted : true,
 		title : 'View Donation'
 	  })
 	  .when('/deposit', {
 		templateUrl: 'views/deposit.html',
-		controller: 'DepositCtrl',
+		// controller: 'DepositCtrl',
 		restricted : true,
 		title : 'Make a Deposit'
 	  })
 	  .when('/login', {
 		templateUrl: 'views/login.html',
-		controller: 'LoginCtrl',
+		// controller: 'LoginCtrl',
 		restricted : false,
 		title : 'Login'
 	  })
@@ -55,30 +55,30 @@ angular
 	  })
 	  .when('/select-event', {
 		templateUrl: 'views/select-event.html',
-		controller: 'SelectEventCtrl',
+		// controller: 'SelectEventCtrl',
 		restricted : true
 		})
 	  .when('/external-donation', {
 		templateUrl: 'views/external-donation.html',
-		controller: 'ExternalDonationCtrl',
+		// controller: 'ExternalDonationCtrl',
 		restricted : true,
 		title: "External Donations"
 		})
 	  .when('/add-external-donation/:donation_type', {
 		templateUrl: 'views/add-external-donation.html',
-		controller: 'AddExternalDonationCtrl',
+		// controller: 'AddExternalDonationCtrl',
 		restricted : true,
 		title: "Add External Donations"
 		})
 	  .when('/add-nach-donation', {
 		templateUrl: 'views/add-nach-donation.html',
-		controller: 'AddNACHDonationCtrl',
+		// controller: 'AddNACHDonationCtrl',
 		restricted : true,
 		title: "Add NACH Donation"
 		})
 	  .when('/add-online-donation', {
 		templateUrl: 'views/add-online-donation.html',
-		controller: 'AddOnlineDonationCtrl',
+		// controller: 'AddOnlineDonationCtrl',
 		restricted : true,
 		title: "Add Online Donation"
 		})
@@ -94,7 +94,7 @@ angular
 		})
 	  .when('/change-password', {
 		templateUrl: 'views/change-password.html',
-		controller: 'ChangePasswordCtrl',
+		// controller: 'ChangePasswordCtrl',
 		restricted : true,
 		title : 'Change Password'
 	  })

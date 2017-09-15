@@ -14,6 +14,7 @@ angular.module('donutApp')
 		vm.is_processing = true;
 		vm.error = "";
 		vm.deposits = {};
+		vm.show_donations = {}
 		vm.active_deposit_id = 0;
 		vm.poc_or_fc = "poc"; // This keeps a track of what kind of volunteer the current user. poc / fc
 		// Every Ajax call will be have this variable - to change the result depending on the current user.
@@ -65,7 +66,7 @@ angular.module('donutApp')
 			}
 			
 			var confirm = $mdDialog.confirm().title('Collected?')
-				.content('Please ensure that you have collected Rs. ' + vm.deposits[deposit_id].amount + ' from ' + vm.deposits[deposit_id].user_name + '. Press \'Yes\' if already collected. Press \'No\' if not collected yet.')
+				.content('Please ensure that you have collected Rs. ' + vm.deposits[deposit_id].amount + ' from ' + vm.deposits[deposit_id].collected_from_user_name + '. Press \'Yes\' if already collected. Press \'No\' if not collected yet.')
 				.ok('Yes').cancel('No');
 			$mdDialog.show(confirm).then(function() { // Yes
 				vm.is_processing = true;
@@ -83,7 +84,7 @@ angular.module('donutApp')
 			var deposit_id = vm.active_deposit_id;
 			$http({
 				method: 'GET',
-				url: $rootScope.base_url + "donation/" + deposit_id + '/'+vm.poc_or_fc+'_approve/' + user_id,
+				url: $rootScope.base_url + "deposit/" + deposit_id + '/approve/' + user_id,
 				headers: {'Content-Type': 'application/x-www-form-urlencoded'},
 				transformRequest: $rootScope.transformRequest
 			}).success(function (data) {
@@ -93,7 +94,7 @@ angular.module('donutApp')
 				vm.donations[data.deposit_id].donation_status = 'APPROVED';
 				vm.active_deposit_id = 0;
 
-				var from = vm.donations[data.deposit_id].user_name;
+				var from = vm.donations[data.deposit_id].collected_from_user_name;
 
 				var alert = $mdDialog.alert().title('Success!').content('Donation of Rs '+vm.deposits[data.deposit_id].amount+' from \''+ from +'\' has been approved(ID: ' + data.deposit_id + ')').ok('Ok');
 				$mdDialog.show(alert);
@@ -120,7 +121,7 @@ angular.module('donutApp')
 
 			$http({
 				method: 'GET',
-				url: $rootScope.base_url + "donation/" + deposit_id + '/delete/' + user_id + '/' + vm.poc_or_fc,
+				url: $rootScope.base_url + "donation/" + deposit_id + '/reject/' + user_id,
 				headers: {'Content-Type': 'application/x-www-form-urlencoded'},
 				transformRequest: $rootScope.transformRequest
 			}).success(function (data) {
