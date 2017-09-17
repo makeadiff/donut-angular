@@ -91,12 +91,12 @@ angular.module('donutApp')
 				if(data.error) return vm.errorMessage("/approvals", data.error);
 
 				vm.is_processing = false;
-				vm.donations[data.deposit_id].donation_status = 'APPROVED';
+				vm.deposits[data.deposit_id].status = 'approved';
 				vm.active_deposit_id = 0;
 
-				var from = vm.donations[data.deposit_id].collected_from_user_name;
+				var from = vm.deposits[data.deposit_id].collected_from_user_name;
 
-				var alert = $mdDialog.alert().title('Success!').content('Donation of Rs '+vm.deposits[data.deposit_id].amount+' from \''+ from +'\' has been approved(ID: ' + data.deposit_id + ')').ok('Ok');
+				var alert = $mdDialog.alert().title('Success!').content('Deposit of Rs '+vm.deposits[data.deposit_id].amount+' from \''+ from +'\' has been approved(ID: ' + data.deposit_id + ')').ok('Ok');
 				$mdDialog.show(alert);
 
 			}).error(vm.errorMessage);
@@ -108,8 +108,8 @@ angular.module('donutApp')
 			if(!vm.userCheck()) return false;
 			vm.active_deposit_id = deposit_id;
 			
-			var confirm = $mdDialog.confirm().title('Delete Donation?')
-				.content('Are you sure you want to delete the donation of Rs. ' + vm.deposits[deposit_id].amount + ' from ' + vm.deposits[deposit_id].user_name)
+			var confirm = $mdDialog.confirm().title('Delete Deposit?')
+				.content('Are you sure you want to delete the deposit of Rs. ' + vm.deposits[deposit_id].amount + ' from ' + vm.deposits[deposit_id].collected_from_user_name)
 				.ok('Yes').cancel('No');
 			$mdDialog.show(confirm).then(vm.rejectCall);
 		}
@@ -121,17 +121,17 @@ angular.module('donutApp')
 
 			$http({
 				method: 'GET',
-				url: $rootScope.base_url + "donation/" + deposit_id + '/reject/' + user_id,
+				url: $rootScope.base_url + "deposit/" + deposit_id + '/reject/' + user_id,
 				headers: {'Content-Type': 'application/x-www-form-urlencoded'},
 				transformRequest: $rootScope.transformRequest
 			}).success(function (data) {
 				if(data.error) return vm.errorMessage("/approvals", data.error);
 
 				vm.is_processing = false;
-				vm.deposits[data.deposit_id].donation_status = 'DELETED';
+				vm.deposits[data.deposit_id].status = 'rejected';
 				vm.active_deposit_id = 0;
 
-				var alert = $mdDialog.alert().title('Success!').content('Donation Deleted(ID: ' + data.deposit_id + ')').ok('Ok');
+				var alert = $mdDialog.alert().title('Success!').content('Deposit Deleted(ID: ' + data.deposit_id + ')').ok('Ok');
 				$mdDialog.show(alert);
 
 			}).error(vm.errorMessage);

@@ -85,7 +85,7 @@ angular
 	  .when('/approvals', {
 		templateUrl: 'views/approvals.html',
 		restricted : true,
-		title: "Approve Donations"
+		title: "Review Deposits"
 		})
 	  .when('/approved-donations', {
 		templateUrl: 'views/approved-donations.html',

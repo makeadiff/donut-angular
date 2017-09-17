@@ -76,9 +76,13 @@ angular.module('donutApp')
 	vm.addDeposit = function() {
 		vm.is_processing = true;
 
-		var donation_ids = Object.keys(vm.include_donation).join(",");
+		var donation_ids = [];
 		var collected_from_user_id = User.getUserId();
 		var given_to_user_id = vm.selected_manager;
+
+		for(var donation_id in vm.include_donation) {
+			if(vm.include_donation[donation_id]) donation_ids.push(donation_id);
+		}
 
 		$http({
 			method: 'POST',
