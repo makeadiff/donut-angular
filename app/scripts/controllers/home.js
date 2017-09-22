@@ -17,6 +17,9 @@ angular.module('donutApp')
 
 		vm.is_poc = User.isPOC();
 		vm.is_fc = User.isFC();
+		vm.manager = 'Coach';
+		if(vm.is_poc) vm.manager = 'Finance Fellow';
+		else if(vm.is_fc) vm.manager = 'National Account';
 
 		vm.approve = true;
 		// var params = $location.search();

@@ -8,7 +8,7 @@
 		<md-card flex-gt-lg="30" flex="100">
 		<md-card-content> 
 			<table width="100%">
-			<tr><td class="md-body-2">Total Amount</td><td>{{deposit.amount}} Rs</td></tr>
+			<tr><td class="md-body-2">Total Amount</td><td>{{deposit.amount}} Rs(from {{count(deposit.donations)}} donations)</td></tr>
 			<tr><td class="md-body-2">Collected From</td><td>{{deposit.collected_from_user_name}}</td></tr>
 			<tr><td colspan="2" class="md-body-2">
 				<span class="show-hide-info" ng-show="!ctrl.show_donations[deposit.id]" ng-click="ctrl.show_donations[deposit.id] = true">[show info...]</span>

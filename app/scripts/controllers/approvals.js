@@ -136,4 +136,8 @@ angular.module('donutApp')
 
 			}).error(vm.errorMessage);
 		}
+
+		$rootScope.count = function(card){
+		   return Object.keys(card).length;
+		}
   }]);

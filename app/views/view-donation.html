@@ -2,7 +2,7 @@
 	<h3 align="center">My Donations</h3>
 	<span layout="row" ng-show="cm.is_processing" layout-align="center center"><br><br><br><md-progress-circular  md-mode="indeterminate"></md-progress-circular></span>
 
-	<span ng-show="cm.error" style="color:red;">{{ctrl.error}}</span>
+	<span ng-show="cm.error" style="color:red; text-align: center;">{{cm.error}}</span>
 
 	<div layout="row" layout-align="center center" ng-repeat="donation in cm.donations">
 		<md-card flex-gt-lg="30" flex="100">

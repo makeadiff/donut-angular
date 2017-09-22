@@ -17,9 +17,18 @@ angular.module('donutApp')
 	vm.include_donation = {};
 	vm.show_mode = "donation-list";
 	vm.selected_manager = 0;
+	vm.national_account_user_id = 13257; // Pooja's User ID in Donut
 	vm.city_managers = {};
 	vm.manager = "Coach";
-	if(User.isPOC()) vm.manager = "Finance Fellow";
+	vm.add_deposit_button_text = "Handover to Coach";
+	if(User.isPOC()) {
+		vm.manager = "Finance Fellow";
+		vm.add_deposit_button_text = "Handover to Finance Fellow";
+	}
+	else if(User.isFC()) {
+		vm.manager = "National Finance";
+		vm.add_deposit_button_text = 'Mark as Deposited in Bank';
+	}
 
 	if(User.checkLoggedIn()) {
 		var fundraiser_id = User.getUserId();
@@ -63,6 +72,9 @@ angular.module('donutApp')
 			transformRequest: $rootScope.transformRequest,
 		}).success(function (data) {
 			vm.city_managers = data.users;
+			if(Object.keys(vm.city_managers).length == 1) {
+				vm.selected_manager = Object.keys(vm.city_managers)[0];
+			}
 		});
 
 	} else {
@@ -79,9 +91,17 @@ angular.module('donutApp')
 		var donation_ids = [];
 		var collected_from_user_id = User.getUserId();
 		var given_to_user_id = vm.selected_manager;
+		var given_to_user_name = "";
 
 		for(var donation_id in vm.include_donation) {
 			if(vm.include_donation[donation_id]) donation_ids.push(donation_id);
+		}
+
+		if(User.isFC()) { // Finance fellow is an FC - making deposits directly to the national account.
+			given_to_user_id = vm.national_account_user_id;
+			given_to_user_name = "National Account";
+		} else {
+			given_to_user_name = vm.city_managers[vm.selected_manager].name;
 		}
 
 		$http({
@@ -99,7 +119,7 @@ angular.module('donutApp')
 				return;
 			}
 
-			var alert = $mdDialog.alert().title('Success!').content('Deposit of ' + Object.keys(vm.include_donation).length + ' donations made to ' + vm.city_managers[vm.selected_manager].name).ok('Ok');
+			var alert = $mdDialog.alert().title('Success!').content('Deposit of ' + donation_ids.length + ' donations made to ' + given_to_user_name).ok('Ok');
 			$mdDialog.show(alert);
 			$location.path('/');
 
@@ -112,7 +132,7 @@ angular.module('donutApp')
 		});
 	}
 
-	$rootScope.isObjectEmpty = function(card){
-	   return Object.keys(card).length === 0;
+	$rootScope.count = function(card){
+	   return Object.keys(card).length;
 	}
 }]);
