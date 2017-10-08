@@ -2,7 +2,7 @@
 describe('Donut Tests', function() {
 	if(!skip) {
 	it('shows an error if password is wrong', function() {
-		browser.get('http://localhost/Sites/community/makeadiff/makeadiff.in/apps/donut/app/#/login');
+		browser.get('http://localhost/MAD/apps/donut/app/#/login');
 		expect(browser.getTitle()).toEqual('Login');
 
 		element(by.model('loginCtrl.login.phone')).sendKeys('9746068565');
@@ -13,7 +13,7 @@ describe('Donut Tests', function() {
 	});
 
 	it('shows a "user not found" error if user details are wrong', function() {
-		browser.get('http://localhost/Sites/community/makeadiff/makeadiff.in/apps/donut/app/#/login');
+		browser.get('http://localhost/MAD/apps/donut/app/#/login');
 		expect(browser.getTitle()).toEqual('Login');
 
 		element(by.model('loginCtrl.login.phone')).sendKeys('0125454543');
@@ -25,7 +25,7 @@ describe('Donut Tests', function() {
 	}
 
 	it('should login if user details are correct', function() {
-		browser.get('http://localhost/Sites/community/makeadiff/makeadiff.in/apps/donut/app/#/login');
+		browser.get('http://localhost/MAD/apps/donut/app/#/login');
 		expect(browser.getTitle()).toEqual('Login');
 
 		element(by.model('loginCtrl.login.phone')).sendKeys('9746068565');

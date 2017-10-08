@@ -7,7 +7,7 @@ function ConnectDatabase() {
 		host: secret.database.host,
 		user: secret.database.user,
 		password: secret.database.password,
-		database: 'Project_Donut'
+		database: 'makeadiff_cfrapp'
 	});
 };
 module.exports = ConnectDatabase;

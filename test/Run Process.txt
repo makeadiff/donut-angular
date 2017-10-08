@@ -1,0 +1,12 @@
+Run a test...
+
+First, start the server...
+
+webdriver-manager start
+
+Go to the folder with the tests..
+cd /mnt/x/Data/www/Sites/community/makeadiff/makeadiff.in/apps/donut/test/protractor
+
+Run the tests...
+protractor conf.js 
+

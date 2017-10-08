@@ -1,6 +1,6 @@
 describe('Add Online Donation', function() {
 	it('should have a disabled submit button if necessary details are not entered', function() {
-		browser.get('http://localhost/Sites/community/makeadiff/makeadiff.in/apps/donut/app/#/add-online-donation');
+		browser.get('http://localhost/MAD/apps/donut/app/#/add-online-donation');
 		expect(browser.getTitle()).toEqual('Add Online Donation');
 
 		var action = element(by.css('#action'));

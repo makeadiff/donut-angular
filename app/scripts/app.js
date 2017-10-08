@@ -103,7 +103,7 @@ angular
 	  });
   })
 	.run(['$location', '$rootScope', '$mdDialog', '$localStorage', 'UserService', function($location, $rootScope, $mdDialog, $localStorage, User) {
-		$rootScope.base_url = 'http://192.168.1.13/Sites/community/makeadiff/makeadiff.in/apps/exdon/api/';
+		$rootScope.base_url = 'http://192.168.1.13/MAD/apps/exdon/api/';
 		// $rootScope.base_url = 'http://localhost/makeadiff.in/home/makeadiff/public_html/apps/exdon/api/';
 		// $rootScope.base_url = 'http://makeadiff.in/apps/exdon/api/';
 		// $rootScope.base_url = 'http://makeadiff.in/apps/exdon-beta/api/';

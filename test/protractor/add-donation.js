@@ -1,6 +1,6 @@
 describe('Add Donation', function() {
 	it('should have a disabled submit button if necessary details are not entered', function() {
-		browser.get('http://localhost/Sites/community/makeadiff/makeadiff.in/apps/donut/app/#/add-donation');
+		browser.get('http://localhost/MAD/apps/donut/app/#/add-donation');
 		expect(browser.getTitle()).toEqual('Add Donation');
 
 		var action = element(by.css('#action'));
@@ -65,7 +65,7 @@ describe('Add Donation', function() {
 		browser.sleep(1000);
 		// browser.wait(donation_id);
 		db.query('SELECT * FROM donations WHERE id=' + donation_id, function(err, rows, fields) {
-			if (err) {
+			if (err || !rows) {
 				expect(1).toBe(0); // Always fail if it reaches this point.
 				return;
 			}
