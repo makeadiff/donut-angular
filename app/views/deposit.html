@@ -2,9 +2,9 @@
 	<h3 align="center">Make a Deposit</h3>
 	<span layout="row" ng-show="ctrl.is_processing" layout-align="center center"><br><br><br><md-progress-circular  md-mode="indeterminate"></md-progress-circular></span>
 
-	<span ng-show="ctrl.error" style="color:red;">{{ctrl.error}}</span>
+	<p align="center" ng-show="ctrl.error" style="color:red;">{{ctrl.error}}</p>
 
-	<div ng-show="ctrl.show_mode == 'donation-list'">
+	<div ng-show="ctrl.show_mode == 'donation-list' && !ctrl.error">
 		<p align="center">Select all the donations that you wish to include in the deposit...</p>
 
 		<div ng-repeat="(key, donation_collection) in ctrl.donation_collection">
@@ -47,7 +47,7 @@
 
 	<div layout="row" layout-align="center center" 
 ng-show="ctrl.show_mode == 'manager-list' || ctrl.manager == 'National Finance' || (ctrl.manager == 'Finance Fellow' && count(ctrl.city_managers) == 1)">
-		<md-button ng-href="#deposit" class="md-raised md-primary" ng-click="ctrl.addDeposit()">{{ctrl.add_deposit_button_text}}</md-button>
+		<md-button ng-show="!ctrl.error" ng-href="#deposit" class="md-raised md-primary" ng-click="ctrl.addDeposit()">{{ctrl.add_deposit_button_text}}</md-button>
 	</div>
 
 	</div>

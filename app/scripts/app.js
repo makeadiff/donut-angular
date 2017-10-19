@@ -103,7 +103,10 @@ angular
 	  });
   })
 	.run(['$location', '$rootScope', '$mdDialog', '$localStorage', 'UserService', function($location, $rootScope, $mdDialog, $localStorage, User) {
-		$rootScope.base_url = 'http://192.168.1.13/MAD/apps/exdon/api/';
+		$rootScope.base_url = 'http://makeadiff.in/apps/exdon-beta/api/';
+		if(location.href.toString().match(/localhost/) || location.href.toString().match(/192\.168\./)) {
+			$rootScope.base_url = 'http://192.168.1.13/MAD/apps/exdon/api/';
+		}
 		// $rootScope.base_url = 'http://localhost/makeadiff.in/home/makeadiff/public_html/apps/exdon/api/';
 		// $rootScope.base_url = 'http://makeadiff.in/apps/exdon/api/';
 		// $rootScope.base_url = 'http://makeadiff.in/apps/exdon-beta/api/';
@@ -168,11 +171,13 @@ angular
 			'mad_website' : 'Website',
 			'give_india' : 'Give India',
 			'DEPOSIT COMPLETE' : 'Deposit Complete',
-			'DEPOSIT_PENDING' : 'Deposited', // 'Deposit Pending',
+			'DEPOSIT_PENDING' : 'Deposit Deposit Pending',
 			'HAND_OVER_TO_FC_PENDING' : 'Collection by Finance Fellow Pending',
 			'RECEIPT PENDING' : 'Receipt Pending',
 			'RECEIPT SENT' : 'Receipt Sent',
-			'TO_BE_APPROVED_BY_POC' : 'To be collected by Coach'
+			'TO_BE_APPROVED_BY_POC' : 'To be collected by Coach',
+			'pending': 'Pending Approval',
+			'approved': 'Approved'
 		};
 
 		return function(input) {

@@ -12,6 +12,7 @@ angular.module('donutApp')
 	var vm = this;
 
 	vm.is_processing = true;
+	vm.error = "";
 	vm.donations = {};
 	vm.show_donation = {};
 	vm.include_donation = {};
@@ -21,13 +22,13 @@ angular.module('donutApp')
 	vm.city_managers = {};
 	vm.manager = "Coach";
 	vm.add_deposit_button_text = "Handover to Coach";
-	if(User.isPOC()) {
-		vm.manager = "Finance Fellow";
-		vm.add_deposit_button_text = "Handover to Finance Fellow";
-	}
-	else if(User.isFC()) {
+	
+	if(User.isFC()) {
 		vm.manager = "National Finance";
 		vm.add_deposit_button_text = 'Mark as Deposited in Bank';
+	} else if(User.isPOC()) {
+		vm.manager = "Finance Fellow";
+		vm.add_deposit_button_text = "Handover to Finance Fellow";
 	}
 
 	if(User.checkLoggedIn()) {
@@ -41,9 +42,8 @@ angular.module('donutApp')
 			vm.is_processing = false;
 
 			if(data.error) {
-				var alert = $mdDialog.alert().title('Error!').content(data.error).ok('Ok');
-				$mdDialog.show(alert);
-				$location.path('/');
+				vm.error = data.error;
+
 			} else {
 				for (var i in data.donations) {
 					vm.show_donation[i] = false;

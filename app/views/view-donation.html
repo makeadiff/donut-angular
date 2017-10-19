@@ -16,7 +16,12 @@
 			<tr><td class="md-body-2">Date</td><td>{{donation.created_at | dateToISO | date : 'MMM d, y'}}</td></tr>
 			<tr ng-show="donation.donation_type && donation.donation_type == 'GEN'"><td class="md-body-2">Status</td>
 				<td><strong>{{donation.donation_status | statusFormat}}</strong></td></tr>
-			<!-- <tr><td class="md-body-2">Deposit Status</td><td><strong>{{donation.donation_status | statusFormat}}</strong></td></tr> :TODO: -->
+			<tr ng-show="donation.deposit.length"><td class="md-body-2">Deposit Status</td>
+				<td><ul ng-repeat="dep in donation.deposit" style="list-style: none;padding:0;margin:0;">
+					<li>{{dep.collected_from_user_name}} &gt; {{dep.given_to_user_name}} 
+						on {{dep.added_on | dateToISO | date : 'MMM d, y'}}
+						- <strong>{{dep.status | statusFormat}}</strong>
+				</ul></td></tr>
 			</table>
 		</md-card-content>
 		</md-card>
