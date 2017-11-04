@@ -22,6 +22,8 @@
 						on {{dep.added_on | dateToISO | date : 'MMM d, y'}}
 						- <strong>{{dep.status | statusFormat}}</strong>
 				</ul></td></tr>
+			<tr ng-show="!donation.deposit.length"><td colspan="2"><md-button ng-disabled="donation.donation_status == 'DELETED'"
+								ng-click="cm.deleteDonation(donation.id)" class="md-raised md-warn">Mistaken Entry</md-button></td></tr>
 			</table>
 		</md-card-content>
 		</md-card>

@@ -38,7 +38,7 @@ angular.module('donutApp')
 
 			}).error(function (data) {
 				vm.is_processing = false;
-				return $rootScope.errorMessage();
+				return vm.errorMessage("/approved-donations", "Connection error. Please try again after a while.");
 			});
 
 		} else {

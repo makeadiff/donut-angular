@@ -92,6 +92,12 @@ angular
 		restricted : true,
 		title: "Approved Donations"
 		})
+	  .when('/find-approve', {
+		templateUrl: 'views/find-approve.html',
+		// controller: 'ChangePasswordCtrl',
+		restricted : true,
+		title : 'Find and Approve Donations'
+	  })
 	  .when('/change-password', {
 		templateUrl: 'views/change-password.html',
 		// controller: 'ChangePasswordCtrl',
@@ -171,12 +177,12 @@ angular
 			'mad_website' : 'Website',
 			'give_india' : 'Give India',
 			'DEPOSIT COMPLETE' : 'Deposit Complete',
-			'DEPOSIT_PENDING' : 'Deposit Deposit Pending',
+			'DEPOSIT_PENDING' : 'Deposit Pending',
 			'HAND_OVER_TO_FC_PENDING' : 'Collection by Finance Fellow Pending',
 			'RECEIPT PENDING' : 'Receipt Pending',
 			'RECEIPT SENT' : 'Receipt Sent',
 			'TO_BE_APPROVED_BY_POC' : 'To be collected by Coach',
-			'pending': 'Pending Approval',
+			'pending': 'Approval Pending',
 			'approved': 'Approved'
 		};
 
