@@ -78,11 +78,16 @@ angular.module('donutApp')
 			transformRequest: $rootScope.transformRequest
 		}).success(function (data) {
 			vm.is_processing = false;
-			vm.donations[data.donation_id].donation_status = 'DELETED';
-			vm.active_donation_id = 0;
+			if(data.success) {
+				vm.donations[data.donation_id].donation_status = 'DELETED';
+				vm.active_donation_id = 0;
 
-			var alert = $mdDialog.alert().title('Success!').content('Donation Deleted. ID: ' + data.donation_id).ok('Ok');
-			$mdDialog.show(alert);
+				var alert = $mdDialog.alert().title('Success!').content('Donation Deleted. ID: ' + data.donation_id).ok('Ok');
+				$mdDialog.show(alert);
+			} else {
+				var alert = $mdDialog.alert().title('Error').content(data.error).ok('Ok');
+				$mdDialog.show(alert);
+			}
 
 		}).error(vm.errorMessage);
 	}
