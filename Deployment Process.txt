@@ -1,0 +1,11 @@
+When you have a version ready for deployment, run the following commands...
+
+grunt build --force
+
+This will build the app, compress it and put it in the dist folder. Then run...
+
+grunt ssh_deploy:staging        [For beta]
+OR
+grunt ssh_deploy:production		[For production]
+
+This will upload it to our server and make the necessary linkages.
