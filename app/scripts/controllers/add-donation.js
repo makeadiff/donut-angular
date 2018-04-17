@@ -90,13 +90,13 @@ angular.module('donutApp')
 				//Validate donation
 				$http({
 					method: 'POST',
-					url: $rootScope.base_url + 'donation/validate',
-					headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+					url: $rootScope.base_url + 'donations/validate',
+					headers: $rootScope.request_headers,
 					transformRequest: $rootScope.transformRequest,
 					data: {amount : vm.donation.amount, donor_name : vm.donation.name, donor_email : vm.donation.email,
-						donor_phone : vm.donation.phone, eighty_g_required : vm.donation.eighty_g, address : vm.donation.address,
-						comment: vm.donation.comment, fundraiser_id : fundraiser_id,
-						created_at : $filter("date")(vm.donation.created_at, "yyyy-MM-dd"), format : 'json'}
+						donor_phone : vm.donation.phone, donor_address : vm.donation.address,
+						comment: vm.donation.comment, fundraiser_user_id : fundraiser_id,
+						format : 'json'}
 
 				}).success(function (data) {
 					if(data.success){
@@ -110,7 +110,6 @@ angular.module('donutApp')
 						});
 					}
 
-
 				}).error(function (data) {
 					vm.is_processing = false;
 					vm.is_error = true;
@@ -123,16 +122,16 @@ angular.module('donutApp')
 				var insertDonation = function(){
 					$http({
 						method: 'POST',
-						url: $rootScope.base_url + 'donation/add',
-						headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+						url: $rootScope.base_url + 'donations',
+						headers: $rootScope.request_headers,
 						transformRequest: $rootScope.transformRequest,
-						data: {amount : vm.donation.amount, donor_name : vm.donation.name, donor_email : vm.donation.email,
-							donor_phone : vm.donation.phone, eighty_g_required : vm.donation.eighty_g, address : vm.donation.address,
-							comment: vm.donation.comment, fundraiser_id : fundraiser_id,
-							created_at : $filter("date")(vm.donation.created_at, "yyyy-MM-dd"), format : 'json'}
+						data: {amount : vm.donation.amount, donor_name : vm.donation.name, donor_email : vm.donation.email, 
+							donor_phone : vm.donation.phone, eighty_g_required : vm.donation.eighty_g, donor_address : vm.donation.address,
+							comment: vm.donation.comment, fundraiser_user_id : fundraiser_id,
+							type: 'cash', format : 'json'}
 					}).success(function (data) {
 						vm.is_processing = false;
-						var alert = $mdDialog.alert().title('Success!').content('Donation of Rs '+vm.donation.amount+' from donor \''+vm.donation.name+'\' added succesfully(Donation ID: ' + data.donation.id + ')').ok('Ok');
+						var alert = $mdDialog.alert().title('Success!').content('Donation of Rs '+vm.donation.amount+' from donor \''+vm.donation.name+'\' added succesfully(Donation ID: ' + data.data.donation.id + ')').ok('Ok');
 						$mdDialog.show(alert);
 
 						//Initializing fields to be empty otherwise fields contain undefined.
@@ -153,7 +152,7 @@ angular.module('donutApp')
 						vm.is_processing = false;
 						vm.is_error = true;
 
-						var alert = $mdDialog.alert().title('Error!').content('Connection issue with \''+$rootScope.base_url + 'donation/add'+'\'. Please try again later.').ok('Ok');
+						var alert = $mdDialog.alert().title('Error!').content('Connection issue with \''+$rootScope.base_url + 'donations'+'\'. Please try again later.').ok('Ok');
 						$mdDialog.show(alert);
 					})
 				};

@@ -20,11 +20,10 @@ angular.module('donutApp')
 			loginCtrl.is_processing = true;
 
 			$http({
-				method: 'POST',
-				url: $rootScope.base_url + 'user/login',
-				headers: {'Content-Type': 'application/x-www-form-urlencoded'},
-				transformRequest: $rootScope.transformRequest,
-				data: {phone: loginCtrl.login.phone, password: loginCtrl.login.password, format: 'xml'}
+				method: 'GET',
+				url: $rootScope.base_url + 'users/login?phone=' + loginCtrl.login.phone + "&password=" + loginCtrl.login.password,
+				headers: $rootScope.request_headers,
+				transformRequest: $rootScope.transformRequest
 			}).success(function (data) {
 				if(data.error) {
 					loginCtrl.is_processing = false;
@@ -35,7 +34,7 @@ angular.module('donutApp')
 
 				} else {
 					loginCtrl.is_processing = false;
-					User.setLoggedIn(data.user);
+					User.setLoggedIn(data.data.user);
 
 					// Update name at the top right corner
 					$rootScope.user_name = User.getUserName();

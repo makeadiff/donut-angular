@@ -18,7 +18,7 @@ angular.module('donutApp')
 			'email'     : "",
 			'address'   : "",
 			'amount'    : "",
-			'donation_type' : "nach",
+			'type' : "nach",
 			'created_at'    : new Date()
 		};
 
@@ -84,7 +84,7 @@ angular.module('donutApp')
 				'email'     : "",
 				'address'   : "",
 				'amount'    : "",
-				'donation_type' : "nach",
+				'type' 		: "nach",
 				'created_at'    : new Date()
 			};
 		}
@@ -97,29 +97,33 @@ angular.module('donutApp')
 
 				$http({
 					method: 'POST',
-					url: $rootScope.base_url + 'donation/add',
-					headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+					url: $rootScope.base_url + 'donations',
+					headers: $rootScope.request_headers,
 					transformRequest: function(obj) {
 						var str = [];
 						for(var p in obj) { str.push(encodeURIComponent(p) + '=' + encodeURIComponent(obj[p])); }
 						return str.join('&');
 					},
-					data: {amount : vm.donation.amount, donor_name : vm.donation.name, donor_email : vm.donation.email,
-						donor_phone : vm.donation.phone, fundraiser_id : fundraiser_id,
-						created_at : $filter("date")(vm.donation.created_at, "yyyy-MM-dd"),
-						donation_type : vm.donation.donation_type, format : 'json'}
+					data: {amount : vm.donation.amount, donor_name : vm.donation.name, donor_email : vm.donation.email, donor_address: "",
+						donor_phone : vm.donation.phone, fundraiser_user_id : fundraiser_id,
+						added_on : $filter("date")(vm.donation.created_at, "yyyy-MM-dd"),
+						type : vm.donation.type, format : 'json'}
 
 				}).success(function (data) {
 					vm.is_processing = false;
 
-					var alert = $mdDialog.alert().title('Success!').content('Donation of Rs '+vm.donation.amount+' from donor \''+vm.donation.name+'\' added succesfully(Donation ID: Ex:' + data.donation.id + ')').ok('Ok');
+					if(data.success) {
+						var alert = $mdDialog.alert().title('Success!').content('Donation of Rs '+vm.donation.amount+' from donor \''+vm.donation.name+'\' added succesfully(Donation ID: Ex:' + data.data.donation.id + ')').ok('Ok');
+					} else {
+						var alert = $mdDialog.alert().title('Error!').content(data.message).ok('Ok');
+					}
 					$mdDialog.show(alert).finally(vm.initialize);
 
 				}).error(function (data) {
 					vm.is_processing = false;
 					vm.is_error = true;
 
-					var alert = $mdDialog.alert().title('Error!').content('Connection issue with \''+add_donation_url+'\'. Please try again later.').ok('Ok');
+					var alert = $mdDialog.alert().title('Error!').content('Connection issue with \''+$rootScope.base_url + 'donations' + '\'. Please try again later.').ok('Ok');
 					$mdDialog.show(alert).finally(vm.initialize);
 				});
 
