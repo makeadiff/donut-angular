@@ -15,16 +15,15 @@
 				<md-card-content>
 					<table class="donation-info">
 					<tr><td colspan="2">
-						<md-checkbox ng-model="ctrl.include_donation[donation.id]" aria-label="Include">{{donation.donor_name}} {{donation.donour.last_name}} 
-							- {{donation.amount}} Rs</md-checkbox>
+						<md-checkbox ng-model="ctrl.include_donation[donation.id]" aria-label="Include">{{donation.donor}} - {{donation.amount}} Rs</md-checkbox>
 						<span class="show-hide-info" ng-show="!ctrl.show_donation[donation.id]" ng-click="ctrl.show_donation[donation.id] = true">[show info...]</span>
 						<span class="show-hide-info" ng-show="ctrl.show_donation[donation.id] == true" ng-click="ctrl.show_donation[donation.id] = false">[hide info...]</span>
 					</td></tr>
 					<tr ng-show="ctrl.show_donation[donation.id] == true"><td class="md-body-2">ID</td><td>{{donation.id}}</td></tr>
-					<tr ng-show="ctrl.show_donation[donation.id] == true"><td class="md-body-2">Donor Name</td><td>{{donation.donor_name}} {{donation.donour.last_name}}</td></tr>
+					<tr ng-show="ctrl.show_donation[donation.id] == true"><td class="md-body-2">Donor Name</td><td>{{donation.donor}}</td></tr>
 					<tr ng-show="ctrl.show_donation[donation.id] == true"><td class="md-body-2">Amount</td><td><strong>{{donation.amount}} Rs</strong></td></tr>
-					<tr ng-show="ctrl.show_donation[donation.id] == true"><td class="md-body-2">Date</td><td>{{donation.created_at | dateToISO | date : 'MMM d, y'}}</td></tr>
-					<tr ng-show="ctrl.show_donation[donation.id] == true"><td class="md-body-2">Status</td><td>{{donation.donation_status | statusFormat}}</td></tr>
+					<tr ng-show="ctrl.show_donation[donation.id] == true"><td class="md-body-2">Date</td><td>{{donation.added_on | dateToISO | date : 'MMM d, y'}}</td></tr>
+					<tr ng-show="ctrl.show_donation[donation.id] == true"><td class="md-body-2">Status</td><td>{{donation.status | statusFormat}}</td></tr>
 					</table>
 				</md-card-content>
 				</md-card>
@@ -38,15 +37,16 @@
 	</div>
 
 	<div ng-show="ctrl.show_mode == 'manager-list'">
+		<div layout="row" layout-align="center center">Select the {{ctrl.manager}} to hand over the selected donations to...</div>
 		<div layout="row" layout-align="center center">
-		<md-radio-group ng-model="ctrl.selected_manager">
-			<md-radio-button ng-repeat="manager in ctrl.city_managers" ng-value="manager.id" label="{{manager.name}}">{{manager.name}}</md-radio-button>
-		</md-radio-group>
+			<md-radio-group ng-model="ctrl.selected_manager">
+				<md-radio-button ng-repeat="manager in ctrl.city_managers" ng-value="manager.id" label="{{manager.name}}">{{manager.name}}</md-radio-button>
+			</md-radio-group>
 		</div>
 	</div>
 
 	<div layout="row" layout-align="center center" 
-ng-show="ctrl.show_mode == 'manager-list' || ctrl.manager == 'National Finance' || (ctrl.manager == 'Finance Fellow' && count(ctrl.city_managers) == 1)">
+			ng-show="ctrl.show_mode == 'manager-list' || ctrl.manager == 'National Finance' || (ctrl.manager == 'Finance Fellow' && count(ctrl.city_managers) == 1)">
 		<md-button ng-show="!ctrl.error" ng-href="#deposit" class="md-raised md-primary" ng-click="ctrl.addDeposit()">{{ctrl.add_deposit_button_text}}</md-button>
 	</div>
 

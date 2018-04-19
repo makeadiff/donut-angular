@@ -188,7 +188,9 @@ angular
 			'RECEIPT SENT' : 'Receipt Sent',
 			'TO_BE_APPROVED_BY_POC' : 'To be collected by Coach',
 			'pending': 'Approval Pending',
-			'approved': 'Approved'
+			'approved': 'Approved',
+			'cash': 'Cash',
+			'collected': "Collected"
 		};
 
 		return function(input) {

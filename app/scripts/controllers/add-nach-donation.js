@@ -18,8 +18,8 @@ angular.module('donutApp')
 			'email'     : "",
 			'address'   : "",
 			'amount'    : "",
-			'type' : "nach",
-			'created_at'    : new Date()
+			'type' 		: "nach",
+			'created_at': new Date()
 		};
 
 		var params = $location.search();
@@ -85,7 +85,7 @@ angular.module('donutApp')
 				'address'   : "",
 				'amount'    : "",
 				'type' 		: "nach",
-				'created_at'    : new Date()
+				'created_at': new Date()
 			};
 		}
 
@@ -99,11 +99,7 @@ angular.module('donutApp')
 					method: 'POST',
 					url: $rootScope.base_url + 'donations',
 					headers: $rootScope.request_headers,
-					transformRequest: function(obj) {
-						var str = [];
-						for(var p in obj) { str.push(encodeURIComponent(p) + '=' + encodeURIComponent(obj[p])); }
-						return str.join('&');
-					},
+					transformRequest: $rootScope.transformRequest,
 					data: {amount : vm.donation.amount, donor_name : vm.donation.name, donor_email : vm.donation.email, donor_address: "",
 						donor_phone : vm.donation.phone, fundraiser_user_id : fundraiser_id,
 						added_on : $filter("date")(vm.donation.created_at, "yyyy-MM-dd"),
@@ -113,7 +109,7 @@ angular.module('donutApp')
 					vm.is_processing = false;
 
 					if(data.success) {
-						var alert = $mdDialog.alert().title('Success!').content('Donation of Rs '+vm.donation.amount+' from donor \''+vm.donation.name+'\' added succesfully(Donation ID: Ex:' + data.data.donation.id + ')').ok('Ok');
+						var alert = $mdDialog.alert().title('Success!').content('Donation of Rs '+vm.donation.amount+' from donor \''+vm.donation.name+'\' added succesfully(Donation ID: ' + data.data.donation.id + ')').ok('Ok');
 					} else {
 						var alert = $mdDialog.alert().title('Error!').content(data.message).ok('Ok');
 					}

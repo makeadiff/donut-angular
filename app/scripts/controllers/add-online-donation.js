@@ -18,7 +18,7 @@ angular.module('donutApp')
 			'email'     : "",
 			'address'   : "",
 			'amount'    : "",
-			'donation_type' : "mad_website",
+			'donation_type' : "online",
 			'created_at'    : new Date()
 		};
 
@@ -82,7 +82,7 @@ angular.module('donutApp')
 				'email'     : "",
 				'address'   : "",
 				'amount'    : "",
-				'donation_type' : "mad_website",
+				'donation_type' : "online",
 				'created_at'    : new Date()
 			};
 		}
@@ -95,22 +95,22 @@ angular.module('donutApp')
 
 				$http({
 					method: 'POST',
-					url: $rootScope.base_url + 'donation/add',
-					headers: {'Content-Type': 'application/x-www-form-urlencoded'},
-					transformRequest: function(obj) {
-						var str = [];
-						for(var p in obj) { str.push(encodeURIComponent(p) + '=' + encodeURIComponent(obj[p])); }
-						return str.join('&');
-					},
+					url: $rootScope.base_url + 'donations',
+					headers: $rootScope.request_headers,
+					transformRequest: $rootScope.transformRequest,
 					data: {amount : vm.donation.amount, donor_name : vm.donation.name, donor_email : vm.donation.email,
-						donor_phone : vm.donation.phone, fundraiser_id : fundraiser_id,
-						created_at : $filter("date")(vm.donation.created_at, "yyyy-MM-dd"),
-						donation_type : vm.donation.donation_type, format : 'json'}
+						donor_phone : vm.donation.phone, fundraiser_user_id : fundraiser_id,
+						added_on : $filter("date")(vm.donation.created_at, "yyyy-MM-dd"),
+						type : vm.donation.donation_type, format : 'json'}
 
 				}).success(function (data) {
 					vm.is_processing = false;
 
-					var alert = $mdDialog.alert().title('Success!').content('Donation of Rs '+vm.donation.amount+' from donor \''+vm.donation.name+'\' added succesfully(Donation ID: Ex:' + data.donation.id + ')').ok('Ok');
+					if(data.status == 'success') {
+						var alert = $mdDialog.alert().title('Success!').content('Donation of Rs '+vm.donation.amount+' from donor \''+vm.donation.name+'\' added succesfully(Donation ID: ' + data.data.donation.id + ')').ok('Ok');
+					} else {
+						var alert = $mdDialog.alert().title('Error!').content('Error in creating the donation - please try again after some time.').ok('Ok');
+					}
 					$mdDialog.show(alert).finally(vm.initialize);
 
 				}).error(function (data) {

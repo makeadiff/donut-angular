@@ -21,17 +21,18 @@ angular.module('donutApp')
 
 		$http({
 			method: 'GET',
-			url: $rootScope.base_url + "donation/get_donations_by_user/" + fundraiser_id,
+			url: $rootScope.base_url + "users/" + fundraiser_id + '/donations',
+			headers: $rootScope.request_headers,
 			transformRequest: $rootScope.transformRequest,
 		}).success(function (data) {
 			vm.is_processing = false;
 
-			if(data.error) {
-				vm.error = data.error
+			if(data.status == 'error') {
+				vm.error = data.message;
 			} else {
 				var donations = {};
-				for(var i in data.donations) {
-					var don = data.donations[i];
+				for(var i in data.data.donations) {
+					var don = data.data.donations[i];
 					donations[don.id] = don;
 				}
 
@@ -61,7 +62,7 @@ angular.module('donutApp')
 		vm.active_donation_id = donation_id;
 		
 		var confirm = $mdDialog.confirm().title('Delete Donation?')
-			.content('Are you sure you want to delete the donation of Rs. ' + vm.donations[donation_id].amount + ' from ' + vm.donations[donation_id].user_name)
+			.content('Are you sure you want to delete the donation of Rs. ' + vm.donations[donation_id].amount + ' from ' + vm.donations[donation_id].fundraiser )
 			.ok('Yes').cancel('No');
 		$mdDialog.show(confirm).then(vm.deleteDonationCall);
 	}
@@ -72,24 +73,23 @@ angular.module('donutApp')
 		var poc_id = User.getUserId();
 
 		$http({
-			method: 'GET',
-			url: $rootScope.base_url + "donation/" + donation_id + '/delete/' + poc_id + '/self',
-			headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+			method: 'DELETE',
+			url: $rootScope.base_url + "donations/" + donation_id,
+			headers: $rootScope.request_headers,
 			transformRequest: $rootScope.transformRequest
-		}).success(function (data) {
+		}).then(function(response) {
 			vm.is_processing = false;
-			if(data.success) {
-				vm.donations[data.donation_id].donation_status = 'DELETED';
+			if(response.status >= 200 && response.status < 300) {
+				vm.donations[donation_id].status = 'DELETED';
 				vm.active_donation_id = 0;
 
-				var alert = $mdDialog.alert().title('Success!').content('Donation Deleted. ID: ' + data.donation_id).ok('Ok');
+				var alert = $mdDialog.alert().title('Success!').content('Donation Deleted. ID: ' + donation_id).ok('Ok');
 				$mdDialog.show(alert);
 			} else {
-				var alert = $mdDialog.alert().title('Error').content(data.error).ok('Ok');
+				var alert = $mdDialog.alert().title('Error').content(data.message).ok('Ok');
 				$mdDialog.show(alert);
 			}
-
-		}).error(vm.errorMessage);
+		});
 	}
 
 	vm.userCheck = function() {
