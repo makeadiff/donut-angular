@@ -20,11 +20,11 @@
 				<md-card flex="100">
 				<md-card-content> 
 				<table>
-					<tr><td class="md-body-2">Donor Name</td><td>{{donation.donor_name}}</td></tr>
-					<tr><td class="md-body-2">Fundraiser Name</td><td>{{donation.user_name}}</td></tr>
+					<tr><td class="md-body-2">Donor Name</td><td>{{donation.donor}}</td></tr>
+					<tr><td class="md-body-2">Fundraiser Name</td><td>{{donation.fundraiser}}</td></tr>
 					<tr><td class="md-body-2">Amount</td><td>{{donation.amount}} Rs</td></tr>
-					<tr><td class="md-body-2">Date</td><td>{{donation.created_at | dateToISO | date : 'MMM d, y'}}</td></tr>
-					<tr><td class="md-body-2">Status</td><td><strong>{{donation.donation_status | statusFormat}}</strong></td></tr>
+					<tr><td class="md-body-2">Date</td><td>{{donation.added_on | dateToISO | date : 'MMM d, y'}}</td></tr>
+					<tr><td class="md-body-2">Status</td><td><strong>{{donation.status | statusFormat}}</strong></td></tr>
 				</table>
 				</md-card-content>
 				</md-card>

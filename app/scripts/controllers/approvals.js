@@ -27,14 +27,14 @@ angular.module('donutApp')
 
 			$http({
 				method: 'GET',
-				url: $rootScope.base_url + "deposit/for_review_by/" + user_id,
-				headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+				url: $rootScope.base_url + "deposits?reviewer_user_id=" + user_id,
+				headers: $rootScope.request_headers,
 				transformRequest: $rootScope.transformRequest
 			}).success(function (data) {
 				vm.is_processing = false;
 
-				if(data.success) vm.deposits = data.deposits;
-				else vm.error = data.error;
+				if(data.status == 'success') vm.deposits = data.data.deposits;
+				else vm.error = data.message;
 			}).error(function() {
 				vm.is_processing = false;
 				return $rootScope.errorMessage();
@@ -55,6 +55,14 @@ angular.module('donutApp')
 
 		vm.approve = function(deposit_id) {
 			vm.active_deposit_id = deposit_id;
+			var index = false;
+			for(var i in vm.deposits) {
+				if(vm.deposits[i].id == deposit_id) {
+					index = i;
+					break;
+				}
+			}
+			if(index === false) return vm.errorMessage("/approvals", "Can't find the given deposit.");
 
 			if(!vm.userCheck()) return false;
 
@@ -67,7 +75,7 @@ angular.module('donutApp')
 			}
 			
 			var confirm = $mdDialog.confirm().title('Collected?')
-				.content('Please ensure that you have collected Rs. ' + vm.deposits[deposit_id].amount + ' from ' + vm.deposits[deposit_id].collected_from_user_name + '. Press \'Yes\' if already collected. Press \'No\' if not collected yet.')
+				.content('Please ensure that you have collected Rs. ' + vm.deposits[index].amount + ' from ' + vm.deposits[index].collected_from_user_name + '. Press \'Yes\' if already collected. Press \'No\' if not collected yet.')
 				.ok('Yes').cancel('No');
 			$mdDialog.show(confirm).then(function() { // Yes
 				vm.is_processing = true;
@@ -84,20 +92,32 @@ angular.module('donutApp')
 		vm.approveCall = function() {
 			var deposit_id = vm.active_deposit_id;
 			$http({
-				method: 'GET',
-				url: $rootScope.base_url + "deposit/" + deposit_id + '/approve/' + user_id,
-				headers: {'Content-Type': 'application/x-www-form-urlencoded'},
-				transformRequest: $rootScope.transformRequest
-			}).success(function (data) {
-				if(data.error) return vm.errorMessage("/approvals", data.error);
+				method: 'POST',
+				url: $rootScope.base_url + "deposits/" + deposit_id,
+				headers: $rootScope.request_headers,
+				transformRequest: $rootScope.transformRequest,
+				data: { reviewer_user_id: user_id, status: 'approved' }
+			}).success(function (response) {
+				if(response.status == 'error') return vm.errorMessage("/approvals", data.message);
+
+				var data = response.data;
+
+				var index = false;
+				for(var i in vm.deposits) {
+					if(vm.deposits[i].id == deposit_id) {
+						index = i;
+						break;
+					}
+				}
+				if(index === false) return vm.errorMessage("/approvals", "Can't find the given deposit.");
 
 				vm.is_processing = false;
-				vm.deposits[data.deposit_id].status = 'approved';
+				vm.deposits[index].status = 'approved';
 				vm.active_deposit_id = 0;
 
-				var from = vm.deposits[data.deposit_id].collected_from_user_name;
+				var from = vm.deposits[index].collected_from_user_name;
 
-				var alert = $mdDialog.alert().title('Success!').content('Deposit of Rs '+vm.deposits[data.deposit_id].amount+' from \''+ from +'\' has been approved(ID: ' + data.deposit_id + ')').ok('Ok');
+				var alert = $mdDialog.alert().title('Success!').content('Deposit of Rs '+vm.deposits[index].amount+' from \''+ from +'\' has been approved(ID: ' + deposit_id + ')').ok('Ok');
 				$mdDialog.show(alert);
 
 			}).error(vm.errorMessage);
@@ -109,8 +129,17 @@ angular.module('donutApp')
 			if(!vm.userCheck()) return false;
 			vm.active_deposit_id = deposit_id;
 			
+			var index = false;
+			for(var i in vm.deposits) {
+				if(vm.deposits[i].id == deposit_id) {
+					index = i;
+					break;
+				}
+			}
+			if(index === false) return vm.errorMessage("/approvals", "Can't find the given deposit.");
+			
 			var confirm = $mdDialog.confirm().title('Delete Deposit?')
-				.content('Are you sure you want to delete the deposit of Rs. ' + vm.deposits[deposit_id].amount + ' from ' + vm.deposits[deposit_id].collected_from_user_name)
+				.content('Are you sure you want to delete the deposit of Rs. ' + vm.deposits[index].amount + ' from ' + vm.deposits[index].collected_from_user_name)
 				.ok('Yes').cancel('No');
 			$mdDialog.show(confirm).then(vm.rejectCall);
 		}
@@ -121,18 +150,30 @@ angular.module('donutApp')
 			var user_id = User.getUserId();
 
 			$http({
-				method: 'GET',
-				url: $rootScope.base_url + "deposit/" + deposit_id + '/reject/' + user_id,
-				headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+				method: 'POST',
+				url: $rootScope.base_url + "deposits/" + deposit_id,
+				data: { reviewer_user_id: user_id, status: 'rejected' },
+				headers: $rootScope.request_headers,
 				transformRequest: $rootScope.transformRequest
-			}).success(function (data) {
-				if(data.error) return vm.errorMessage("/approvals", data.error);
+			}).success(function (response) {
+				if(response.status == 'error') return vm.errorMessage("/approvals", response.message);
+
+				var data = response.data;
+
+				var index = false;
+				for(var i in vm.deposits) {
+					if(vm.deposits[i].id == deposit_id) {
+						index = i;
+						break;
+					}
+				}
+				if(index === false) return vm.errorMessage("/approvals", "Can't find the given deposit.");
 
 				vm.is_processing = false;
-				vm.deposits[data.deposit_id].status = 'rejected';
+				vm.deposits[index].status = 'rejected';
 				vm.active_deposit_id = 0;
 
-				var alert = $mdDialog.alert().title('Success!').content('Deposit Deleted(ID: ' + data.deposit_id + ')').ok('Ok');
+				var alert = $mdDialog.alert().title('Success!').content('Deposit Deleted(ID: ' + deposit_id + ')').ok('Ok');
 				$mdDialog.show(alert);
 
 			}).error(vm.errorMessage);

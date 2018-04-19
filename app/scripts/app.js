@@ -111,7 +111,7 @@ angular
 	.run(['$location', '$rootScope', '$mdDialog', '$localStorage', 'UserService', function($location, $rootScope, $mdDialog, $localStorage, User) {
 		$rootScope.base_url = 'http://makeadiff.in/apps/exdon-beta/api/v1/';
 		if(location.href.toString().match(/localhost/) || location.href.toString().match(/192\.168\./)) {
-			$rootScope.base_url = 'http://localhost/Projects/Phoenix/v1/';
+			$rootScope.base_url = 'http://localhost/MAD/api/v1/';
 		}
 		// $rootScope.base_url = 'http://localhost/makeadiff.in/home/makeadiff/public_html/apps/exdon/api/';
 		// $rootScope.base_url = 'http://makeadiff.in/apps/exdon/api/';
@@ -121,6 +121,9 @@ angular
 			'Content-Type': 'application/x-www-form-urlencoded', 
 			'Authorization': 'Basic ' + window.btoa('sulu.simulation@makeadiff.in:pass')
 		};
+
+		$rootScope.coach_group_id = 369; // This is actually the FR volunteer user group - change as need be.
+		$rootScope.finance_fellow_group_id = 15;
 
 		if(User.getUserName()) {
 			$rootScope.user_name = User.getUserName();

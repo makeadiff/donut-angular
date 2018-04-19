@@ -56,12 +56,9 @@ angular.module('donutApp')
 			headers: $rootScope.request_headers,
 		}).success(function(response) { vm.listDonations(response, 'approved_donations'); }).error(vm.showError);
 
-		var coach_group_id = 369; // This is actually the FR volunteer user group - change as need be.
-		var finance_fellow_group_id = 15;
-
-		var group_id = coach_group_id; // If its any volunteer, find coaches in the city
+		var group_id = $rootScope.coach_group_id; // If its any volunteer, find coaches in the city
 		if(User.isPOC()) {
-			group_id = finance_fellow_group_id; // If its a coach, find the finance fellow in the city.
+			group_id = $rootScope.finance_fellow_group_id; // If its a coach, find the finance fellow in the city.
 			vm.manager = 'Finance Fellow';
 		}
 
@@ -157,8 +154,6 @@ angular.module('donutApp')
 	$rootScope.count = function(card){
 	   	return Object.keys(card).length;
 	}
-
-
 
 	if(User.checkLoggedIn()) {
 		vm.init();

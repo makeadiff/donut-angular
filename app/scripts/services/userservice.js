@@ -8,7 +8,7 @@
  * Factory in the donutApp.
  */
 angular.module('donutApp')
-  .factory('UserService', ['$localStorage',function ($localStorage) {
+  .factory('UserService', ['$localStorage','$rootScope',function ($localStorage, $rootScope) {
 		var user = {};
 
 		user.setLoggedIn = function(user_data){
@@ -35,16 +35,16 @@ angular.module('donutApp')
 		};
 
 		user.isPOC = function() {
-			for(var role in $localStorage.user.roles) {
-				if(role == 9) {return true;}
+			for(var i in $localStorage.user.groups) {
+				if($localStorage.user.groups[i].id == $rootScope.coach_group_id) {return true;}
 			}
 
 			return false;
 		};
 
 		user.isFC = function() {
-			for(var role in $localStorage.user.roles) {
-				if(role == 8) {return true;}
+			for(var i in $localStorage.user.groups) {
+				if($localStorage.user.groups[i].id == $rootScope.finance_fellow_group_id) {return true;}
 			}
 
 			return false;
