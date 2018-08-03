@@ -24,34 +24,46 @@ angular.module('donutApp')
 				url: $rootScope.base_url + 'users/login?phone=' + loginCtrl.login.phone + "&password=" + loginCtrl.login.password,
 				headers: $rootScope.request_headers,
 				transformRequest: $rootScope.transformRequest
-			}).success(function (data) {
-				if(data.error) {
-					loginCtrl.is_processing = false;
+			}).then(function (response) {
+				loginCtrl.is_processing = false;
+
+				if(response.status >= 200 && response.status < 300) {
+					var data = response.data;
+
+					if(data.status != 'success') {
+						User.unsetLoggedIn();
+						loginCtrl.login_invalid = true;
+						loginCtrl.error_message = data.join(",");
+						loginCtrl.login = {};
+
+					} else {
+						User.setLoggedIn(data.data.user);
+
+						// Update name at the top right corner
+						$rootScope.user_name = User.getUserName();
+						if(User.isPOC()) $rootScope.user_name += "(Coach)";
+						if(User.isFC()) $rootScope.user_name += "(Finance Fellow)";
+
+						var params = $location.search();
+
+						if(params.path != null) {
+							$location.path("/" + params.path);
+						}else{
+							$location.path('/');
+						}
+					}
+				} else {
 					User.unsetLoggedIn();
 					loginCtrl.login_invalid = true;
-					loginCtrl.error_message = data.error;
+					loginCtrl.error_message = data.join(",");
 					loginCtrl.login = {};
-
-				} else {
-					loginCtrl.is_processing = false;
-					User.setLoggedIn(data.data.user);
-
-					// Update name at the top right corner
-					$rootScope.user_name = User.getUserName();
-					if(User.isPOC()) $rootScope.user_name += "(Coach)";
-					if(User.isFC()) $rootScope.user_name += "(Finance Fellow)";
-
-					var params = $location.search();
-
-					if(params.path != null) {
-						$location.path("/" + params.path);
-					}else{
-						$location.path('/');
-					}
 				}
-
-			}).error(function(data){
+			}, function(response) {
+				loginCtrl.is_processing = false;
 				User.unsetLoggedIn();
+				loginCtrl.login_invalid = true;
+				loginCtrl.error_message = response.data.data.join(",");
+				loginCtrl.login = {};
 			});
 		};
 }]);
