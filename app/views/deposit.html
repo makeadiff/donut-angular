@@ -32,7 +32,7 @@
 
 		<div layout="row" layout-align="center center" 
 				ng-show="ctrl.donation_count && ctrl.manager != 'National Finance' && !(ctrl.manager == 'Finance Fellow' && count(ctrl.city_managers) == 1)">
-			<md-button class="md-raised md-primary" ng-click="ctrl.show_mode='manager-list'">Select {{ctrl.manager}} for Handover</md-button>
+			<md-button class="md-raised md-primary" ng-click="ctrl.selectManager()">Select {{ctrl.manager}} for Handover</md-button>
 		</div>
 	</div>
 
@@ -43,12 +43,12 @@
 				<md-radio-button ng-repeat="manager in ctrl.city_managers" ng-value="manager.id" label="{{manager.name}}">{{manager.name}}</md-radio-button>
 			</md-radio-group>
 		</div>
-	</div>
+		</div>
 
-	<div layout="row" layout-align="center center" 
-			ng-show="ctrl.show_mode == 'manager-list' || ctrl.manager == 'National Finance' || (ctrl.manager == 'Finance Fellow' && count(ctrl.city_managers) == 1)">
-		<md-button ng-show="!ctrl.error" ng-href="#deposit" class="md-raised md-primary" ng-click="ctrl.addDeposit()">{{ctrl.add_deposit_button_text}}</md-button>
-	</div>
+		<div layout="row" layout-align="center center" 
+				ng-show="ctrl.show_mode == 'manager-list' || ctrl.manager == 'National Finance' || (ctrl.manager == 'Finance Fellow' && count(ctrl.city_managers) == 1)">
+			<md-button ng-show="!ctrl.error" ng-href="#deposit" class="md-raised md-primary" ng-click="ctrl.addDeposit()">{{ctrl.add_deposit_button_text}}</md-button>
+		</div>
 
 	</div>
 

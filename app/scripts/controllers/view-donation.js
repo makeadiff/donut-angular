@@ -16,6 +16,19 @@ angular.module('donutApp')
 	vm.error = false;
 	vm.active_donation_id = 0;
 
+
+	vm.showError = function (error_message) {
+		vm.is_processing = false;
+
+		if(typeof error_message.message != 'undefined') error_message = error_message.message;
+		else if(error_message.data.length) error_message = error_message.data.join("<br />");
+		else if(!error_message) error_message = 'Connection error. Please try again later.';
+
+		var alert = $mdDialog.alert().title('Error!').content(error_message).ok('Ok');
+		$mdDialog.show(alert);
+		// $location.path('/');
+	}
+
 	if(User.checkLoggedIn()) {
 		var fundraiser_id = User.getUserId();
 
@@ -38,14 +51,7 @@ angular.module('donutApp')
 
 				vm.donations = donations;
 			}
-
-		}).error(function (data) {
-			vm.is_processing = false;
-
-			var alert = $mdDialog.alert().title('Error!').content('Connection error. Please try again later.').ok('Ok');
-			$mdDialog.show(alert);
-			$location.path('/');
-		});
+		}).error(vm.showError);
 
 	} else {
 		vm.is_processing = false;
@@ -77,19 +83,15 @@ angular.module('donutApp')
 			url: $rootScope.base_url + "donations/" + donation_id,
 			headers: $rootScope.request_headers,
 			transformRequest: $rootScope.transformRequest
-		}).then(function(response) {
+		}).success(function(response) {
 			vm.is_processing = false;
-			if(response.status >= 200 && response.status < 300) {
-				vm.donations[donation_id].status = 'DELETED';
-				vm.active_donation_id = 0;
 
-				var alert = $mdDialog.alert().title('Success!').content('Donation Deleted. ID: ' + donation_id).ok('Ok');
-				$mdDialog.show(alert);
-			} else {
-				var alert = $mdDialog.alert().title('Error').content(data.message).ok('Ok');
-				$mdDialog.show(alert);
-			}
-		});
+			vm.donations[donation_id].status = 'DELETED';
+			vm.active_donation_id = 0;
+
+			var alert = $mdDialog.alert().title('Success!').content('Donation Deleted. ID: ' + donation_id).ok('Ok');
+			$mdDialog.show(alert);
+		}).error(vm.showError);
 	}
 
 	vm.userCheck = function() {
@@ -100,4 +102,5 @@ angular.module('donutApp')
 		vm.is_processing = false;
 		return $rootScope.errorMessage(redirect_to, error_message);
 	}
+
 }]);

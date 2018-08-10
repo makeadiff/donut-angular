@@ -67,8 +67,8 @@ angular.module('donutApp')
 			url: $rootScope.base_url + "users?city_id=" + User.getUserCityId() + "&group_id=" + group_id,
 			transformRequest: $rootScope.transformRequest,
 			headers: $rootScope.request_headers
-		}).success(function (data) {
-			vm.city_managers = data.data.users;
+		}).success(function (response) {
+			vm.city_managers = response.data.users;
 			if(Object.keys(vm.city_managers).length == 1) {
 				vm.selected_manager = vm.city_managers[0]['id'];
 			}
@@ -141,10 +141,25 @@ angular.module('donutApp')
 		}).error(vm.showError);
 	}
 
+	vm.selectManager = function () {
+		var count = 0;
+		for(var donation_id in vm.include_donation) {
+			if(vm.include_donation[donation_id]) count++;
+		}
+
+		if(count) vm.show_mode = 'manager-list';
+		else {
+			var alert = $mdDialog.alert().title('Error!').content('Please select the donations you wish to include in this deposit...').ok('Ok');
+			$mdDialog.show(alert);
+		}
+	}
+
 	vm.showError = function (error_message) {
 		vm.is_processing = false;
 
-		if(!error_message) error_message = 'Connection error. Please try again later.';
+		if(typeof error_message.message != 'undefined') error_message = error_message.message;
+		else if(error_message.data.length) error_message = error_message.data.join("<br />");
+		else if(!error_message) error_message = 'Connection error. Please try again later.';
 
 		var alert = $mdDialog.alert().title('Error!').content(error_message).ok('Ok');
 		$mdDialog.show(alert);

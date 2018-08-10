@@ -54,6 +54,7 @@ angular.module('donutApp')
 			$localStorage.user_id = 0;
 			$localStorage.user = {};
 			$localStorage.loggedIn = false;
+			$rootScope.user_name = '';
 			return true;
 		};
 

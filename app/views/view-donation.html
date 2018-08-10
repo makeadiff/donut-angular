@@ -1,10 +1,10 @@
-<div layout="column" ng-controller="ViewDonationCtrl as cm" layout-margin layout-fill layout-padding>
+<div layout="column" ng-controller="ViewDonationCtrl as vm" layout-margin layout-fill layout-padding>
 	<h3 align="center">My Donations</h3>
-	<span layout="row" ng-show="cm.is_processing" layout-align="center center"><br><br><br><md-progress-circular  md-mode="indeterminate"></md-progress-circular></span>
+	<span layout="row" ng-show="vm.is_processing" layout-align="center center"><br><br><br><md-progress-circular  md-mode="indeterminate"></md-progress-circular></span>
 
-	<span ng-show="cm.error" style="color:red; text-align: center;">{{cm.error}}</span>
+	<span ng-show="vm.error" style="color:red; text-align: center;">{{vm.error}}</span>
 
-	<div layout="row" layout-align="center center" ng-repeat="donation in cm.donations">
+	<div layout="row" layout-align="center center" ng-repeat="donation in vm.donations">
 		<md-card flex-gt-lg="30" flex="100">
 		<md-card-content>
 			<table>
@@ -23,7 +23,7 @@
 						- <strong>{{dep.status | statusFormat}}</strong>
 				</ul></td></tr>
 			<tr ng-show="!donation.deposit.length"><td colspan="2"><md-button ng-disabled="donation.status == 'DELETED'"
-								ng-click="cm.deleteDonation(donation.id)" class="md-raised md-warn">Mistaken Entry</md-button></td></tr>
+								ng-click="vm.deleteDonation(donation.id)" class="md-raised md-warn">Mistaken Entry</md-button></td></tr>
 			</table>
 		</md-card-content>
 		</md-card>

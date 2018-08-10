@@ -20,10 +20,11 @@ angular.module('donutApp')
 			loginCtrl.is_processing = true;
 
 			$http({
-				method: 'GET',
-				url: $rootScope.base_url + 'users/login?phone=' + loginCtrl.login.phone + "&password=" + loginCtrl.login.password,
+				method: 'POST',
+				url: $rootScope.base_url + 'users/login',
 				headers: $rootScope.request_headers,
-				transformRequest: $rootScope.transformRequest
+				transformRequest: $rootScope.transformRequest,
+				data: {"phone": loginCtrl.login.phone, "password": loginCtrl.login.password}
 			}).then(function (response) {
 				loginCtrl.is_processing = false;
 
