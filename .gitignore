@@ -5,4 +5,9 @@ dist
 bower_components
 .idea
 secret.json
-
+Donut.sublime-workspace
+Old/
+UR Results.txt
+User Research.txt
+failsafe/
+test/protractor/Sample.js

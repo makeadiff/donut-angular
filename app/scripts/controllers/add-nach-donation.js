@@ -19,7 +19,9 @@ angular.module('donutApp')
 			'address'   : "",
 			'amount'    : "",
 			'type' 		: "nach",
-			'created_at': new Date()
+			'created_at': new Date(),
+			'nach_start_on': new Date(),
+			'nach_end_on': ""
 		};
 
 		var params = $location.search();
@@ -85,7 +87,9 @@ angular.module('donutApp')
 				'address'   : "",
 				'amount'    : "",
 				'type' 		: "nach",
-				'created_at': new Date()
+				'created_at': new Date(),
+				'nach_start_on': new Date(),
+				'nach_end_on': ""
 			};
 		}
 
@@ -95,6 +99,14 @@ angular.module('donutApp')
 			if(User.checkLoggedIn()) {
 				var fundraiser_id = User.getUserId();
 
+				if(!vm.donation.nach_end_on) {
+					vm.donation.amount = vm.donation.amount * 12;
+				} else {
+					var diff = vm.donation.nach_end_on.getTime() - vm.donation.nach_start_on.getTime();
+					var months = Math.round(diff / (1000*60*60*24 * 30));
+					vm.donation.amount = vm.donation.amount * months;
+				}
+
 				$http({
 					method: 'POST',
 					url: $rootScope.base_url + 'donations',
@@ -103,6 +115,8 @@ angular.module('donutApp')
 					data: {amount : vm.donation.amount, donor_name : vm.donation.name, donor_email : vm.donation.email, donor_address: "",
 						donor_phone : vm.donation.phone, fundraiser_user_id : fundraiser_id,
 						added_on : $filter("date")(vm.donation.created_at, "yyyy-MM-dd"),
+						nach_start_on : $filter("date")(vm.donation.nach_start_on, "yyyy-MM-dd"),
+						nach_end_on : $filter("date")(vm.donation.nach_end_on, "yyyy-MM-dd"),
 						type : vm.donation.type, format : 'json'}
 
 				}).success(function (data) {

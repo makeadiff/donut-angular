@@ -19,11 +19,18 @@
 
         <md-input-container>
             <label>Donor Email</label>
-            <input name="email" label="Email" ng-model="addExDon.donation.email" type="email" type="email" required>
+            <input name="email" label="Email" ng-model="addExDon.donation.email" type="email" required>
         </md-input-container>
 
         <p>Donated on Date :</p>
         <md-datepicker ng-model="addExDon.donation.created_at" md-placeholder="Donated On"></md-datepicker>
+        <br>
+
+        <p>NACH Start Date :</p>
+        <md-datepicker ng-model="addExDon.donation.nach_start_on" md-placeholder="NACH Starts On"></md-datepicker>
+        <br>
+        <p>NACH End Date :</p>
+        <md-datepicker ng-model="addExDon.donation.nach_end_on" md-placeholder="Until Cancelled"></md-datepicker>
         <br>
 
         <md-button id="action" ng-disabled="!addExDon.validCheck() || addExDon.is_processing" class="md-raised" type="submit">Submit</md-button>

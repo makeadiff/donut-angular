@@ -30,6 +30,13 @@
 			</div>
 		</div>
 
+		<div layout="row" layout-align="center center" ng-show="ctrl.manager == 'National Finance'">
+		<md-input-container>
+            <label>Salesforce ID</label>
+            <input name="deposit_information" label="Salesforce ID" ng-model="ctrl.deposit_information" type="text" required>
+        </md-input-container>
+    	</div>
+
 		<div layout="row" layout-align="center center" 
 				ng-show="ctrl.donation_count && ctrl.manager != 'National Finance' && !(ctrl.manager == 'Finance Fellow' && count(ctrl.city_managers) == 1)">
 			<md-button class="md-raised md-primary" ng-click="ctrl.selectManager()">Select {{ctrl.manager}} for Handover</md-button>
@@ -43,6 +50,7 @@
 				<md-radio-button ng-repeat="manager in ctrl.city_managers" ng-value="manager.id" label="{{manager.name}}">{{manager.name}}</md-radio-button>
 			</md-radio-group>
 		</div>
+
 		</div>
 
 		<div layout="row" layout-align="center center" 

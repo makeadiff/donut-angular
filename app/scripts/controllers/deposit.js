@@ -19,6 +19,7 @@ angular.module('donutApp')
 	vm.include_donation = {};
 	vm.show_mode = "donation-list";
 	vm.selected_manager = 0;
+	vm.deposit_information = "";
 	vm.national_account_user_id = 163416; // National Finance User ID.
 	vm.city_managers = {};
 	vm.manager = "Coach";
@@ -124,7 +125,7 @@ angular.module('donutApp')
 			url: $rootScope.base_url + "deposits",
 			headers: $rootScope.request_headers,
 			transformRequest: $rootScope.transformRequest,
-			data: {"donation_ids": donation_ids, "collected_from_user_id": collected_from_user_id, "given_to_user_id": given_to_user_id}
+			data: {"donation_ids": donation_ids, "collected_from_user_id": collected_from_user_id, "given_to_user_id": given_to_user_id, "deposit_information": vm.deposit_information }
 		}).success(function (data) {
 			vm.is_processing = false;
 			if(data.status == 'error') {
