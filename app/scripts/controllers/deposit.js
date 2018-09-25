@@ -58,14 +58,17 @@ angular.module('donutApp')
 		}).success(function(response) { vm.listDonations(response, 'approved_donations'); }).error(vm.showError);
 
 		var group_id = $rootScope.coach_group_id; // If its any volunteer, find coaches in the city
+		var get_groups = "&group_in=" + $rootScope.coach_group_id + "," + $rootScope.finance_fellow_group_id;
+		
 		if(User.isPOC()) {
 			group_id = $rootScope.finance_fellow_group_id; // If its a coach, find the finance fellow in the city.
 			vm.manager = 'Finance Fellow';
+			get_groups = "&group_id=" + group_id;
 		}
 
 		$http({
 			method: 'GET',
-			url: $rootScope.base_url + "users?city_id=" + User.getUserCityId() + "&group_id=" + group_id,
+			url: $rootScope.base_url + "users?city_id=" + User.getUserCityId() + get_groups,
 			transformRequest: $rootScope.transformRequest,
 			headers: $rootScope.request_headers
 		}).success(function (response) {
