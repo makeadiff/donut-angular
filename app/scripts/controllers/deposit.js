@@ -111,6 +111,13 @@ angular.module('donutApp')
 			if(vm.include_donation[donation_id]) donation_ids.push(donation_id);
 		}
 
+		if(!donation_ids.length) { // No donations selected.
+			var alert = $mdDialog.alert().title('Error!').content("You haven't selected any donation. Please select one or more donation to be added to the deposit.").ok('Ok');
+			$mdDialog.show(alert);
+			vm.is_processing = false;
+			return false;
+		}
+
 		if(User.isFC()) { // Finance fellow is an FC - making deposits directly to the national account.
 			given_to_user_id = vm.national_account_user_id;
 			given_to_user_name = "National Account";
@@ -134,7 +141,7 @@ angular.module('donutApp')
 			if(data.status == 'error') {
 				var alert = $mdDialog.alert().title('Error!').content(data.message).ok('Ok');
 				$mdDialog.show(alert);
-				$location.path('/deposit');
+				// $location.path('/deposit');
 				return;
 			}
 
