@@ -13,9 +13,12 @@ angular.module('donutApp')
 
 	vm.is_processing = true;
 	vm.donations = {};
+	vm.historical_donations = {};
 	vm.error = false;
 	vm.active_donation_id = 0;
-
+	vm.donation_sum = 0;
+	vm.donation_overall_sum = 0;
+	vm.show_historical_donations = 0;
 
 	vm.showError = function (error_message) {
 		vm.is_processing = false;
@@ -34,7 +37,7 @@ angular.module('donutApp')
 
 		$http({
 			method: 'GET',
-			url: $rootScope.base_url + "users/" + fundraiser_id + '/donations',
+			url: $rootScope.base_url + "users/" + fundraiser_id + '/donations?from=2014-04-01',
 			headers: $rootScope.request_headers,
 			transformRequest: $rootScope.transformRequest,
 		}).success(function (data) {
@@ -43,13 +46,24 @@ angular.module('donutApp')
 			if(data.status == 'error') {
 				vm.error = data.message;
 			} else {
-				var donations = {};
+				var this_year_donations = {};
+				var all_donations = {};
+
 				for(var i in data.data.donations) {
 					var don = data.data.donations[i];
-					donations[don.id] = don;
+
+					var don_date = new Date(don.added_on);
+					if(don_date.getFullYear() >= $rootScope.year || ((don_date.getFullYear() == $rootScope.year - 1) && (don_date.getMonth() > 4))) {
+						this_year_donations[don.id] = don;
+						vm.donation_sum += Number(don.amount);
+					} else {
+						all_donations[don.id] = don;
+					}
+					vm.donation_overall_sum += Number(don.amount);
 				}
 
-				vm.donations = donations;
+				vm.donations = this_year_donations;
+				vm.historical_donations = all_donations;
 			}
 		}).error(vm.showError);
 

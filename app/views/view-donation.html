@@ -1,9 +1,11 @@
-<div layout="column" ng-controller="ViewDonationCtrl as vm" layout-margin layout-fill layout-padding>
+<div layout="column" ng-controller="ViewDonationCtrl as vm" align="center" layout-margin layout-fill layout-padding>
 	<h3 align="center">My Donations</h3>
 	<span layout="row" ng-show="vm.is_processing" layout-align="center center"><br><br><br><md-progress-circular  md-mode="indeterminate"></md-progress-circular></span>
 
 	<span ng-show="vm.error" style="color:red; text-align: center;">{{vm.error}}</span>
 
+	<h4>Donations this year...</h4>
+	<strong>Total Amount: {{vm.donation_sum}}</strong>
 	<div layout="row" layout-align="center center" ng-repeat="donation in vm.donations">
 		<md-card flex-gt-lg="30" flex="100">
 		<md-card-content>
@@ -28,4 +30,32 @@
 		</md-card-content>
 		</md-card>
 	</div>
+
+	<h4>Historical Donations...</h4>
+	<strong>Total Amount(Overall): {{vm.donation_overall_sum}}</strong>
+	<a ng-click="vm.show_historical_donations = 1" style="color: #2da5e0; text-decoration: underline;">[Show All...]</a>
+
+	<div ng-show="vm.show_historical_donations" layout="row" layout-align="center center" ng-repeat="donation in vm.historical_donations">
+		<md-card flex-gt-lg="30" flex="100">
+		<md-card-content>
+			<table>
+			<tr><td class="md-body-2">ID</td><td>{{donation.id}}</td></tr>
+			<tr><td class="md-body-2">Donor Name</td><td>{{donation.donor}}</td></tr>
+			<tr><td class="md-body-2">Amount</td><td>{{donation.amount}}</td></tr>
+			<tr ng-show="donation.type && donation.type != 'GEN'"><td class="md-body-2">Donation Type</td>
+				<td><strong>{{donation.type | statusFormat}}</strong></td></tr>
+			<tr><td class="md-body-2">Date</td><td>{{donation.added_on | dateToISO | date : 'MMM d, y'}}</td></tr>
+			<tr ng-show="donation.status"><td class="md-body-2">Status</td>
+				<td><strong>{{donation.status | statusFormat}}</strong></td></tr>
+			<tr ng-show="donation.deposit.length"><td class="md-body-2">Deposit Status</td>
+				<td><ul ng-repeat="dep in donation.deposit" style="list-style: none;padding:0;margin:0;">
+					<li>{{dep.collected_from_user_name}} &gt; {{dep.given_to_user_name}} 
+						on {{dep.added_on | dateToISO | date : 'MMM d, y'}}
+						- <strong>{{dep.status | statusFormat}}</strong>
+				</ul></td></tr>
+			</table>
+		</md-card-content>
+		</md-card>
+	</div>
+	<p>&nbsp;</p>
 </div>

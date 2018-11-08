@@ -124,6 +124,14 @@ angular
 		$rootScope.coach_group_id = 369; // This is actually the FR volunteer user group - change as need be.
 		$rootScope.finance_fellow_group_id = 15;
 
+		// MAD Year - code taken from Phoenix/Models/Common.php:__construct__
+		var start_month = 5; // May
+		var today = new Date();
+        var year = today.getFullYear();
+        var this_month = today.getMonth() + 1;
+        if(this_month < start_month) year = year - 1;
+		$rootScope.year = year;
+
 		if(User.getUserName()) {
 			$rootScope.user_name = User.getUserName();
 
@@ -192,7 +200,8 @@ angular
 			'pending': 'Approval Pending',
 			'approved': 'Approved',
 			'cash': 'Cash',
-			'collected': "Collected"
+			'collected': "Collected",
+			'crowdfunding_platforms': "Crowdfunding Platforms"
 		};
 
 		return function(input) {
