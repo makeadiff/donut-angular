@@ -1,5 +1,7 @@
 
 <div layout="column" layout-align="center center" ng-controller="AddDonationCtrl as addDon" >
+		<h3 align="center">Add Cash / Cheque donations</h3>
+
 	<span ng-show="addDon.is_processing"><br><md-progress-circular  md-mode="indeterminate"></md-progress-circular></span>
 	<form name="addDon.donationForm" layout="column" ng-submit="addDon.addDonation()" novalidate>
 		<md-input-container>
@@ -41,7 +43,7 @@
 		<br>
 
 		<md-button id="action" ng-disabled="!addDon.validCheck() || addDon.is_processing" class="md-raised" type="submit">Submit</md-button>
-		<p align="right"><a href="#home">Cancel</a></p>
+		<!-- <p align="right"><a href="#home">Cancel</a></p> -->
 		
 	</form>
 

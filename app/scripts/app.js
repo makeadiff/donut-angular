@@ -22,25 +22,28 @@ angular
 	  .when('/', {
 		templateUrl: 'views/home.html',
 		restricted : true,
-		title : 'Home'
+		title : 'Donut'
 	  })
 	  .when('/add-donation', {
 		templateUrl: 'views/add-donation.html',
 		// controller: 'AddDonationCtrl',
 		restricted : true,
-		title : 'Add Donation'
+		title : 'Cash/ Cheque Donation',
+		heading:'Add Cash / Cheque donations'
 	  })
 	  .when('/view-donation', {
 		templateUrl: 'views/view-donation.html',
 		// controller: 'ViewDonationCtrl',
 		restricted : true,
-		title : 'View Donation'
+		title : 'View Donation',
+		heading:'My Donations'
 	  })
 	  .when('/deposit', {
 		templateUrl: 'views/deposit.html',
 		// controller: 'DepositCtrl',
 		restricted : true,
-		title : 'Make a Deposit'
+		title : 'Make a Deposit',
+		heading:'Make a Deposit'
 	  })
 	  .when('/login', {
 		templateUrl: 'views/login.html',
@@ -74,13 +77,15 @@ angular
 		templateUrl: 'views/add-nach-donation.html',
 		// controller: 'AddNACHDonationCtrl',
 		restricted : true,
-		title: "Add NACH Donation"
+		title: "Add NACH Donation",
+		heading:'Add NACH Donation'
 		})
 	  .when('/add-online-donation', {
 		templateUrl: 'views/add-online-donation.html',
 		// controller: 'AddOnlineDonationCtrl',
 		restricted : true,
-		title: "Add Online Donation"
+		title: "Add Online Donation",
+		heading:'Add Online Donation'
 		})
 	  .when('/approvals', {
 		templateUrl: 'views/approvals.html',
@@ -113,7 +118,7 @@ angular
 		
 		if(location.href.toString().match(/localhost/) || location.href.toString().match(/192\.168\./)) {
 			// $rootScope.base_url = 'http://localhost/MAD/api/v1/';
-			$rootScope.base_url = 'http://localhost/Projects/Phoenix/v1/';
+			$rootScope.base_url = 'http://localhost/Phoenix/v1/';
 		}
 		
 		$rootScope.request_headers = {
