@@ -10,11 +10,6 @@
 		</md-input-container>
 
 		<md-input-container>
-		<label>Donated Amount</label>
-		<input name="amount" label="Amount" ng-model="addDon.donation.amount" required ng-pattern="/^\d+$/">
-		</md-input-container>
-
-		<md-input-container>
 		<label>Donor Phone</label>
 		<input name="phone" label="Phone" ng-model="addDon.donation.phone" required type="tel" md-minlength="10" md-maxlength="15" ng-pattern="/^[\d \-\+\.]{10,15}$/">
 		</md-input-container>
@@ -30,15 +25,28 @@
 		</md-input-container>
 
 		<md-input-container>
+				<label>Donation Type</label>
+				<md-select ng-model="addDon.donation.type" placeholder="Donation Type" class="md-no-underline" required md-no-asterisk="false">
+						<md-option value="cash">Cash</md-option>
+						<md-option value="cheque">Cheque</md-option>
+					  </md-select>
+			</md-input-container>
+	
+		<md-input-container>
+			<label>Donated Amount</label>
+			<input name="amount" label="Amount" ng-model="addDon.donation.amount" required ng-pattern="/^\d+$/">
+			</md-input-container>
+	
+		<md-input-container ng-if="addDon.donation.type=='cheque'">
 		<label>Cheque Number</label>
-		<input name="comment" label="Cheque Number" ng-model="addDon.donation.comment">
+		<input name="comment" label="Cheque Number" ng-model="addDon.donation.comment" required>
 		</md-input-container>
  
-		<md-radio-group layout="row" layout-align="start center" ng-model="addDon.donation.eighty_g">
+		<!-- <md-radio-group layout="row" layout-align="start center" ng-model="addDon.donation.eighty_g">
 			<p>80G :</p>
 			<md-radio-button value ="true">Yes</md-radio-button>
 			<md-radio-button value="false">No</md-radio-button>
-		</md-radio-group>
+		</md-radio-group> -->
 
 		<br>
 
