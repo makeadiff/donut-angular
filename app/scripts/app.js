@@ -118,7 +118,7 @@ angular
 		
 		if(location.href.toString().match(/localhost/) || location.href.toString().match(/192\.168\./)) {
 			// $rootScope.base_url = 'http://localhost/MAD/api/v1/';
-			$rootScope.base_url = 'http://localhost/Phoenix/v1/';
+			$rootScope.base_url = 'http://localhost/Projects/Phoenix/v1/';
 		}
 		
 		$rootScope.request_headers = {
