@@ -14,6 +14,8 @@ angular.module('donutApp')
 
 		//Initializing fields to be empty otherwise fields contain undefined.
 		vm.donation = {};
+		vm.donation.eighty_g = "false";
+		vm.donation.type = "cash";
 
 		var params = $location.search();
 
@@ -48,7 +50,7 @@ angular.module('donutApp')
 		}
 
 		vm.donation.comment = "";
-		vm.donation.eighty_g = "false";
+		vm.donation.cheque_no = "";
 
 		//Initializing errors
 		vm.phone_email_absent = false;
@@ -86,6 +88,11 @@ angular.module('donutApp')
 			vm.is_processing = true;
 			if(User.checkLoggedIn()) {
 				var fundraiser_id = User.getUserId();
+				console.log(vm.donation.eighty_g);
+				if(parseInt(vm.donation.amount)>2000){
+					vm.donation.eighty_g = "true";
+				}
+				console.log(vm.donation.type);
 
 				//Validate donation
 				$http({
@@ -114,7 +121,7 @@ angular.module('donutApp')
 					vm.is_processing = false;
 					vm.is_error = true;
 
-					var alert = $mdDialog.alert().title('Error!').content('Connection issue with \''+$rootScope.base_url + 'donation/add'+'\'. Please try again later.').ok('Ok');
+					var alert = $mdDialog.alert().title('Error!').content('Connection issue with \''+$rootScope.base_url + 'donations/validate'+'\'. Please try again later.').ok('Ok');
 					$mdDialog.show(alert);
 				});
 
@@ -127,8 +134,8 @@ angular.module('donutApp')
 						transformRequest: $rootScope.transformRequest,
 						data: {amount : vm.donation.amount, donor_name : vm.donation.name, donor_email : vm.donation.email, 
 							donor_phone : vm.donation.phone, eighty_g_required : vm.donation.eighty_g, donor_address : vm.donation.address,
-							comment: vm.donation.comment, fundraiser_user_id : fundraiser_id,
-							type: 'cash', format : 'json'}
+							comment: vm.donation.comment, fundraiser_user_id : fundraiser_id, cheque_no: vm.donation.cheque_no,
+							type: vm.donation.type, format : 'json'}
 					}).success(function (data) {
 						vm.is_processing = false;
 						var alert = $mdDialog.alert().title('Success!').content('Donation of Rs '+vm.donation.amount+' from donor \''+vm.donation.name+'\' added succesfully(Donation ID: ' + data.data.donation.id + ')').ok('Ok');
@@ -152,7 +159,7 @@ angular.module('donutApp')
 						vm.is_processing = false;
 						vm.is_error = true;
 
-						var alert = $mdDialog.alert().title('Error!').content('Connection issue with \''+$rootScope.base_url + 'donations'+'\'. Please try again later.').ok('Ok');
+						var alert = $mdDialog.alert().title('Error!').content('Connection issue with \''+$rootScope.base_url + 'donations\'. Please try again later.').ok('Ok');
 						$mdDialog.show(alert);
 					})
 				};

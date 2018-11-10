@@ -1,15 +1,12 @@
 
 <div layout="column" layout-align="center center" ng-controller="AddDonationCtrl as addDon" >
+		<h3 align="center">Add Cash / Cheque donations</h3>
+
 	<span ng-show="addDon.is_processing"><br><md-progress-circular  md-mode="indeterminate"></md-progress-circular></span>
 	<form name="addDon.donationForm" layout="column" ng-submit="addDon.addDonation()" novalidate>
 		<md-input-container>
 		<label>Donor Name</label>
 		<input name="name" label="Name" ng-model="addDon.donation.name" required>
-		</md-input-container>
-
-		<md-input-container>
-		<label>Donated Amount</label>
-		<input name="amount" label="Amount" ng-model="addDon.donation.amount" required ng-pattern="/^\d+$/">
 		</md-input-container>
 
 		<md-input-container>
@@ -28,20 +25,33 @@
 		</md-input-container>
 
 		<md-input-container>
+			<label>Donated Amount</label>
+			<input name="amount" label="Amount" ng-model="addDon.donation.amount" required ng-pattern="/^\d+$/">
+		</md-input-container>
+
+		<md-input-container>
+			<label>Donation Type</label>
+			<md-select ng-model="addDon.donation.type" placeholder="Donation Type" class="md-no-underline" required md-no-asterisk="false">
+					<md-option value="cash">Cash</md-option>
+					<md-option value="cheque">Cheque</md-option>
+				  </md-select>
+		</md-input-container>
+	
+		<md-input-container ng-if="addDon.donation.type=='cheque'">
 		<label>Cheque Number</label>
-		<input name="comment" label="Cheque Number" ng-model="addDon.donation.comment">
+		<input name="comment" label="Cheque Number" ng-model="addDon.donation.cheque_no" required>
 		</md-input-container>
  
-		<md-radio-group layout="row" layout-align="start center" ng-model="addDon.donation.eighty_g">
+		<!-- <md-radio-group layout="row" layout-align="start center" ng-model="addDon.donation.eighty_g">
 			<p>80G :</p>
 			<md-radio-button value ="true">Yes</md-radio-button>
 			<md-radio-button value="false">No</md-radio-button>
-		</md-radio-group>
+		</md-radio-group> -->
 
 		<br>
 
 		<md-button id="action" ng-disabled="!addDon.validCheck() || addDon.is_processing" class="md-raised" type="submit">Submit</md-button>
-		<p align="right"><a href="#home">Cancel</a></p>
+		<!-- <p align="right"><a href="#home">Cancel</a></p> -->
 		
 	</form>
 
