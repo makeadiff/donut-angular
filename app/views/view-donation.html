@@ -24,8 +24,10 @@
 						on {{dep.added_on | dateToISO | date : 'MMM d, y'}}
 						- <strong>{{dep.status | statusFormat}}</strong>
 				</ul></td></tr>
-			<tr ng-show="!donation.deposit.length"><td colspan="2"><md-button ng-disabled="donation.status == 'DELETED'"
-								ng-click="vm.deleteDonation(donation.id)" class="md-raised md-warn">Mistaken Entry</md-button></td></tr>
+			<tr ng-show="!donation.deposit.length"><td class="md-body-2" valign="top">Action</td>
+				<td><!-- <md-button href="#/add-donation?donor_name={{donation.donor}}&donor_phone={{donation.donor}}&donor_email=" class="md-raised">Add donation by same donor</md-button><br /> -->
+					<md-button ng-disabled="donation.status == 'DELETED'"
+						ng-click="vm.deleteDonation(donation.id)" class="md-raised md-warn">Mistaken Entry</md-button><br /></td></tr>
 			</table>
 		</md-card-content>
 		</md-card>
