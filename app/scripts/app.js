@@ -8,6 +8,7 @@
  */
 angular
   .module('donutApp', [
+  	'ngRaven',
 	'ngAnimate',
 	'ngCookies',
 	'ngResource',
@@ -160,6 +161,7 @@ angular
 
 		$rootScope.coach_group_id = 369; // This is actually the FR volunteer user group - change as need be.
 		$rootScope.finance_fellow_group_id = 15;
+		$rootScope.fr_fellow_group_id = 370;
 
 		// MAD Year - code taken from Phoenix/Models/Common.php:__construct__
 		var start_month = 5; // May

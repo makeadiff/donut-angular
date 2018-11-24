@@ -58,7 +58,7 @@ angular.module('donutApp')
 		}).success(function(response) { vm.listDonations(response, 'approved_donations'); }).error(vm.showError);
 
 		var group_id = $rootScope.coach_group_id; // If its any volunteer, find coaches in the city
-		var get_groups = "&group_in=" + $rootScope.coach_group_id + "," + $rootScope.finance_fellow_group_id;
+		var get_groups = "&group_in=" + $rootScope.coach_group_id + "," + $rootScope.fr_fellow_group_id + "," + $rootScope.finance_fellow_group_id;
 		
 		if(User.isPOC()) {
 			group_id = $rootScope.finance_fellow_group_id; // If its a coach, find the finance fellow in the city.
