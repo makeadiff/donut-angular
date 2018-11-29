@@ -36,7 +36,10 @@ angular.module('donutApp')
 
 		user.isPOC = function() {
 			for(var i in $localStorage.user.groups) {
-				if($localStorage.user.groups[i].id == $rootScope.coach_group_id) {return true;}
+				if($localStorage.user.groups[i].id == $rootScope.coach_group_id 
+						|| $localStorage.user.groups[i].id == $rootScope.fr_fellow_group_id) {
+					return true;
+				}
 			}
 
 			return false;
