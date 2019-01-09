@@ -22,6 +22,7 @@
 					<tr ng-show="ctrl.show_donation[donation.id] == true"><td class="md-body-2">ID</td><td>{{donation.id}}</td></tr>
 					<tr ng-show="ctrl.show_donation[donation.id] == true"><td class="md-body-2">Donor Name</td><td>{{donation.donor}}</td></tr>
 					<tr ng-show="ctrl.show_donation[donation.id] == true"><td class="md-body-2">Amount</td><td><strong>{{donation.amount}} Rs</strong></td></tr>
+					<tr ng-show="ctrl.show_donation[donation.id] == true"><td class="md-body-2">Type</td><td><strong>{{donation.type | statusFormat}}</strong></td></tr>
 					<tr ng-show="ctrl.show_donation[donation.id] == true"><td class="md-body-2">Date</td><td>{{donation.added_on | dateToISO | date : 'MMM d, y'}}</td></tr>
 					<tr ng-show="ctrl.show_donation[donation.id] == true"><td class="md-body-2">Status</td><td>{{donation.status | statusFormat}}</td></tr>
 					</table>

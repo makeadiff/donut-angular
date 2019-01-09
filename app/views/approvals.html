@@ -23,6 +23,7 @@
 					<tr><td class="md-body-2">Donor Name</td><td>{{donation.donor}}</td></tr>
 					<tr><td class="md-body-2">Fundraiser Name</td><td>{{donation.fundraiser}}</td></tr>
 					<tr><td class="md-body-2">Amount</td><td>{{donation.amount}} Rs</td></tr>
+					<tr><td class="md-body-2">Type</td><td>{{donation.type | statusFormat}}</td></tr>
 					<tr><td class="md-body-2">Date</td><td>{{donation.added_on | dateToISO | date : 'MMM d, y'}}</td></tr>
 					<tr><td class="md-body-2">Status</td><td><strong>{{donation.status | statusFormat}}</strong></td></tr>
 				</table>

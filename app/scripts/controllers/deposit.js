@@ -32,7 +32,7 @@ angular.module('donutApp')
 	
 	if(User.isFC()) {
 		vm.manager = "National Finance";
-		vm.add_deposit_button_text = 'Mark as Deposited in Bank';
+		vm.add_deposit_button_text = 'Handed over to National Team';
 	} else if(User.isPOC()) {
 		vm.manager = "Finance Fellow";
 		vm.add_deposit_button_text = "Handover to Finance Fellow";
@@ -119,6 +119,13 @@ angular.module('donutApp')
 		}
 
 		if(User.isFC()) { // Finance fellow is an FC - making deposits directly to the national account.
+			if(vm.deposit_information == "" || vm.deposit_information.length != 4) { // Validation for Deposit ID in salesforce
+				var alert = $mdDialog.alert().title('Error!').content("Please make sure you have entered a valid the Salesforce Deposit ID.").ok('Ok');
+				$mdDialog.show(alert);
+				vm.is_processing = false;
+				return false;
+			}
+
 			given_to_user_id = vm.national_account_user_id;
 			given_to_user_name = "National Account";
 		} else {

@@ -53,8 +53,8 @@ angular.module('donutApp')
 					var don = data.data.donations[i];
 
 					var don_date = new Date(don.added_on);
-					if((don_date.getFullYear() == $rootScope.year && don_date.getMonth() > 4)
-							|| (don_date.getFullYear() == $rootScope.year + 1 && don_date.getMonth() >= 1 && don_date.getMonth() < 4)) {
+					if((don_date.getFullYear() == $rootScope.year && don_date.getMonth() > 3)
+							|| (don_date.getFullYear() == ($rootScope.year + 1) && don_date.getMonth() < 3)) {
 						this_year_donations[don.id] = don;
 						vm.donation_sum += Number(don.amount);
 					} else {

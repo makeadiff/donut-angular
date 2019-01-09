@@ -39,10 +39,10 @@ angular.module('donutApp')
 
 					} else {
 						User.setLoggedIn(data.data.user);
-						window.LogRocket.identify('THE_USER_ID_IN_YOUR_APP', {
-							name:User.getUserName() + ' ' + User.getUserId(),
-							email:data.data.user.email
-						  });
+						// window.LogRocket.identify('THE_USER_ID_IN_YOUR_APP', {
+						// 	name:User.getUserName() + ' ' + User.getUserId(),
+						// 	email:data.data.user.email
+						//   });
 						// Update name at the top right corner
 						$rootScope.user_name = User.getUserName();
 						if(User.isPOC()) $rootScope.user_name += "(Coach)";
