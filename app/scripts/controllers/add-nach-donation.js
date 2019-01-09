@@ -67,10 +67,8 @@ angular.module('donutApp')
 
 		vm.fundraiser_id = User.getUserId();
 		
-		$('#created_at').attr('min', moment("2018-04-01").format("YYYY-MM-DD"));
-		$('#created_at').attr('max', moment().format("YYYY-MM-DD"));
-
-
+		// $('#created_at').attr('min', moment("2018-04-01").format("YYYY-MM-DD"));
+		// $('#created_at').attr('max', moment().format("YYYY-MM-DD"));
 
 		vm.validCheck = function() {
 			if(vm.donationForm.$valid == false){
@@ -120,8 +118,6 @@ angular.module('donutApp')
 				return true;
 			}
 		}
-
-	
 
 		vm.addExDonation = function() {
 			vm.is_processing = true;
