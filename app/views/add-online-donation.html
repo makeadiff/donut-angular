@@ -23,9 +23,10 @@
             <input name="email" label="Email" ng-model="addExDon.donation.email" type="email" type="email" required>
         </md-input-container>
 
+        <md-input-container>
         <p>Donated on Date :</p>
-        <md-datepicker ng-model="addExDon.donation.created_at" md-placeholder="Donated On"></md-datepicker>
-        <br>
+        <input type="date" id="created_at" ng-model="addExDon.donation.created_at" md-placeholder="Donated On" required></input>
+        </md-input-container>
 
         <md-radio-group layout-align="start center" ng-model="addExDon.donation.donation_type">
             <p>Donated on Website :</p>

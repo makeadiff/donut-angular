@@ -12,18 +12,51 @@ angular.module('donutApp')
 		var vm = this; //vm stands for view-model
 
 		//Initializing fields to be empty otherwise fields contain undefined.
-		vm.donation = {
-			'name'      : "",
-			'phone'     : "",
-			'email'     : "",
-			'address'   : "",
-			'amount'    : "",
-			'type' 		: "nach",
-			'created_at': new Date(),
-			'nach_start_on': new Date(),
-			'nach_end_on': ""
-		};
+		vm.initialize = function() {
+			//Initializing fields to be empty otherwise fields contain undefined.
+			vm.donation = {
+				'name'      : "",
+				'phone'     : "",
+				'email'     : "",
+				'address'   : "",
+				'amount'    : "",
+				'type' 		: "nach",
+				'created_at': "",
+				'nach_start_on': "",
+				'nach_end_on': ""
+			};
+		}
+		vm.initialize();
+		//Setting up max and min date
+		// vm.currentDate = new Date();
+		// vm.beginDate =  moment("2018-03-31").toDate();
 
+		// vm.minDate = new Date(
+		//   vm.beginDate.getFullYear(),
+		//   vm.beginDate.getMonth(),
+		//   vm.beginDate.getDate()
+		// );
+	  
+		// vm.maxDate = new Date(
+		//   vm.currentDate.getFullYear(),
+		//   vm.currentDate.getMonth(),
+		//   vm.currentDate.getDate()
+		// );
+
+		//Initializing errors
+		vm.is_error = false;
+		vm.is_processing = false;
+
+		vm.phone_absent = false;
+		vm.email_absent = false;
+		vm.phone_invalid = false;
+		vm.email_invalid = false;
+		vm.amount_invalid = false;
+		vm.created_at_invalid = false;
+		vm.nach_start_on_invalid = false;
+		vm.nach_end_on_invalid = false;
+
+		//getting values from URL
 		var params = $location.search();
 
 		if(params.donor_name) vm.donation.name = params.donor_name;
@@ -32,16 +65,12 @@ angular.module('donutApp')
 		if(params.donor_city) vm.donation.address = params.donor_city;
 		if(params.amount) vm.donation.amount = params.amount;
 
-		//Initializing errors
-		vm.is_error = false;
-		vm.phone_absent = false;
-		vm.email_absent = false;
-		vm.phone_invalid = false;
-		vm.email_invalid = false;
-		vm.amount_invalid = false;
-		vm.is_processing = false;
-
 		vm.fundraiser_id = User.getUserId();
+		
+		$('#created_at').attr('min', moment("2018-04-01").format("YYYY-MM-DD"));
+		$('#created_at').attr('max', moment().format("YYYY-MM-DD"));
+
+
 
 		vm.validCheck = function() {
 			if(vm.donationForm.$valid == false){
@@ -66,32 +95,33 @@ angular.module('donutApp')
 			} else if(vm.donation.amount.length !=0 && (isNaN(vm.donation.amount))) {
 				vm.amount_invalid = true;
 				return false;
+			
+			} else if (moment(vm.donation.created_at).isValid() && moment(vm.donation.created_at).isBefore(moment('2018-03-31')) && moment(vm.donation.created_at).isAfter(moment()) ){
+				vm.created_at_invalid = true;
+				return false;
+				
+			} else if (moment(vm.donation.created_at).isValid() && moment(vm.donation.created_at).isAfter(moment(vm.donation.nach_start_on))){
+				vm.nach_start_on_invalid = true;
+				return false;
 
+			} else if(moment(vm.donation.created_at).isValid() && moment(vm.donation.nach_start_on).isAfter(moment(vm.donation.nach_end_on))){
+				vm.nach_end_on_invalid = true;
+				return false;
 			} else { // No errors.
 				vm.phone_absent = false;
 				vm.email_absent = false;
 				vm.phone_invalid = false;
 				vm.email_invalid = false;
 				vm.amount_invalid = false;
+				vm.created_at_invalid = false;
+				vm.nach_start_on_invalid = false;
+				vm.nach_end_on_invalid = false;
 
 				return true;
 			}
 		}
 
-		vm.initialize = function() {
-			//Initializing fields to be empty otherwise fields contain undefined.
-			vm.donation = {
-				'name'      : "",
-				'phone'     : "",
-				'email'     : "",
-				'address'   : "",
-				'amount'    : "",
-				'type' 		: "nach",
-				'created_at': new Date(),
-				'nach_start_on': new Date(),
-				'nach_end_on': ""
-			};
-		}
+	
 
 		vm.addExDonation = function() {
 			vm.is_processing = true;

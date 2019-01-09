@@ -23,16 +23,20 @@
             <input name="email" label="Email" ng-model="addExDon.donation.email" type="email" required>
         </md-input-container>
 
+        <md-input-container>
         <p>Donated on Date :</p>
-        <md-datepicker ng-model="addExDon.donation.created_at" md-placeholder="Donated On"></md-datepicker>
-        <br>
+        <input type="date" id="created_at" ng-model="addExDon.donation.created_at" md-placeholder="Donated On" required></input>
+        </md-input-container>
 
+        <md-input-container>
         <p>NACH Start Date :</p>
-        <md-datepicker ng-model="addExDon.donation.nach_start_on" md-placeholder="NACH Starts On"></md-datepicker>
-        <br>
+        <input type="date" ng-model="addExDon.donation.nach_start_on" md-placeholder="NACH Starts On" required></input>
+        </md-input-container>
+
+        <md-input-container>
         <p>NACH End Date :</p>
-        <md-datepicker ng-model="addExDon.donation.nach_end_on" md-placeholder="Until Cancelled"></md-datepicker>
-        <br>
+        <input type="date" ng-model="addExDon.donation.nach_end_on" md-placeholder="Until Cancelled"></input>
+        </md-input-container>
 
         <md-button id="action" ng-disabled="!addExDon.validCheck() || addExDon.is_processing" class="md-raised" type="submit">Submit</md-button>
 
@@ -47,6 +51,10 @@
     <span ng-show="addExDon.email_invalid"><p class="error">Invalid Email</p></span>
     <span ng-show="addExDon.phone_invalid"><p class="error">Phone number should be 10 to 15 digits in length</p></span>
     <span ng-show="addExDon.amount_invalid"><p class="error">Amount is not a valid number</p></span>
+    <span ng-show="addExDon.created_at_invalid"><p class="error">Please enter a valid 'Donated on date'. Date should be after 31-March-2018 </p></span>
+    <span ng-show="addExDon.nach_start_on_invalid"><p class="error">Please enter a valid 'NACH Start date'. Date should be after 'Donated on date'  </p></span>
+    <span ng-show="addExDon.nach_end_on_invalid"><p class="error">Please enter a valid 'NACH End date'. Date should be after 'NACH Start date' </p></span>
+
 </div>
 
 
