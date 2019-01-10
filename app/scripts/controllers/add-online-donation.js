@@ -39,9 +39,8 @@ angular.module('donutApp')
 		vm.amount_invalid = false;
 		vm.is_processing = false;
 
-
-		$('#created_at').attr('min', moment("2018-04-01").format("YYYY-MM-DD"));
-		$('#created_at').attr('max', moment().format("YYYY-MM-DD"));
+		// $('#created_at').attr('min', moment("2018-04-01").format("YYYY-MM-DD"));
+		// $('#created_at').attr('max', moment().format("YYYY-MM-DD"));
 
 		vm.validCheck = function() {
 			if(vm.donationForm.$valid == false){

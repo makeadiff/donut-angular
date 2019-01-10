@@ -21,8 +21,8 @@ angular.module('donutApp')
 				'address'   : "",
 				'amount'    : "",
 				'type' 		: "nach",
-				'created_at': "",
-				'nach_start_on': "",
+				'created_at': moment().toDate(),
+				'nach_start_on': moment().toDate(),
 				'nach_end_on': ""
 			};
 		}
@@ -90,7 +90,7 @@ angular.module('donutApp')
 				vm.email_invalid = true;
 				return false;
 
-			} else if(vm.donation.amount.length !=0 && (isNaN(vm.donation.amount))) {
+			} else if(vm.donation.amount.length != 0 && (isNaN(vm.donation.amount) || vm.donation.amount < 100)) {
 				vm.amount_invalid = true;
 				return false;
 			
