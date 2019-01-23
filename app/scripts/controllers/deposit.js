@@ -60,7 +60,7 @@ angular.module('donutApp')
 		var group_id = $rootScope.coach_group_id; // If its any volunteer, find coaches in the city
 		var get_groups = "&group_in=" + $rootScope.coach_group_id + "," + $rootScope.fr_fellow_group_id + "," + $rootScope.finance_fellow_group_id;
 		
-		if(User.isPOC()) {
+		if(User.isPOC() && !User.isFC()) {
 			group_id = $rootScope.finance_fellow_group_id; // If its a coach, find the finance fellow in the city.
 			vm.manager = 'Finance Fellow';
 			get_groups = "&group_id=" + group_id;

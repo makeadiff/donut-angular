@@ -38,7 +38,7 @@ angular.module('donutApp')
 						loginCtrl.login = {};
 
 					} else {
-						User.setLoggedIn(data.data.user);
+						User.setLoggedIn(data.data.users);
 						// window.LogRocket.identify('THE_USER_ID_IN_YOUR_APP', {
 						// 	name:User.getUserName() + ' ' + User.getUserId(),
 						// 	email:data.data.user.email

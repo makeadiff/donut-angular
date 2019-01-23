@@ -8,7 +8,7 @@
  */
 angular
   .module('donutApp', [
-  	'ngRaven',
+  	// 'ngRaven',
 	'ngAnimate',
 	'ngCookies',
 	'ngResource',
