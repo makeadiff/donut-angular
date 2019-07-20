@@ -3,6 +3,13 @@
     <span ng-show="addExDon.is_processing"><br><md-progress-circular  md-mode="indeterminate"></md-progress-circular></span>
 
     <form name="addExDon.donationForm" layout="column" ng-submit="addExDon.addExDonation()" novalidate>
+        <md-radio-group layout-align="start center" ng-model="addExDon.donation.donation_type">
+            <p>Donation Type:</p>
+            <md-radio-button value="online">One Time Donation</md-radio-button>
+            <md-radio-button value="online_recurring">Recurring Donation</md-radio-button>
+            <md-radio-button value="crowdfunding_patforms">External Crowdfunding Platforms(Global Giving/Ketto/etc.)</md-radio-button>
+        </md-radio-group>
+
         <md-input-container>
             <label>Donor Name</label>
             <input name="name" label="Name" ng-model="addExDon.donation.name" required>
@@ -24,17 +31,21 @@
         </md-input-container>
 
         <md-input-container>
-        <p>Donated on Date :</p>
-        <input type="date" id="created_at" ng-model="addExDon.donation.created_at" md-placeholder="Donated On" required></input>
+            <p>Donated on Date :</p>
+            <input type="date" id="created_at" ng-model="addExDon.donation.created_at" md-placeholder="Donated On" required></input>
         </md-input-container>
 
-        <md-radio-group layout-align="start center" ng-model="addExDon.donation.donation_type">
-            <p>Donated on Website :</p>
-            <md-radio-button value="online">MAD Website (makeadiff.in)</md-radio-button>
-            <md-radio-button value="crowdfunding_patforms">Online Crowdfunding Platforms(Global Giving/Ketto/etc.)</md-radio-button>
-            <!-- <md-radio-button value="globalgiving">Global Giving (globalgiving.org)</md-radio-button> -->
-            <!-- <md-radio-button value="give_india">Give India (giveindia.org)</md-radio-button> -->
-        </md-radio-group>
+        <div id="recurring-options">
+        <md-input-container>
+            <p>Recurring Donation Start Date :</p>
+            <input type="date" id="donation_start_date" ng-model="addExDon.donation.nach_start_on" md-placeholder="Recurring Donation Start Date"></input>
+        </md-input-container>
+
+        <md-input-container>
+            <p>Recurring Donation End Date :</p>
+            <input type="date" id="donation_end_date" ng-model="addExDon.donation.nach_end_on" md-placeholder="Recurring Donation End Date"></input>
+        </md-input-container>
+        </div>
 
         <md-button id="action" ng-disabled="!addExDon.validCheck() || addExDon.is_processing" class="md-raised" type="submit">Submit</md-button>
 

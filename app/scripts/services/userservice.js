@@ -8,7 +8,7 @@
  * Factory in the donutApp.
  */
 angular.module('donutApp')
-  .factory('UserService', ['$localStorage','$rootScope',function ($localStorage, $rootScope) {
+  .factory('UserService', ['$localStorage','$rootScope', '$cookies', '$http', '$location',function ($localStorage, $rootScope, $cookies, $http, $location) {
 		var user = {};
 
 		user.setLoggedIn = function(user_data){
@@ -18,7 +18,29 @@ angular.module('donutApp')
 		};
 
 		user.checkLoggedIn = function(){
-			return $localStorage.loggedIn;
+			var loggedIn = $localStorage.loggedIn;
+			if(loggedIn) return loggedIn;
+
+			var cookies = $cookies.getAll();
+			var email = cookies.email;
+			var auth_token = cookies.auth_token;
+
+			var that = this;
+			$http({
+				method: 'POST',
+				url: $rootScope.base_url + 'users/login',
+				headers: $rootScope.request_headers,
+				transformRequest: $rootScope.transformRequest,
+				data: {"email": email, "auth_token": auth_token}
+			}).then(function (response) {
+				if(response.status >= 200 && response.status < 300) {
+					var data = response.data;
+					that.setLoggedIn(data);
+					$location.path("/");
+				}
+			});
+
+			return false;
 		};
 
 		user.getUserId = function(){
@@ -58,6 +80,7 @@ angular.module('donutApp')
 			$localStorage.user = {};
 			$localStorage.loggedIn = false;
 			$rootScope.user_name = '';
+		    document.cookie = 'auth_token=; Path=/; Expires=Thu, 01 Jan 1970 00:00:01 GMT;'; // Ideally should be $cookies.remove('auth_token'); - but doesn't work.
 			return true;
 		};
 

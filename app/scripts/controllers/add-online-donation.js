@@ -19,7 +19,9 @@ angular.module('donutApp')
 			'address'   : "",
 			'amount'    : "",
 			'donation_type' : "online",
-			'created_at'    : new Date()
+			'created_at'    : moment().toDate(),
+			'nach_start_on': moment().toDate(),
+			'nach_end_on': ""
 		};
 
 		var params = $location.search();

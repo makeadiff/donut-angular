@@ -1,5 +1,5 @@
 <div layout="column" ng-controller="DepositCtrl as ctrl" layout-margin layout-fill layout-padding id="deposit-page">
-	<h3 align="center">Handover a Deposit to Coach / Fellow </h3>
+	<h3 align="center">Please handover the cash, cheque and NACH collected from the donor to the City Fundraising Coach or City Finance Fellow</h3>
 	<span layout="row" ng-show="ctrl.is_processing" layout-align="center center"><br><br><br><md-progress-circular  md-mode="indeterminate"></md-progress-circular></span>
 
 	<p align="center" ng-show="ctrl.error" style="color:red;">{{ctrl.error}}</p>
@@ -48,7 +48,7 @@
 		<div layout="row" layout-align="center center">Select the {{ctrl.manager}} to hand over the selected donations to...</div>
 		<div layout="row" layout-align="center center">
 			<md-radio-group ng-model="ctrl.selected_manager">
-				<md-radio-button ng-repeat="manager in ctrl.city_managers" ng-value="manager.id" label="{{manager.name}}">{{manager.name}}</md-radio-button>
+				<md-radio-button ng-repeat="manager in ctrl.city_managers" ng-value="manager.id" label="{{manager.name}}">{{manager.name}}({{manager.phone}})</md-radio-button>
 			</md-radio-group>
 		</div>
 
