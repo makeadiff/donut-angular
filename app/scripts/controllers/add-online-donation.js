@@ -21,7 +21,7 @@ angular.module('donutApp')
 			'donation_type' : "online",
 			'created_at'    : moment().toDate(),
 			'nach_start_on': moment().toDate(),
-			'nach_end_on': ""
+			'nach_end_on': moment().add(1, 'years').toDate()
 		};
 
 		var params = $location.search();
@@ -39,6 +39,8 @@ angular.module('donutApp')
 		vm.phone_invalid = false;
 		vm.email_invalid = false;
 		vm.amount_invalid = false;
+		vm.nach_start_on_invalid = false;
+		vm.nach_end_on_invalid = false;
 		vm.is_processing = false;
 
 		// $('#created_at').attr('min', moment("2018-04-01").format("YYYY-MM-DD"));
@@ -66,6 +68,14 @@ angular.module('donutApp')
 
 			} else if(vm.donation.amount.length !=0 && (isNaN(vm.donation.amount))) {
 				vm.amount_invalid = true;
+				return false;
+
+			} else if(vm.donation.donation_type == "online_recurring" && !vm.donation.nach_start_on) {
+				vm.nach_start_on_invalid = true;
+				return false;
+
+			} else if(vm.donation.donation_type == "online_recurring" && !vm.donation.nach_end_on) {
+				vm.nach_end_on_invalid = true;
 				return false;
 
 			} else { // No errors.
@@ -97,17 +107,33 @@ angular.module('donutApp')
 
 			if(User.checkLoggedIn()) {
 				var fundraiser_id = User.getUserId();
+				if(!fundraiser_id) {
+					var error = $mdDialog.alert().title('Error!').content('Session error! Please login again.').ok('Ok');
+					$mdDialog.show(alert).finally(vm.initialize);
+					return false;
+				}
+
+				var donation_data = {
+					amount : vm.donation.amount, 
+					donor_name : vm.donation.name, 
+					donor_email : vm.donation.email,
+					donor_phone : vm.donation.phone, 
+					fundraiser_user_id : fundraiser_id,
+					added_on : $filter("date")(vm.donation.created_at, "yyyy-MM-dd"),
+					type : vm.donation.donation_type, 
+					format : 'json'
+				}
+				if(vm.donation.donation_type == "online_recurring") {
+					donation_data.nach_start_on = $filter("date")(vm.donation.nach_start_on, "yyyy-MM-dd");
+					donation_data.nach_end_on = $filter("date")(vm.donation.nach_end_on, "yyyy-MM-dd");
+				}
 
 				$http({
 					method: 'POST',
 					url: $rootScope.base_url + 'donations',
 					headers: $rootScope.request_headers,
 					transformRequest: $rootScope.transformRequest,
-					data: {amount : vm.donation.amount, donor_name : vm.donation.name, donor_email : vm.donation.email,
-						donor_phone : vm.donation.phone, fundraiser_user_id : fundraiser_id,
-						added_on : $filter("date")(vm.donation.created_at, "yyyy-MM-dd"),
-						type : vm.donation.donation_type, format : 'json'}
-
+					data: donation_data
 				}).success(function (data) {
 					vm.is_processing = false;
 

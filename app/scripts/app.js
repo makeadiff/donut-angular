@@ -200,16 +200,6 @@ angular
 				$rootScope.title = current.$$route.title;
 			else 
 				$rootScope.title = "Donut";
-
-			window.Intercom("boot", {
-		        app_id: "xnngu157",
-		        email: $localStorage.user.email,
-		        name: $localStorage.user.name,
-		        user_id: $localStorage.user.user_id,
-		        widget: {
-		          activator: "#IntercomDefaultWidget"
-		        }
-		    });
 		});
 	}])
 	.filter('dateToISO', function() {

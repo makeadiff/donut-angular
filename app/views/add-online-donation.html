@@ -32,18 +32,18 @@
 
         <md-input-container>
             <p>Donated on Date :</p>
-            <input type="date" id="created_at" ng-model="addExDon.donation.created_at" md-placeholder="Donated On" required></input>
+            <input type="date" id="created_at" ng-model="addExDon.donation.created_at" md-placeholder="Donated On" required aria-label="Donation Date"></input>
         </md-input-container>
 
-        <div id="recurring-options">
+        <div id="recurring-options" ng-show="addExDon.donation.donation_type == 'online_recurring'">
         <md-input-container>
             <p>Recurring Donation Start Date :</p>
-            <input type="date" id="donation_start_date" ng-model="addExDon.donation.nach_start_on" md-placeholder="Recurring Donation Start Date"></input>
+            <input type="date" id="donation_start_date" ng-model="addExDon.donation.nach_start_on" md-placeholder="Recurring Donation Start Date" aria-label="Recurring Start Date"></input>
         </md-input-container>
 
         <md-input-container>
             <p>Recurring Donation End Date :</p>
-            <input type="date" id="donation_end_date" ng-model="addExDon.donation.nach_end_on" md-placeholder="Recurring Donation End Date"></input>
+            <input type="date" id="donation_end_date" ng-model="addExDon.donation.nach_end_on" md-placeholder="Recurring Donation End Date" aria-label="Recurring End Date"></input>
         </md-input-container>
         </div>
 
