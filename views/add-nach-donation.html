@@ -25,17 +25,22 @@
 
         <md-input-container>
         <p>Donated on Date :</p>
-        <input type="date" id="created_at" ng-model="addExDon.donation.created_at" md-placeholder="Donated On" required></input>
+        <input type="date" id="created_at" ng-model="addExDon.donation.created_at" md-placeholder="Donated On" required aria-label="Donated On"></input>
         </md-input-container>
 
         <md-input-container>
         <p>NACH Start Date :</p>
-        <input type="date" ng-model="addExDon.donation.nach_start_on" md-placeholder="NACH Starts On" required></input>
+        <input type="date" ng-model="addExDon.donation.nach_start_on" md-placeholder="NACH Starts On" required aria-label="NACH Starts On"></input>
         </md-input-container>
 
         <md-input-container>
         <p>NACH End Date :</p>
-        <input type="date" ng-model="addExDon.donation.nach_end_on" md-placeholder="Until Cancelled"></input>
+        <input type="date" ng-model="addExDon.donation.nach_end_on" md-placeholder="Until Cancelled" aria-label="NACH Ends On"></input>
+        </md-input-container>
+
+        <md-input-container>
+        <p>NACH Form :</p>
+        <input type="file" accept="image/*" capture file-upload="addExDon.donation.reference_file" md-placeholder="NACH Form" aria-label="NACH Form"></input>
         </md-input-container>
 
         <md-button id="action" ng-disabled="!addExDon.validCheck() || addExDon.is_processing" class="md-raised" type="submit">Submit</md-button>

@@ -23,25 +23,10 @@ angular.module('donutApp')
 				'type' 		: "nach",
 				'created_at': moment().toDate(),
 				'nach_start_on': moment().toDate(),
-				'nach_end_on': ""
+				'nach_end_on': moment().add(1, 'years').toDate()
 			};
 		}
 		vm.initialize();
-		//Setting up max and min date
-		// vm.currentDate = new Date();
-		// vm.beginDate =  moment("2018-03-31").toDate();
-
-		// vm.minDate = new Date(
-		//   vm.beginDate.getFullYear(),
-		//   vm.beginDate.getMonth(),
-		//   vm.beginDate.getDate()
-		// );
-	  
-		// vm.maxDate = new Date(
-		//   vm.currentDate.getFullYear(),
-		//   vm.currentDate.getMonth(),
-		//   vm.currentDate.getDate()
-		// );
 
 		//Initializing errors
 		vm.is_error = false;
@@ -133,18 +118,45 @@ angular.module('donutApp')
 					vm.donation.amount = vm.donation.amount * months;
 				}
 
+				var form_data = new FormData();
+            	form_data.append('reference_file', vm.donation.reference_file);
+            	form_data.append('amount', vm.donation.amount); 
+				form_data.append('donor_name', vm.donation.name); 
+				form_data.append('donor_email', vm.donation.email); 
+				form_data.append('donor_address', "");
+				form_data.append('donor_phone', vm.donation.phone); 
+				form_data.append('fundraiser_user_id', fundraiser_id);
+				form_data.append('added_on', $filter("date")(vm.donation.created_at, "yyyy-MM-dd"));
+				form_data.append('nach_start_on', $filter("date")(vm.donation.nach_start_on, "yyyy-MM-dd"));
+				form_data.append('nach_end_on', $filter("date")(vm.donation.nach_end_on, "yyyy-MM-dd"));
+				form_data.append('type', vm.donation.type);
+				form_data.append('format', 'json');
+
+				// $http({
+				// 	method: 'POST',
+				// 	url: $rootScope.base_url + 'donations',
+				// 	headers: $rootScope.request_headers,
+				// 	transformRequest: $rootScope.transformRequest,
+				// 	data: {
+				// 		amount 			: vm.donation.amount, 
+				// 		donor_name 		: vm.donation.name, 
+				// 		donor_email 	: vm.donation.email, 
+				// 		donor_address	: "",
+				// 		donor_phone 	: vm.donation.phone, 
+				// 		fundraiser_user_id : fundraiser_id,
+				// 		added_on 		: $filter("date")(vm.donation.created_at, "yyyy-MM-dd"),
+				// 		nach_start_on 	: $filter("date")(vm.donation.nach_start_on, "yyyy-MM-dd"),
+				// 		nach_end_on 	: $filter("date")(vm.donation.nach_end_on, "yyyy-MM-dd"),
+				// 		type 			: vm.donation.type, 
+				// 		format 			: 'json'
+				// 	}
+
 				$http({
 					method: 'POST',
 					url: $rootScope.base_url + 'donations',
-					headers: $rootScope.request_headers,
-					transformRequest: $rootScope.transformRequest,
-					data: {amount : vm.donation.amount, donor_name : vm.donation.name, donor_email : vm.donation.email, donor_address: "",
-						donor_phone : vm.donation.phone, fundraiser_user_id : fundraiser_id,
-						added_on : $filter("date")(vm.donation.created_at, "yyyy-MM-dd"),
-						nach_start_on : $filter("date")(vm.donation.nach_start_on, "yyyy-MM-dd"),
-						nach_end_on : $filter("date")(vm.donation.nach_end_on, "yyyy-MM-dd"),
-						type : vm.donation.type, format : 'json'}
-
+					headers: { 'Content-Type' : undefined },
+					transformRequest: angular.identity,
+					data: form_data
 				}).success(function (data) {
 					vm.is_processing = false;
 
