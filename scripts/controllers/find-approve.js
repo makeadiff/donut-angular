@@ -20,13 +20,8 @@ angular.module('donutApp')
 		"amount": 0
 	}
 
-	if(User.checkLoggedIn()) {
-		var user_id = User.getUserId();
-		if(!User.isFC()) vm.error = "Only Finance Fellows can access the Find and Approve Page";
-
-	} else {
-		vm.errorMessage("/login", "Connection error. Please login once again.")
-	};
+	var user_id = User.getUserId();
+	if(!User.isFC()) vm.error = "Only Finance Fellows can access the Find and Approve Page";
 
 	vm.userCheck = function() {
 		if(!User.checkLoggedIn()) return vm.errorMessage("/login", "Please login to use this feature.");

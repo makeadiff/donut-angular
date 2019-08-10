@@ -22,92 +22,65 @@ angular
 	$routeProvider
 	  .when('/', {
 		templateUrl: 'views/home.html',
-		restricted : true,
 		title : 'Donut'
 	  })
 	  .when('/add-donation', {
 		templateUrl: 'views/add-donation.html',
-		// controller: 'AddDonationCtrl',
-		restricted : true,
 		title : 'Cash/ Cheque Donation',
 		heading:'Add Cash / Cheque donations'
 	  })
 	  .when('/view-donation', {
 		templateUrl: 'views/view-donation.html',
-		// controller: 'ViewDonationCtrl',
-		restricted : true,
 		title : 'View Donation',
 		heading:'My Donations'
 	  })
 	  .when('/deposit', {
 		templateUrl: 'views/deposit.html',
-		// controller: 'DepositCtrl',
-		restricted : true,
 		title : 'Make a Deposit',
 		heading:'Make a Deposit'
 	  })
 	  .when('/login', {
 		templateUrl: 'views/login.html',
-		// controller: 'LoginCtrl',
 		restricted : false,
 		title : 'Login'
 	  })
 	  .when('/logout', {
 		templateUrl: 'views/logout.html',
 		controller: 'LogoutCtrl',
-		restricted : false
 	  })
 	  .when('/select-event', {
 		templateUrl: 'views/select-event.html',
-		// controller: 'SelectEventCtrl',
-		restricted : true
 		})
 	  .when('/external-donation', {
 		templateUrl: 'views/external-donation.html',
-		// controller: 'ExternalDonationCtrl',
-		restricted : true,
 		title: "External Donations"
 		})
 	  .when('/add-external-donation/:donation_type', {
 		templateUrl: 'views/add-external-donation.html',
-		// controller: 'AddExternalDonationCtrl',
-		restricted : true,
 		title: "Add External Donations"
 		})
 	  .when('/add-nach-donation', {
 		templateUrl: 'views/add-nach-donation.html',
-		// controller: 'AddNACHDonationCtrl',
-		restricted : true,
 		title: "Add NACH Donation",
-		heading:'Add NACH Donation'
 		})
 	  .when('/add-online-donation', {
 		templateUrl: 'views/add-online-donation.html',
-		// controller: 'AddOnlineDonationCtrl',
-		restricted : true,
 		title: "Add Online Donation",
-		heading:'Add Online Donation'
 		})
 	  .when('/approvals', {
 		templateUrl: 'views/approvals.html',
-		restricted : true,
 		title: "Review Deposits"
 		})
 	  .when('/approved-donations', {
 		templateUrl: 'views/approved-donations.html',
-		restricted : true,
 		title: "Approved Donations"
 		})
 	  .when('/find-approve', {
 		templateUrl: 'views/find-approve.html',
-		// controller: 'ChangePasswordCtrl',
-		restricted : true,
 		title : 'Find and Approve Donations'
 	  })
 	  .when('/change-password', {
 		templateUrl: 'views/change-password.html',
-		// controller: 'ChangePasswordCtrl',
-		restricted : true,
 		title : 'Change Password'
 	  })
 	  .otherwise({
@@ -147,7 +120,7 @@ angular
     };
   })
 	.run(['$location', '$rootScope', '$mdDialog', '$localStorage', 'UserService', function($location, $rootScope, $mdDialog, $localStorage, User) {
-		$rootScope.base_url = window.location.protocol + '//makeadiff.in/api/v1/';
+		$rootScope.base_url = window.location.protocol + '//' + window.location.hostname + '/api/v1/';
 		
 		if(location.href.toString().match(/localhost/) || location.href.toString().match(/192\.168\./)) {
 			// $rootScope.base_url = 'http://localhost/MAD/api/v1/';
@@ -170,6 +143,8 @@ angular
         var this_month = today.getMonth() + 1;
         if(this_month < start_month) year = year - 1;
 		$rootScope.year = year;
+
+		User.setLoggedIn(current_user);
 
 		if(User.getUserName()) {
 			$rootScope.user_name = User.getUserName();
@@ -215,6 +190,7 @@ angular
 			'ecs' : 'ECS',
 			'globalgiving' : 'Global Giving',
 			'online' : 'Online',
+			'online_recurring' : 'Online Recurring',
 			'other' : 'Other',
 			'nach' : 'NACH',
 			'global_giving' : 'Global Giving',

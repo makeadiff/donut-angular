@@ -32,50 +32,40 @@ angular.module('donutApp')
 		// $location.path('/');
 	}
 
-	if(User.checkLoggedIn()) {
-		var fundraiser_id = User.getUserId();
+	var fundraiser_id = User.getUserId();
 
-		$http({
-			method: 'GET',
-			url: $rootScope.base_url + "users/" + fundraiser_id + '/donations?from=2014-04-01',
-			headers: $rootScope.request_headers,
-			transformRequest: $rootScope.transformRequest,
-		}).success(function (data) {
-			vm.is_processing = false;
-
-			if(data.status == 'error') {
-				vm.error = data.message;
-			} else {
-				var this_year_donations = {};
-				var all_donations = {};
-
-				for(var i in data.data.donations) {
-					var don = data.data.donations[i];
-
-					var don_date = new Date(don.added_on);
-					if((don_date.getFullYear() == $rootScope.year && don_date.getMonth() > 3)
-							|| (don_date.getFullYear() == ($rootScope.year + 1) && don_date.getMonth() < 3)) {
-						this_year_donations[don.id] = don;
-						vm.donation_sum += Number(don.amount);
-					} else {
-						all_donations[don.id] = don;
-					}
-					vm.donation_overall_sum += Number(don.amount);
-				}
-
-				vm.donations = this_year_donations;
-				vm.historical_donations = all_donations;
-			}
-		}).error(vm.showError);
-
-	} else {
+	$http({
+		method: 'GET',
+		url: $rootScope.base_url + "users/" + fundraiser_id + '/donations?from=2014-04-01',
+		headers: $rootScope.request_headers,
+		transformRequest: $rootScope.transformRequest,
+	}).success(function (data) {
 		vm.is_processing = false;
 
-		var alert = $mdDialog.alert().title('Error!').content('Connection error. Please try again later.').ok('Ok');
-		$mdDialog.show(alert);
-		$location.path('/login');
-	};
+		if(data.status == 'error') {
+			vm.error = data.message;
+		} else {
+			var this_year_donations = {};
+			var all_donations = {};
 
+			for(var i in data.data.donations) {
+				var don = data.data.donations[i];
+
+				var don_date = new Date(don.added_on);
+				if((don_date.getFullYear() == $rootScope.year && don_date.getMonth() > 3)
+						|| (don_date.getFullYear() == ($rootScope.year + 1) && don_date.getMonth() < 3)) {
+					this_year_donations[don.id] = don;
+					vm.donation_sum += Number(don.amount);
+				} else {
+					all_donations[don.id] = don;
+				}
+				vm.donation_overall_sum += Number(don.amount);
+			}
+
+			vm.donations = this_year_donations;
+			vm.historical_donations = all_donations;
+		}
+	}).error(vm.showError);
 
 	// Delete donation option.
 	vm.deleteDonation = function(donation_id) {

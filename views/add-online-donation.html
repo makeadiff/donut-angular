@@ -37,23 +37,13 @@
 
         <div id="recurring-options" ng-show="addExDon.donation.donation_type == 'online_recurring'">
         <md-input-container>
-            <p>Recurring Donation Start Date :</p>
-            <input type="date" id="donation_start_date" ng-model="addExDon.donation.nach_start_on" md-placeholder="Recurring Donation Start Date" aria-label="Recurring Start Date"></input>
-        </md-input-container>
-
-        <md-input-container>
-            <p>Recurring Donation End Date :</p>
-            <input type="date" id="donation_end_date" ng-model="addExDon.donation.nach_end_on" md-placeholder="Recurring Donation End Date" aria-label="Recurring End Date"></input>
+            <p>Recurring Donation Count :</p>
+            <input type="number" id="donation_repeat_count" ng-model="addExDon.donation.donation_repeat_count" md-placeholder="Number of months the donation was repeated" aria-label="Donation Recurring Count"></input>
         </md-input-container>
         </div>
 
         <md-button id="action" ng-disabled="!addExDon.validCheck() || addExDon.is_processing" class="md-raised" type="submit">Submit</md-button>
-
     </form>
-
-    <!-- <div class="failsafe" ng-show="addExDon.is_error">
-        <a href="{{addExDon.base_url}}apps/donut/failsafe/external-donations.php?fundraiser_id={{addExDon.fundraiser_id}}">Failsafe</a>
-    </div> -->
 
     <span ng-show="addExDon.phone_absent"><p class="error">Phone is a mandatory field</p></span>
     <span ng-show="addExDon.email_absent"><p class="error">Email is a mandatory field</p></span>

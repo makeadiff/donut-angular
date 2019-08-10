@@ -11,10 +11,6 @@ angular.module('donutApp')
     .controller('HomeCtrl', ['UserService','$location', function (User, $location) {
 		var vm = this;
 
-		if(!User.checkLoggedIn()) {
-			$location.path('/login');
-		}
-
 		vm.is_poc = User.isPOC();
 		vm.is_fc = User.isFC();
 		vm.manager = 'Coach';
@@ -22,9 +18,4 @@ angular.module('donutApp')
 		else if(vm.is_poc) vm.manager = 'Finance Fellow';
 
 		vm.approve = true;
-		// var params = $location.search();
-		// if(params.approve != null) {
-		// 	vm.approve = params.approve;
-		// }
-
     }]);

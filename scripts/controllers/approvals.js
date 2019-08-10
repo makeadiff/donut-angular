@@ -20,34 +20,25 @@ angular.module('donutApp')
 		vm.poc_or_fc = "poc"; // This keeps a track of what kind of volunteer the current user. poc / fc
 		// Every Ajax call will be have this variable - to change the result depending on the current user.
 
-		if(User.checkLoggedIn()) {
-			var user_id = User.getUserId();
-			if(User.isPOC()) vm.poc_or_fc = "poc";
-			else vm.poc_or_fc = "fc";
+		var user_id = User.getUserId();
+		if(User.isPOC()) vm.poc_or_fc = "poc";
+		else vm.poc_or_fc = "fc";
 
-			$http({
-				method: 'GET',
-				url: $rootScope.base_url + "deposits?reviewer_user_id=" + user_id,
-				headers: $rootScope.request_headers,
-				transformRequest: $rootScope.transformRequest
-			}).success(function (data) {
-				vm.is_processing = false;
+		$http({
+			method: 'GET',
+			url: $rootScope.base_url + "deposits?reviewer_user_id=" + user_id,
+			headers: $rootScope.request_headers,
+			transformRequest: $rootScope.transformRequest
+		}).success(function (data) {
+			vm.is_processing = false;
 
-				if(data.status == 'success') vm.deposits = data.data.deposits;
-				else vm.error = data.message;
-			}).error(function() {
-				vm.is_processing = false;
-				return $rootScope.errorMessage();
-			});
+			if(data.status == 'success') vm.deposits = data.data.deposits;
+			else vm.error = data.message;
+		}).error(function() {
+			vm.is_processing = false;
+			return $rootScope.errorMessage();
+		});
 
-		} else {
-			vm.errorMessage("/login", "Connection error. Please login once again.")
-		};
-
-		vm.userCheck = function() {
-			if(!User.checkLoggedIn()) return vm.errorMessage("/login", "Please login to use this feature.");
-			return true;
-		}
 		vm.errorMessage = function (redirect_to, error_message) {
 			vm.is_processing = false;
 			return $rootScope.errorMessage(redirect_to, error_message);
@@ -63,8 +54,6 @@ angular.module('donutApp')
 				}
 			}
 			if(index === false) return vm.errorMessage("/approvals", "Can't find the given deposit.");
-
-			if(!vm.userCheck()) return false;
 
 			var user_id = User.getUserId();
 
@@ -126,7 +115,6 @@ angular.module('donutApp')
 
 		// Delete donation option.
 		vm.reject = function(deposit_id) {
-			if(!vm.userCheck()) return false;
 			vm.active_deposit_id = deposit_id;
 			
 			var index = false;

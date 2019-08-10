@@ -17,45 +17,35 @@ angular.module('donutApp')
 		vm.active_donation_id = 0;
 		vm.poc_or_fc = "poc";
 
-		if(User.checkLoggedIn()) {
-			var poc_id = User.getUserId();
-			if(User.isPOC()) vm.poc_or_fc = "poc";
-			else vm.poc_or_fc = "fc";
+		var poc_id = User.getUserId();
+		if(User.isPOC()) vm.poc_or_fc = "poc";
+		else vm.poc_or_fc = "fc";
 
-			$http({
-				method: 'GET',
-				url: $rootScope.base_url + "donation/get_" + vm.poc_or_fc + "_approved_donations/" + poc_id,
-				headers: {'Content-Type': 'application/x-www-form-urlencoded'},
-				transformRequest: $rootScope.transformRequest,
-			}).success(function (data) {
-				vm.is_processing = false;
+		$http({
+			method: 'GET',
+			url: $rootScope.base_url + "donation/get_" + vm.poc_or_fc + "_approved_donations/" + poc_id,
+			headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+			transformRequest: $rootScope.transformRequest,
+		}).success(function (data) {
+			vm.is_processing = false;
 
-				if(data.success) {
-					vm.donations = data.donations;
-				} else {
-					vm.error = data.error;
-				}
+			if(data.success) {
+				vm.donations = data.donations;
+			} else {
+				vm.error = data.error;
+			}
 
-			}).error(function (data) {
-				vm.is_processing = false;
-				return vm.errorMessage("/approved-donations", "Connection error. Please try again after a while.");
-			});
+		}).error(function (data) {
+			vm.is_processing = false;
+			return vm.errorMessage("/approved-donations", "Connection error. Please try again after a while.");
+		});
 
-		} else {
-			vm.errorMessage("/login", "Connection error. Please login once again.");
-		};
-
-		vm.userCheck = function() {
-			if(!User.checkLoggedIn()) return vm.errorMessage("/login", "Please login to use this feature.");
-			return true;
-		}
 		vm.errorMessage = function (redirect_to, error_message) {
 			vm.is_processing = false;
 			return $rootScope.errorMessage(redirect_to, error_message);
 		}
 
 		vm.rejectDonation = function(donation_id) {
-			if(!vm.userCheck()) return false;
 			vm.active_donation_id = donation_id;
 
 			var donation_source = vm.donations[donation_id].user_name;
@@ -92,7 +82,6 @@ angular.module('donutApp')
 
 		// Delete donation option.
 		vm.deleteDonation = function(donation_id) {
-			if(!vm.userCheck()) return false;
 			vm.active_donation_id = donation_id;
 			
 			var confirm = $mdDialog.confirm().title('Delete Donation?')

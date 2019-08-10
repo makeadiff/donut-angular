@@ -188,14 +188,5 @@ angular.module('donutApp')
 	   	return Object.keys(card).length;
 	}
 
-	if(User.checkLoggedIn()) {
-		vm.init();
-
-	} else {
-		vm.is_processing = false;
-
-		var alert = $mdDialog.alert().title('Error!').content("Can't authenticate user. Please login again.").ok('Ok');
-		$mdDialog.show(alert);
-		$location.path('/login');
-	};
+	vm.init();
 }]);

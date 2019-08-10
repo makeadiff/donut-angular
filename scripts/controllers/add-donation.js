@@ -9,7 +9,6 @@
  */
 angular.module('donutApp')
   .controller('AddDonationCtrl', ['$http','$mdDialog','UserService','$location', '$filter', '$rootScope',function ($http,$mdDialog,User,$location,$filter,$rootScope) {
-
 		var vm = this; //vm stands for view-model
 
 		//Initializing fields to be empty otherwise fields contain undefined.
@@ -58,7 +57,6 @@ angular.module('donutApp')
 		vm.amount_invalid = false;
 		vm.is_processing = false;
 
-
 		var fundraiser_id = User.getUserId();
 
 		vm.validCheck = function() {
@@ -86,94 +84,80 @@ angular.module('donutApp')
 
 		vm.addDonation = function() {
 			vm.is_processing = true;
-			if(User.checkLoggedIn()) {
-				var fundraiser_id = User.getUserId();
-				console.log(vm.donation.eighty_g);
-				if(parseInt(vm.donation.amount)>2000){
-					vm.donation.eighty_g = "true";
-				}
-				console.log(vm.donation.type);
+			
+			var fundraiser_id = User.getUserId();
+			if(parseInt(vm.donation.amount)>2000){
+				vm.donation.eighty_g = "true";
+			}
 
-				//Validate donation
+			//Validate donation
+			$http({
+				method: 'POST',
+				url: $rootScope.base_url + 'donations/validate',
+				headers: $rootScope.request_headers,
+				transformRequest: $rootScope.transformRequest,
+				data: {amount : vm.donation.amount, donor_name : vm.donation.name, donor_email : vm.donation.email,
+					donor_phone : vm.donation.phone, donor_address : vm.donation.address,
+					comment: vm.donation.comment, fundraiser_user_id : fundraiser_id,
+					format : 'json'}
+
+			}).success(function (data) {
+				if(data.success){
+					insertDonation();
+				} else {
+					var confirm_dialog = $mdDialog.confirm().title('Confirm').content(data.error).ok('Yes').cancel('No');
+					$mdDialog.show(confirm_dialog).then(function() {
+						insertDonation();
+					}, function() {
+						vm.is_processing = false;
+					});
+				}
+
+			}).error(function (data) {
+				vm.is_processing = false;
+				vm.is_error = true;
+
+				var alert = $mdDialog.alert().title('Error!').content('Connection issue with \''+$rootScope.base_url + 'donations/validate'+'\'. Please try again later.').ok('Ok');
+				$mdDialog.show(alert);
+			});
+
+			var insertDonation = function(){
 				$http({
 					method: 'POST',
-					url: $rootScope.base_url + 'donations/validate',
+					url: $rootScope.base_url + 'donations',
 					headers: $rootScope.request_headers,
 					transformRequest: $rootScope.transformRequest,
-					data: {amount : vm.donation.amount, donor_name : vm.donation.name, donor_email : vm.donation.email,
-						donor_phone : vm.donation.phone, donor_address : vm.donation.address,
-						comment: vm.donation.comment, fundraiser_user_id : fundraiser_id,
-						format : 'json'}
-
+					data: {amount : vm.donation.amount, donor_name : vm.donation.name, donor_email : vm.donation.email, 
+						donor_phone : vm.donation.phone, eighty_g_required : vm.donation.eighty_g, donor_address : vm.donation.address,
+						comment: vm.donation.comment, fundraiser_user_id : fundraiser_id, cheque_no: vm.donation.cheque_no,
+						type: vm.donation.type, format : 'json'}
 				}).success(function (data) {
-					if(data.success){
-						insertDonation();
-					} else {
-						var confirm_dialog = $mdDialog.confirm().title('Confirm').content(data.error).ok('Yes').cancel('No');
-						$mdDialog.show(confirm_dialog).then(function() {
-							insertDonation();
-						}, function() {
-							vm.is_processing = false;
-						});
-					}
+					vm.is_processing = false;
+					var alert = $mdDialog.alert().title('Success!').content('Donation of Rs '+vm.donation.amount+' from donor \''+vm.donation.name+'\' added succesfully(Donation ID: ' + data.data.donation.id + ')').ok('Ok');
+					$mdDialog.show(alert);
+
+					//Initializing fields to be empty otherwise fields contain undefined.
+					vm.donation = {};
+					vm.donation.name = "";
+					vm.donation.amount = "";
+					vm.donation.email = "";
+					vm.donation.phone = "";
+					vm.donation.address = "";
+					vm.donation.comment = "";
+					vm.donation.eighty_g = "false";
+
+					//So that form is reset after submit
+					vm.donationForm.$setUntouched();
+					vm.donationForm.$setPristine();
 
 				}).error(function (data) {
 					vm.is_processing = false;
 					vm.is_error = true;
 
-					var alert = $mdDialog.alert().title('Error!').content('Connection issue with \''+$rootScope.base_url + 'donations/validate'+'\'. Please try again later.').ok('Ok');
+					var alert = $mdDialog.alert().title('Error!').content('Connection issue with \''+$rootScope.base_url + 'donations\'. Please try again later.').ok('Ok');
 					$mdDialog.show(alert);
-				});
-
-
-				var insertDonation = function(){
-					$http({
-						method: 'POST',
-						url: $rootScope.base_url + 'donations',
-						headers: $rootScope.request_headers,
-						transformRequest: $rootScope.transformRequest,
-						data: {amount : vm.donation.amount, donor_name : vm.donation.name, donor_email : vm.donation.email, 
-							donor_phone : vm.donation.phone, eighty_g_required : vm.donation.eighty_g, donor_address : vm.donation.address,
-							comment: vm.donation.comment, fundraiser_user_id : fundraiser_id, cheque_no: vm.donation.cheque_no,
-							type: vm.donation.type, format : 'json'}
-					}).success(function (data) {
-						vm.is_processing = false;
-						var alert = $mdDialog.alert().title('Success!').content('Donation of Rs '+vm.donation.amount+' from donor \''+vm.donation.name+'\' added succesfully(Donation ID: ' + data.data.donation.id + ')').ok('Ok');
-						$mdDialog.show(alert);
-
-						//Initializing fields to be empty otherwise fields contain undefined.
-						vm.donation = {};
-						vm.donation.name = "";
-						vm.donation.amount = "";
-						vm.donation.email = "";
-						vm.donation.phone = "";
-						vm.donation.address = "";
-						vm.donation.comment = "";
-						vm.donation.eighty_g = "false";
-
-						//So that form is reset after submit
-						vm.donationForm.$setUntouched();
-						vm.donationForm.$setPristine();
-
-					}).error(function (data) {
-						vm.is_processing = false;
-						vm.is_error = true;
-
-						var alert = $mdDialog.alert().title('Error!').content('Connection issue with \''+$rootScope.base_url + 'donations\'. Please try again later.').ok('Ok');
-						$mdDialog.show(alert);
-					})
-				};
-
-			} else {
-				vm.is_processing = false;
-
-				var alert = $mdDialog.alert().title('Error!').content('Connection error. Please try again later.').ok('Ok');
-				$mdDialog.show(alert);
-				$location.path('/login');
-
+				})
 			};
-
-
 		};
 
   }]);

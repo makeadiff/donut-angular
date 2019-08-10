@@ -1,4 +1,10 @@
-<!doctype html>
+<?php
+include 'common.php';
+
+/** IMPORTANT Note. We are using PHP for session management. Login and auth is handled by PHP - apps/auth. It was handled by JS before, now that's depricated. */
+$current_user = accessControl([]);
+$current_user['user_id'] = $current_user['id'];
+?><!doctype html>
 <html ng-app="donutApp" class="no-js">
   <head>
 	<meta charset="utf-8">
@@ -26,12 +32,11 @@
 
 	<md-toolbar>
 		<div class="md-toolbar-tools">
-			<span><a href="#home">Menu</a></span>
+			<span><a href="#home">Donut</a></span>
 			<span flex>
-				<h3 align="center">DONUT</h3>
 			</span>
 			<span><a class="reduced">{{user_name}}</a></span>
-			<md-button ng-show="user_name" class="white" href="#logout">Logout</md-button>
+			<md-button ng-show="user_name" class="white" href="https://makeadiff.in/apps/auth/logout.php">Logout</md-button>
 
 		</div>
 	</md-toolbar>
@@ -69,7 +74,7 @@
 	<script>Raven.config('https://26d6bfc3ed854cf199a6d45e002980ca@sentry.io/1327657').install();</script>
 	<! -- -->
 
-	<!-- build:js({.tmp,app}) scripts/scripts.js -->
+	<!-- build:js(.) scripts/scripts.js -->
 	<script src="scripts/app.js"></script>
 	<script src="scripts/controllers/home.js"></script>
 	<script src="scripts/controllers/add-donation.js"></script>
@@ -87,6 +92,10 @@
 	<script src="scripts/controllers/add-online-donation.js"></script>
 	<script src="scripts/controllers/find-approve.js"></script>
 	<!-- endbuild -->
+
+	<script type="text/javascript">
+	var current_user = <?php echo json_encode($current_user); ?>;
+	</script>
 
 	<!-- Google Analytics: change UA-XXXXX-X to be your site's ID -->
 	 <script>

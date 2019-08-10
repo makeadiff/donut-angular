@@ -20,27 +20,6 @@ angular.module('donutApp')
 		user.checkLoggedIn = function(){
 			var loggedIn = $localStorage.loggedIn;
 			if(loggedIn) return loggedIn;
-
-			var cookies = $cookies.getAll();
-			var email = cookies.email;
-			var auth_token = cookies.auth_token;
-
-			var that = this;
-			$http({
-				method: 'POST',
-				url: $rootScope.base_url + 'users/login',
-				headers: $rootScope.request_headers,
-				transformRequest: $rootScope.transformRequest,
-				data: {"email": email, "auth_token": auth_token}
-			}).then(function (response) {
-				if(response.status >= 200 && response.status < 300) {
-					var data = response.data;
-					that.setLoggedIn(data);
-					$location.path("/");
-				}
-			});
-
-			return false;
 		};
 
 		user.getUserId = function(){
