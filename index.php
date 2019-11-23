@@ -32,7 +32,7 @@ $current_user['user_id'] = $current_user['id'];
 
 	<md-toolbar>
 		<div class="md-toolbar-tools">
-			<span><a href="#home">Donut</a></span>
+			<span><a href="#home">Menu</a></span>
 			<span flex>
 			</span>
 			<span><a class="reduced">{{user_name}}</a></span>
@@ -43,15 +43,6 @@ $current_user['user_id'] = $current_user['id'];
 
 	<div ng-view=""></div>
 
-	<!-- build:js(.) scripts/oldieshim.js -->
-	<!--[if lt IE 9]>
-	<script src="bower_components/es5-shim/es5-shim.js"></script>
-	<script src="bower_components/json3/lib/json3.js"></script>
-	<![endif]-->
-	<!-- endbuild -->
-
-	<!-- build:js(.) scripts/vendor.js -->
-	<!-- bower:js -->
 	<script src="bower_components/jquery/dist/jquery.js"></script>
 	<script src="bower_components/angular/angular.js"></script>
 	<script src="bower_components/angular-animate/angular-animate.js"></script>
@@ -62,19 +53,22 @@ $current_user['user_id'] = $current_user['id'];
 	<script src="bower_components/angular-touch/angular-touch.js"></script>
 	<script src="bower_components/angular-aria/angular-aria.js"></script>
 	<script src="bower_components/angular-material/angular-material.js"></script>
-	<script src="bower_components/angular-storage/dist/angular-storage.js"></script>
+	<script src="deprecated_components/angular-storage/dist/angular-storage.js"></script>
 	<script src="bower_components/x2js/xml2json.min.js"></script>
 	<script src="bower_components/ngstorage/ngStorage.js"></script>
 	<script src="bower_components/moment/moment.js"></script>
-	<!-- endbower -->
-	<!-- endbuild -->
+	
 
 	<!-- Sentry Code - - >
 	<script src="https://cdn.ravenjs.com/3.26.4/angular/raven.min.js" crossorigin="anonymous"></script>
 	<script>Raven.config('https://26d6bfc3ed854cf199a6d45e002980ca@sentry.io/1327657').install();</script>
 	<! -- -->
 
-	<!-- build:js(.) scripts/scripts.js -->
+		<!-- LogRocket Init - ->
+	<script src="https://cdn.logrocket.io/LogRocket.min.js" crossorigin="anonymous"></script>
+	<script>window.LogRocket && window.LogRocket.init('2obogn/mad_donut');</script>
+	-->
+
 	<script src="scripts/app.js"></script>
 	<script src="scripts/controllers/home.js"></script>
 	<script src="scripts/controllers/add-donation.js"></script>
@@ -91,7 +85,6 @@ $current_user['user_id'] = $current_user['id'];
 	<script src="scripts/controllers/add-nach-donation.js"></script>
 	<script src="scripts/controllers/add-online-donation.js"></script>
 	<script src="scripts/controllers/find-approve.js"></script>
-	<!-- endbuild -->
 
 	<script type="text/javascript">
 	var current_user = <?php echo json_encode($current_user); ?>;
@@ -108,9 +101,5 @@ $current_user['user_id'] = $current_user['id'];
 	   ga('send', 'pageview');
 	</script>
 
-	<!-- LogRocket Init - ->
-	<script src="https://cdn.logrocket.io/LogRocket.min.js" crossorigin="anonymous"></script>
-	<script>window.LogRocket && window.LogRocket.init('2obogn/mad_donut');</script>
-	-->
 </body>
 </html>

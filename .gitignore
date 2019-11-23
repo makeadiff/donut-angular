@@ -1,6 +1,7 @@
 node_modules
 dist
 .tmp
+Donut.sublime-project
 .sass-cache
 bower_components
 .idea
