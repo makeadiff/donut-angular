@@ -79,10 +79,6 @@ angular
 		templateUrl: 'views/find-approve.html',
 		title : 'Find and Approve Donations'
 	  })
-	  .when('/change-password', {
-		templateUrl: 'views/change-password.html',
-		title : 'Change Password'
-	  })
 	  .otherwise({
 		redirectTo: '/'
 	  });

@@ -53,7 +53,6 @@ $current_user['user_id'] = $current_user['id'];
 	<script src="bower_components/angular-touch/angular-touch.js"></script>
 	<script src="bower_components/angular-aria/angular-aria.js"></script>
 	<script src="bower_components/angular-material/angular-material.js"></script>
-	<script src="deprecated_components/angular-storage/dist/angular-storage.js"></script>
 	<script src="bower_components/x2js/xml2json.min.js"></script>
 	<script src="bower_components/ngstorage/ngStorage.js"></script>
 	<script src="bower_components/moment/moment.js"></script>
