@@ -2,11 +2,11 @@
   "name": "donut",
   "version": "0.0.2",
   "dependencies": {
-    "angular": "1.5.8",
+    "angular": "1.4.8",
     "json3": "3.3.2",
     "es5-shim": "4.3.1",
-    "angular-animate": "1.5.8",
-    "angular-cookies": "1.5.8",
+    "angular-animate": "1.4.8",
+    "angular-cookies": "1.4.8",
     "angular-resource": "1.4.8",
     "angular-route": "1.4.8",
     "angular-sanitize": "1.4.8",
@@ -15,11 +15,11 @@
     "x2js": "1.1.7",
     "ngstorage":"0.3.10",
     "moment":"2.10.6",
-    "jquery":"latest"
+    "jquery":"latest",
+    "angular-aria":"1.4.8"
   },
   "devDependencies": {
-    "angular-mocks": "~1.3.0",
-    "angular-scenario": "~1.3.0"
+
   },
   "appPath": "./",
   "resolutions": {
