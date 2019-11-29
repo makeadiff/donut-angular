@@ -150,10 +150,12 @@ angular.module('donutApp')
 			// 		format 			: 'json'
 			// 	}
 
+			let headers = $rootScope.request_headers;
+			headers['Content-Type'] = undefined; // We are doing this to make sure the image upload(reference_file) works.
 			$http({
 				method: 'POST',
 				url: $rootScope.base_url + 'donations',
-				headers: { 'Content-Type' : undefined },
+				headers: headers,
 				transformRequest: angular.identity,
 				data: form_data
 			}).success(function (data) {
