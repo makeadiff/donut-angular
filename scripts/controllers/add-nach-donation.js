@@ -109,21 +109,23 @@ angular.module('donutApp')
 
 			var fundraiser_id = User.getUserId();
 
+			var form_data = new FormData();
+
 			if(!vm.donation.nach_end_on) {
 				vm.donation.amount = vm.donation.amount * 12;
 			} else {
 				var diff = vm.donation.nach_end_on.getTime() - vm.donation.nach_start_on.getTime();
 				var months = Math.round(diff / (1000*60*60*24 * 30));
 				vm.donation.amount = vm.donation.amount * months;
+				form_data.append('donation_repeat_count', months); 
 			}
-
-			var form_data = new FormData();
+			
         	form_data.append('reference_file', vm.donation.reference_file);
-        	form_data.append('amount', vm.donation.amount); 
-			form_data.append('donor_name', vm.donation.name); 
-			form_data.append('donor_email', vm.donation.email); 
+        	form_data.append('amount', vm.donation.amount);
+			form_data.append('donor_name', vm.donation.name);
+			form_data.append('donor_email', vm.donation.email);
 			form_data.append('donor_address', "");
-			form_data.append('donor_phone', vm.donation.phone); 
+			form_data.append('donor_phone', vm.donation.phone);
 			form_data.append('fundraiser_user_id', fundraiser_id);
 			form_data.append('added_on', $filter("date")(vm.donation.created_at, "yyyy-MM-dd"));
 			form_data.append('nach_start_on', $filter("date")(vm.donation.nach_start_on, "yyyy-MM-dd"));

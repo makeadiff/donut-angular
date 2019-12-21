@@ -104,6 +104,10 @@ angular.module('donutApp')
 				return false;
 			}
 
+			if(vm.donation.donation_type == 'online_recurring') {
+				vm.donation.amount = vm.donation.amount * vm.donation.donation_repeat_count;
+			}
+
 			var donation_data = {
 				amount : vm.donation.amount * vm.donation.donation_repeat_count, 
 				donor_name : vm.donation.name, 
@@ -136,7 +140,7 @@ angular.module('donutApp')
 				vm.is_processing = false;
 				vm.is_error = true;
 
-				var alert = $mdDialog.alert().title('Error!').content('Connection issue with \''+add_donation_url+'\'. Please try again later.').ok('Ok');
+				var alert = $mdDialog.alert().title('Error!').content('Connection issue with \'/donations\'. Please try again later.').ok('Ok');
 				$mdDialog.show(alert).finally(vm.initialize);
 			});
 			
