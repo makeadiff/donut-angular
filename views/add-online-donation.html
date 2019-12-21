@@ -16,8 +16,9 @@
         </md-input-container>
 
         <md-input-container>
-            <label>Donated Amount</label>
-            <input name="amount" label="Amount" ng-model="addExDon.donation.amount" required ng-pattern="/^\d+$/">
+            <label ng-show="addExDon.donation.donation_type === 'online_recurring'">Monthly Donation Amount</label>
+            <label ng-show="addExDon.donation.donation_type !== 'online_recurring'">Donated Amount</label>
+            <input name="amount" label="Amount" ng-model="addExDon.donation.amount" required ng-pattern="/^[\.\d]+$/">
         </md-input-container>
 
         <md-input-container>
