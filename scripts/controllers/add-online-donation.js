@@ -144,7 +144,7 @@ angular.module('donutApp')
 				$mdDialog.show(alert).finally(vm.initialize);
 			});
 			
-			//So that form is reset after submit
+			//Form should be reset after submit
 			vm.donationForm.$setUntouched();
 			vm.donationForm.$setPristine();
 		};
