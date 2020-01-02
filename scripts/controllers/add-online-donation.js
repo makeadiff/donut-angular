@@ -109,7 +109,7 @@ angular.module('donutApp')
 			}
 
 			var donation_data = {
-				amount : vm.donation.amount * vm.donation.donation_repeat_count, 
+				amount : vm.donation.amount, 
 				donor_name : vm.donation.name, 
 				donor_email : vm.donation.email,
 				donor_phone : vm.donation.phone, 
@@ -130,7 +130,7 @@ angular.module('donutApp')
 				vm.is_processing = false;
 
 				if(data.status == 'success') {
-					var alert = $mdDialog.alert().title('Success!').content('Donation of Rs '+vm.donation.amount *  vm.donation.donation_repeat_count+' from donor \''+vm.donation.name+'\' added succesfully(Donation ID: ' + data.data.donation.id + ')').ok('Ok');
+					var alert = $mdDialog.alert().title('Success!').content('Donation of Rs ' + vm.donation.amount +' from donor \''+vm.donation.name+'\' added succesfully(Donation ID: ' + data.data.donation.id + ')').ok('Ok');
 				} else {
 					var alert = $mdDialog.alert().title('Error!').content('Error in creating the donation - please try again after some time.').ok('Ok');
 				}
