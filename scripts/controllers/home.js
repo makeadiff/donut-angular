@@ -13,6 +13,7 @@ angular.module('donutApp')
 
 		vm.is_poc = User.isPOC();
 		vm.is_fc = User.isFC();
+		vm.donation_url = 'https://makeadiff.in/donate?fundraiser_id=' + User.getUserId();
 		vm.manager = 'Coach';
 		if(vm.is_fc) vm.manager = 'National Account';
 		else if(vm.is_poc) vm.manager = 'Finance Fellow';

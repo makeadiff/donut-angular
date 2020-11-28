@@ -18,7 +18,7 @@ angular.module('donutApp')
 			'email'     : "",
 			'address'   : "",
 			'amount'    : "",
-			'donation_type' : "online",
+			'donation_type' : "crowdfunding_patforms",
 			'created_at'    : moment().toDate(),
 			'donation_repeat_count': 1
 		};
