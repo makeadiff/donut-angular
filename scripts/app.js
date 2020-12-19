@@ -18,6 +18,9 @@ angular
 	'ngMaterial',
 	'ngStorage'
   ])
+  .config(function ($compileProvider) {
+  	$compileProvider.aHrefSanitizationWhitelist(/^\s*(https?|ftp|mailto|whatsapp):/);
+  })
   .config(function ($routeProvider) {
 	$routeProvider
 	  .when('/', {

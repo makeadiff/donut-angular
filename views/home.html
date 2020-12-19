@@ -3,6 +3,7 @@
 <div layout="column" layout-align="center center" layout-margin layout-padding >
 	<p>Share the following donation URL with your donors - all the donations made though your URL will automatically be tagged to you...</p>
 	<p><a href="{{ ctrl.donation_url }}">{{ ctrl.donation_url }}</a></p>
+  <p>Share on <a href="{{ctrl.sanitize('whatsapp://send?text=I am working with an NGO called Make A Difference. You can donate to our organization using this link - ' + ctrl.donation_url)}}" data-action="share/whatsapp/share">Whatsapp</a></p>
 
 	<p>&nbsp;</p>
 
@@ -14,9 +15,10 @@
 
     <div layout="row" layout-align="center center"><md-button ng-href="#view-donation" class="md-raised" >View My Donations</md-button></div>
 <!--	<div layout="row" layout-align="center center" ng-show="ctrl.approve && (ctrl.is_poc || ctrl.is_fc)"><md-button ng-href="#approvals" class="md-raised">Collect Deposits</md-button></div>
-  	<div layout="row" layout-align="center center" ng-show="ctrl.approve && (ctrl.is_poc || ctrl.is_fc)"><md-button ng-href="#approved-donations" class="md-raised">List Approved Deposits</md-button></div> -->
-
+  	<div layout="row" layout-align="center center" ng-show="ctrl.approve && (ctrl.is_poc || ctrl.is_fc)"><md-button ng-href="#approved-donations" class="md-raised">List Approved Deposits</md-button></div>
     <div layout="row" layout-align="center center"><md-button ng-href="#deposit" class="md-raised">Handover to {{ctrl.manager}}</md-button></div>
+  -->
+
     <div layout="row" layout-align="center center"><md-button ng-href="https://makeadiff.in/apps/tunod/index.php" class="md-raised md-warn" target="_blank" >View Leaderboard</md-button></div>
 </div>
-</div>
+</div>  
