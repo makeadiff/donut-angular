@@ -14,7 +14,7 @@
 			<tr><td class="md-body-2">Donor Name</td><td>{{donation.donor}}</td></tr>
 			<tr><td class="md-body-2">Amount</td><td>{{donation.amount}}</td></tr>
 			<tr ng-show="donation.type && donation.type != 'GEN'"><td class="md-body-2">Donation Type</td>
-				<td><strong>{{donation.type | statusFormat}}</strong></td></tr>
+				<td><strong>{{donation.type | textFormat}}</strong></td></tr>
 			<tr><td class="md-body-2">Date</td><td>{{donation.added_on | dateToISO | date : 'MMM d, y'}}</td></tr>
 			<tr ng-show="donation.status"><td class="md-body-2">Status</td>
 				<td><strong>{{donation.status | statusFormat}}</strong></td></tr>
@@ -24,8 +24,8 @@
 						on {{dep.added_on | dateToISO | date : 'MMM d, y'}}
 						- <strong>{{dep.status | statusFormat}}</strong>
 				</ul></td></tr>
-			<tr ng-show="!donation.deposit.length"><td class="md-body-2" valign="top">Action</td>
-				<td><!-- <md-button href="#/add-donation?donor_name={{donation.donor}}&donor_phone={{donation.donor}}&donor_email=" class="md-raised">Add donation by same donor</md-button><br /> -->
+			<tr ng-show="!donation.deposit.length && donation.type != 'online_donation'"><td class="md-body-2" valign="top">Action</td>
+				<td>
 					<md-button ng-disabled="donation.status == 'DELETED'"
 						ng-click="vm.deleteDonation(donation.id)" class="md-raised md-warn">Mistaken Entry</md-button><br /></td></tr>
 			</table>
@@ -33,7 +33,7 @@
 		</md-card>
 	</div>
 
-	<h4>Historical Donations...</h4>
+<!-- 	<h4>Historical Donations...</h4>
 	<strong>Total Amount(Overall): {{vm.donation_overall_sum}}</strong>
 	<a ng-click="vm.show_historical_donations = 1" style="color: #2da5e0; text-decoration: underline;">[Show All...]</a>
 
@@ -58,6 +58,6 @@
 			</table>
 		</md-card-content>
 		</md-card>
-	</div>
+	</div> -->
 	<p>&nbsp;</p>
 </div>

@@ -203,9 +203,11 @@ angular
 			'TO_BE_APPROVED_BY_POC' : 'To be collected by Coach',
 			'pending': 'Approval Pending',
 			'approved': 'Approved',
+			'receipted': 'Receipt Sent',
 			'cash': 'Cash',
 			'collected': "Collected",
-			'crowdfunding_platforms': "Crowdfunding Platforms"
+			'crowdfunding_platforms': "Crowdfunding Platforms",
+			'online_donation': "Online Donation"
 		};
 
 		return function(input) {
