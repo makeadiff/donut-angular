@@ -18,8 +18,8 @@ angular.module('donutApp')
 			'email'     : "",
 			'address'   : "",
 			'amount'    : "",
-			'donation_type' : "crowdfunding_patforms",
-			'created_at'    : moment().toDate(),
+			'source'	: "give_india",
+			'created_at': moment().toDate(),
 			'donation_repeat_count': 1
 		};
 
@@ -65,10 +65,6 @@ angular.module('donutApp')
 				vm.amount_invalid = true;
 				return false;
 
-			} else if(vm.donation.donation_type == "online_recurring" && !vm.donation.donation_repeat_count) {
-				vm.donation_repeat_count_invalid = true;
-				return false;
-
 			} else { // No errors.
 				vm.phone_absent = false;
 				vm.email_absent = false;
@@ -88,7 +84,7 @@ angular.module('donutApp')
 				'email'     : "",
 				'address'   : "",
 				'amount'    : "",
-				'donation_type' : "online",
+				'source' : "give_india",
 				'created_at'    : new Date(),
 				'donation_repeat_count' : 1
 			};
@@ -104,9 +100,7 @@ angular.module('donutApp')
 				return false;
 			}
 
-			if(vm.donation.donation_type == 'online_recurring') {
-				vm.donation.amount = vm.donation.amount * vm.donation.donation_repeat_count;
-			}
+			const comment = JSON.stringify({"source": vm.donation.source});
 
 			var donation_data = {
 				amount : vm.donation.amount, 
@@ -115,8 +109,8 @@ angular.module('donutApp')
 				donor_phone : vm.donation.phone, 
 				fundraiser_user_id : fundraiser_id,
 				added_on : $filter("date")(vm.donation.created_at, "yyyy-MM-dd"),
-				type : vm.donation.donation_type, 
-				donation_repeat_count : vm.donation.donation_repeat_count,
+				type : "crowdfunding_patforms", 
+				comment: comment,
 				format : 'json'
 			}
 

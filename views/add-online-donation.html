@@ -3,22 +3,22 @@
     <span ng-show="addExDon.is_processing"><br><md-progress-circular  md-mode="indeterminate"></md-progress-circular></span>
 
     <form name="addExDon.donationForm" layout="column" ng-submit="addExDon.addExDonation()" novalidate>
-        <md-radio-group layout-align="start center" ng-model="addExDon.donation.donation_type">
-            <p>Donation Type:</p>
-            <!-- <md-radio-button value="online">One Time Donation</md-radio-button>
-            <md-radio-button value="online_recurring">Recurring Donation</md-radio-button> -->
-            <md-radio-button value="crowdfunding_patforms">External Crowdfunding Platforms(Global Giving/Ketto/etc.)</md-radio-button>
+        <md-radio-group layout-align="start center" ng-model="addExDon.donation.source">
+            <p>Donation Source:</p>
+            <md-radio-button value="give_india">Give India</md-radio-button>
+            <md-radio-button value="global_giving">Global Giving</md-radio-button>
+            <md-radio-button value="ketto">Ketto</md-radio-button>
         </md-radio-group>
+
+        <md-input-container>
+            <label>Donated Amount</label>
+            <input name="amount" label="Amount" ng-model="addExDon.donation.amount" required ng-pattern="/^[\.\d]+$/">
+        </md-input-container>
+
 
         <md-input-container>
             <label>Donor Name</label>
             <input name="name" label="Name" ng-model="addExDon.donation.name" required>
-        </md-input-container>
-
-        <md-input-container>
-            <label ng-show="addExDon.donation.donation_type === 'online_recurring'">Monthly Donation Amount</label>
-            <label ng-show="addExDon.donation.donation_type !== 'online_recurring'">Donated Amount</label>
-            <input name="amount" label="Amount" ng-model="addExDon.donation.amount" required ng-pattern="/^[\.\d]+$/">
         </md-input-container>
 
         <md-input-container>
@@ -35,13 +35,6 @@
             <p>Donated on Date :</p>
             <input type="date" id="created_at" ng-model="addExDon.donation.created_at" md-placeholder="Donated On" required aria-label="Donation Date"></input>
         </md-input-container>
-
-        <div id="recurring-options" ng-show="addExDon.donation.donation_type == 'online_recurring'">
-        <md-input-container>
-            <p>Number of Months :</p>
-            <input type="number" id="donation_repeat_count" ng-model="addExDon.donation.donation_repeat_count" md-placeholder="Number of months the donation was repeated" aria-label="Number of Months"></input>
-        </md-input-container>
-        </div>
 
         <md-button id="action" ng-disabled="!addExDon.validCheck() || addExDon.is_processing" class="md-raised" type="submit">Submit</md-button>
     </form>
