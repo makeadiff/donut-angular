@@ -136,7 +136,7 @@ angular
 		$rootScope.fr_fellow_group_id = 370;
 
 		// MAD Year - code taken from Phoenix/Models/Common.php:__construct__
-		var start_month = 5; // May
+		var start_month = 7; // July, Chaned this for 2020
 		var today = new Date();
         var year = today.getFullYear();
         var this_month = today.getMonth() + 1;

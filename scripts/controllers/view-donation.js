@@ -47,13 +47,14 @@ angular.module('donutApp')
 		} else {
 			var this_year_donations = {};
 			var all_donations = {};
+			var year_ending_month = 5;
 
 			for(var i in data.data.donations) {
 				var don = data.data.donations[i];
 
 				var don_date = new Date(don.added_on);
 				// Show anything post start year march. It can go post march of end year. PS: in 2020-21, 2020 is start year and 2021 is end year.
-				if((don_date.getFullYear() == $rootScope.year && don_date.getMonth() > 3) || don_date.getFullYear() > $rootScope.year) { 
+				if((don_date.getFullYear() == $rootScope.year && don_date.getMonth() > year_ending_month) || don_date.getFullYear() > $rootScope.year) { 
 					this_year_donations[don.id] = don;
 					vm.donation_sum += Number(don.amount);
 				} else {
