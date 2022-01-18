@@ -5,16 +5,21 @@
 	<p><a href="{{ ctrl.donation_url }}">{{ ctrl.donation_url }}</a></p>
   <p>Share on <a href="{{ctrl.sanitize('whatsapp://send?text=I volunteer with Make A Difference. Please support my efforts to raise funds for MAD. Donate using this link - ' + ctrl.donation_url)}}" data-action="share/whatsapp/share">Whatsapp</a></p>
 
-	<p>&nbsp;</p>
+  <hr />
+
+	<p>NOTE: This App(Donut) is being retired. All the below links will take you to the app that's replacing it - MADNet. You might have to login again to access it.</p>
+
+  <div layout="row" layout-align="center center"><md-button ng-href="https://makeadiff.in/madnet/#/donations/0" class="md-raised md-primary" >Add Crowd Funding Platform Donation</md-button></div>
+
+  <div layout="row" layout-align="center center"><md-button ng-href="https://makeadiff.in/madnet/#/donations" class="md-raised" >View My Donations</md-button></div>
 
 <!--     
 	<div layout="row" layout-align="center center"><md-button ng-href="#add-donation" class="md-raised md-primary" >Add Cash/Cheque Donation</md-button></div>
     <div layout="row" layout-align="center center"><md-button ng-href="#add-nach-donation" class="md-raised md-primary" >Add NACH Donation</md-button></div>
-     -->
     <div layout="row" layout-align="center center"><md-button ng-href="#add-online-donation" class="md-raised md-primary" >Add Crowd Funding Platform Donation</md-button></div>
 
     <div layout="row" layout-align="center center"><md-button ng-href="#view-donation" class="md-raised" >View My Donations</md-button></div>
-<!--	<div layout="row" layout-align="center center" ng-show="ctrl.approve && (ctrl.is_poc || ctrl.is_fc)"><md-button ng-href="#approvals" class="md-raised">Collect Deposits</md-button></div>
+  	<div layout="row" layout-align="center center" ng-show="ctrl.approve && (ctrl.is_poc || ctrl.is_fc)"><md-button ng-href="#approvals" class="md-raised">Collect Deposits</md-button></div>
   	<div layout="row" layout-align="center center" ng-show="ctrl.approve && (ctrl.is_poc || ctrl.is_fc)"><md-button ng-href="#approved-donations" class="md-raised">List Approved Deposits</md-button></div>
     <div layout="row" layout-align="center center"><md-button ng-href="#deposit" class="md-raised">Handover to {{ctrl.manager}}</md-button></div>
   -->
